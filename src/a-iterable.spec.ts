@@ -13,11 +13,7 @@ describe('AIterable', () => {
         return elements[Symbol.iterator]();
       },
     });
-    empty = AIterable.of({
-      [Symbol.iterator]() {
-        return [][Symbol.iterator]();
-      },
-    });
+    empty = AIterable.none();
   });
 
   describe('is', () => {
@@ -52,6 +48,18 @@ describe('AIterable', () => {
     it('converts array to iterable', () => {
       expect<Iterable<number>>(AIterable.from(elements)).not.toBe(elements);
       expect([...AIterable.from(elements)]).toEqual(elements);
+    });
+  });
+
+  describe('every', () => {
+    it('returns `true` for empty iterable', () => {
+      expect(empty.every(() => false)).toBe(true);
+    });
+    it('returns `true` when all elements pass the test', () => {
+      expect(iter.every(element => element > 0)).toBe(true);
+    });
+    it('returns `false` when some elements do not pass the test', () => {
+      expect(iter.every(element => element > 20)).toBe(false);
     });
   });
 

@@ -49,6 +49,17 @@ expect([...it.map(item => item * item)]).toBe([1, 4, 9]);
 API
 ___
 
+### `AIterable.none()`
+
+Returns an iterable without elements.
+
+```TypeScript
+import { AIterable } from 'a-iterable';
+
+expect(AIterable.none()[Symbol.iterator]().next().done).toBe(true);
+```
+
+
 ### `AIterable.is()`
 
 Checks whether the source `Iterable` implements an `AIterable` interface.
@@ -90,6 +101,22 @@ import { AIterable, itsFirst } from 'a-iterable';
 
 itsFirst(AIterable.from([1, 2, 3]).filter(x => x > 1)); // 2
 ```
+
+### `every()`
+
+Tests whether all elements in the array pass the test implemented by the provided function. Corresponds to
+[Array.prototype.every()].
+
+```TypeScript
+import { AIterable } from 'a-iterable';
+
+const numbers = AIterable.from([1, 30, 39, 29, 10, 13]);
+
+numbers.every(x => x < 40); // true
+numbers.every(x => x < 20); // false
+```
+
+[Array.prototype.every()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
 
 
 ### `filter()`
@@ -165,8 +192,6 @@ import { AIterable } from 'a-iterable';
 const numbers = AIterable.of([1, 2, 3, 4]);
 
 numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0); // 10
-
-AIterable.from([1, 2, 3]).reduce((prev, x) => prev && x > 0, true); // `Array.every()` analog
 ```
 
 [Array.prototype.reduce()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce

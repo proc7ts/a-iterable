@@ -53,7 +53,6 @@ module.exports = (config) => {
         'forceConsistentCasingInFileNames': false,
         'experimentalDecorators': true,
         'lib': [
-          'dom',
           'es6',
         ],
         'sourceMap': true,
