@@ -60,8 +60,8 @@ module.exports = (config) => {
         'newLine': 'LF'
       },
       coverageOptions: {
-        // Exclude tests, test utilities, and index files.
-        exclude: /((\.spec|[\\/]index)\.ts$|[\\/]spec[\\/].*)/,
+        // Exclude tests.
+        exclude: /\.spec\.ts$/,
         threshold: {
           global: {
             statements: 90,
