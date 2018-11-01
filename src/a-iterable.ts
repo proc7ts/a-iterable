@@ -11,7 +11,9 @@ export abstract class AIterable<T> implements Iterable<T> {
    * @returns An empty iterable instance.
    */
   static none<T>(): AIterable<T> {
+    // tslint:disable:no-use-before-declare
     return NONE;
+    // tslint:enable:no-use-before-declare
   }
 
   /**
