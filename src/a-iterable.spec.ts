@@ -55,6 +55,18 @@ describe('AIterable', () => {
     });
   });
 
+  describe('every', () => {
+    it('returns `true` for empty iterable', () => {
+      expect(empty.every(() => false)).toBe(true);
+    });
+    it('returns `true` when all elements pass the test', () => {
+      expect(iter.every(element => element > 0)).toBe(true);
+    });
+    it('returns `false` when some elements do not pass the test', () => {
+      expect(iter.every(element => element > 20)).toBe(false);
+    });
+  });
+
   describe('filter', () => {
     it('filters elements', () => {
       expect([...iter.filter(element => element > 11)]).toEqual([22, 33]);

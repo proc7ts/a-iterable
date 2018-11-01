@@ -14,7 +14,8 @@ export abstract class AIterable<T> implements Iterable<T> {
    * or `false` otherwise.
    */
   static is<T>(source: Iterable<T>): source is AIterable<T> {
-    return 'filter' in source
+    return 'every' in source
+        && 'filter' in source
         && 'flatMap' in source
         && 'forEach' in source
         && 'map' in source
@@ -62,11 +63,29 @@ export abstract class AIterable<T> implements Iterable<T> {
   abstract [Symbol.iterator](): Iterator<T>;
 
   /**
+   * Tests whether all elements in the array pass the test implemented by the provided function.
+   *
+   * Corresponds to `Array.prototype.every()`.
+   *
+   * @param test A predicate function to test each element.
+   *
+   * @returns `true` if the `test` function returned a truthy value for every element, or `false` otherwise.
+   */
+  every(test: (element: T) => boolean): boolean {
+    for (const element of this) {
+      if (!test(element)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
    * Creates an iterable with all elements that pass the test implemented by the provided function.
    *
    * Corresponds to `Array.prototype.filter()`.
    *
-   * @param test A function is a predicate, to test each element of the array. Return `true` to keep the element,
+   * @param test A predicate function to test each element. Returns `true` to keep the element,
    * or `false` otherwise. It accepts the tested element as the only parameter.
    *
    * @return A new iterable with the elements that pass the test. If no elements pass the test, an empty iterable will
