@@ -49,6 +49,17 @@ expect([...it.map(item => item * item)]).toBe([1, 4, 9]);
 API
 ___
 
+### `AIterable.none()`
+
+Returns an iterable without elements.
+
+```TypeScript
+import { AIterable } from 'a-iterable';
+
+expect(AIterable.none()[Symbol.iterator]().next().done).toBe(true);
+```
+
+
 ### `AIterable.is()`
 
 Checks whether the source `Iterable` implements an `AIterable` interface.

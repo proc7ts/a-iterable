@@ -6,6 +6,15 @@
 export abstract class AIterable<T> implements Iterable<T> {
 
   /**
+   * Returns an iterable without elements.
+   *
+   * @returns An empty iterable instance.
+   */
+  static none<T>(): AIterable<T> {
+    return NONE;
+  }
+
+  /**
    * Checks whether the given iterable implements an `AIterable` interface.
    *
    * @param source An iterable to check.
@@ -191,3 +200,11 @@ export abstract class AIterable<T> implements Iterable<T> {
   }
 
 }
+
+class NoneIterable extends AIterable<any> {
+
+  *[Symbol.iterator](): Iterator<any> {}
+
+}
+
+const NONE = new NoneIterable();

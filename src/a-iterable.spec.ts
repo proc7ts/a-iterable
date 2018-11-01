@@ -13,11 +13,7 @@ describe('AIterable', () => {
         return elements[Symbol.iterator]();
       },
     });
-    empty = AIterable.of({
-      [Symbol.iterator]() {
-        return [][Symbol.iterator]();
-      },
-    });
+    empty = AIterable.none();
   });
 
   describe('is', () => {
