@@ -39,6 +39,9 @@ module.exports = (config) => {
           'src/**/*.ts',
         ],
       },
+      remapOptions: {
+        exclude: /index\.ts/
+      },
       bundlerOptions: {
         entrypoints: /\.spec\.ts$/,
       },
@@ -58,7 +61,7 @@ module.exports = (config) => {
       },
       coverageOptions: {
         // Exclude tests.
-        exclude: /\.spec\.ts$/,
+        exclude: /(\.spec|[\\/]index)\.ts$/,
         threshold: {
           global: {
             statements: 90,

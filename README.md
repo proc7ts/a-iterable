@@ -84,7 +84,7 @@ and iterating over its elements. This way new array instances won't be created.
 ```TypeScript
 import { AIterable } from 'a-iterable';
 
-AIterable.from([1, 2, 3]).filter();
+AIterable.from([1, 2, 3]).filter(x => x > 1);
 ```
 
 

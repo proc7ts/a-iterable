@@ -1,4 +1,4 @@
-import { AIterable } from './index';
+import { AIterable } from './a-iterable';
 
 describe('AIterable', () => {
 
