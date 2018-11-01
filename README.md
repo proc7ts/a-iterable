@@ -88,6 +88,23 @@ words.filter(word => word.length > 6); // "exuberant", "destruction", "present"
 [Array.prototype.filter()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
 
 
+### `flatMap()`
+
+First maps each element using a mapping function, then flattens the result into a new iterable. Corresponds to
+[Array.prototype.flatMap()].
+
+```TypeScript
+import { AIterable } from 'a-iterable';
+
+const numbers = AIterable.of([1, 2, 3]);
+
+numbers.flatMap(x => [x, x + 10]); // 1, 11, 2, 12, 3, 13
+```
+
+
+[Array.prototype.flatMap()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap
+
+
 ### `forEach()`
 
 Performs the given action for each element. Corresponds to [Array.prototype.forEach()].

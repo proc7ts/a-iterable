@@ -38,13 +38,13 @@ describe('AIterable', () => {
 
   describe('of', () => {
     it('returns array itself', () => {
-      expect(AIterable.of(elements)).toBe(elements);
+      expect<Iterable<number>>(AIterable.of(elements)).toBe(elements);
     });
     it('returns `AIterable` itself', () => {
       expect(AIterable.of(iter)).toBe(iter);
     });
     it('returns new implementation for others', () => {
-      expect(iter).not.toBe(elements);
+      expect<Iterable<number>>(iter).not.toBe(elements);
     });
   });
 
@@ -54,6 +54,12 @@ describe('AIterable', () => {
     });
     it('does not filter empty iterable', () => {
       expect([...empty.filter(() => true)]).toEqual([]);
+    });
+  });
+
+  describe('flatMap', () => {
+    it('maps and flattens elements', () => {
+      expect([...iter.flatMap(element => [element, element + 1])]).toEqual([11, 12, 22, 23, 33, 34]);
     });
   });
 
