@@ -25,18 +25,18 @@ jobs:
         command: yarn install
 
     - save_cache:
-      name: Save Yarn Package Cache
-      key: v1-dependencies-{{ checksum "yarn.lock" }}
-      paths:
-      - ~/.cache/yarn
+        name: Save Yarn Package Cache
+        key: v1-dependencies-{{ checksum "yarn.lock" }}
+        paths:
+        - ~/.cache/yarn
 
     - run:
-      name: Build The Project
-      command: yarn build
+        name: Build The Project
+        command: yarn build
 
     - run:
-      name: Run Tests
-      command: yarn test-once
+        name: Run Tests
+        command: yarn test-once
 
     - store_artifacts:
         name: Store Test Results
@@ -53,9 +53,9 @@ jobs:
         path: target/test-results
 
     - run:
-      name: Upload Code Coverage Report
-      command: yarn codecov --disable=gcov
+        name: Upload Code Coverage Report
+        command: yarn codecov --disable=gcov
 
     - run:
-      name: Linting
-      command: yarn lint
+        name: Linting
+        command: yarn lint
