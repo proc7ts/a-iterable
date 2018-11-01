@@ -70,3 +70,64 @@ AIterable.of({ *[Symbol.iterator]() { yield 'something'; } });
 
 When called for the object already implementing `AIterable` (such as `Array`), this method returns the source
 object itself.
+
+
+### `filter()`
+
+Creates an iterable with all elements that pass the test implemented by the provided function. Corresponds to 
+[Array.prototype.filter()].
+
+```TypeScript
+import { AIterable } from 'a-iterable';
+
+const words = AIterable.of(['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present']);
+
+words.filter(word => word.length > 6); // "exuberant", "destruction", "present"
+```
+
+[Array.prototype.filter()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
+
+
+### `forEach()`
+
+Performs the given action for each element. Corresponds to [Array.prototype.forEach()].
+
+```TypeScript
+import { AIterable } from 'a-iterable';
+
+AIterable.is([1, 2, 3]).forEach(console.log); // 1, 2, 3
+```
+
+[Array.prototype.forEach()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+
+
+### `map()`
+
+Creates a new iterable with the results of calling a provided function on every element.
+Corresponds to [Array.prototype.map()].
+
+```TypeScript
+import { AIterable } from 'a-iterable';
+
+const numbers = AIterable.of([1, 4, 9, 16]);
+
+numbers.map(x => x * 2); // 2, 8, 18, 32
+```
+
+[Array.prototype.map()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
+
+
+### `reduce()`
+
+Applies a function against an accumulator and each element to reduce elements to a single value.
+Corresponds to [Array.prototype.reduce()].
+
+```TypeScript
+import { AIterable } from 'a-iterable';
+
+const numbers = AIterable.of([1, 2, 3, 4]);
+
+numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0); // 10
+```
+
+[Array.prototype.reduce()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce

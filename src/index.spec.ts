@@ -2,15 +2,15 @@ import { AIterable } from './index';
 
 describe('AIterable', () => {
 
-  let items: number[];
+  let elements: number[];
   let iter: AIterable<number>;
   let empty: AIterable<number>;
 
   beforeEach(() => {
-    items = [11, 22, 33];
+    elements = [11, 22, 33];
     iter = AIterable.of({
       [Symbol.iterator]() {
-        return items[Symbol.iterator]();
+        return elements[Symbol.iterator]();
       },
     });
     empty = AIterable.of({
@@ -38,18 +38,27 @@ describe('AIterable', () => {
 
   describe('of', () => {
     it('returns array itself', () => {
-      expect(AIterable.of(items)).toBe(items);
+      expect(AIterable.of(elements)).toBe(elements);
     });
     it('returns `AIterable` itself', () => {
       expect(AIterable.of(iter)).toBe(iter);
     });
     it('returns new implementation for others', () => {
-      expect(iter).not.toBe(items);
+      expect(iter).not.toBe(elements);
+    });
+  });
+
+  describe('filter', () => {
+    it('filters elements', () => {
+      expect([...iter.filter(element => element > 11)]).toEqual([22, 33]);
+    });
+    it('does not filter empty iterable', () => {
+      expect([...empty.filter(() => true)]).toEqual([]);
     });
   });
 
   describe('forEach', () => {
-    it('iterates over items', () => {
+    it('iterates over elements', () => {
 
       const spy = jasmine.createSpy('action');
 
@@ -57,7 +66,7 @@ describe('AIterable', () => {
 
       expect(spy.calls.allArgs()).toEqual([[11], [22], [33]]);
     });
-    it('does not iterate over empty iterable items', () => {
+    it('does not iterate over empty iterable elements', () => {
 
       const spy = jasmine.createSpy('action');
 
@@ -66,20 +75,20 @@ describe('AIterable', () => {
       expect(spy).not.toHaveBeenCalled();
     });
   });
+
+  describe('map', () => {
+    it('converts elements', () => {
+      expect([...iter.map(element => `${element}!`)]).toEqual(['11!', '22!', '33!']);
+    });
+  });
+
   describe('reduce', () => {
     it('reduces value', () => {
-      expect(iter.reduce((prev, item) => prev + item, 1)).toBe(67);
+      expect(iter.reduce((prev, element) => prev + element, 1)).toBe(67);
     });
     it('returns initial value on empty iterable', () => {
-      expect(empty.reduce((prev, item) => prev + item, 1)).toBe(1);
+      expect(empty.reduce((prev, element) => prev + element, 1)).toBe(1);
     });
   });
-  describe('filter', () => {
-    it('filters items', () => {
-      expect([...iter.filter(item => item > 11)]).toEqual([22, 33]);
-    });
-    it('does not filter empty iterable', () => {
-      expect([...empty.filter(() => true)]).toEqual([]);
-    });
-  });
+
 });
