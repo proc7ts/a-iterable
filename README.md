@@ -1,4 +1,4 @@
-AIterable
+A-Iterable
 =========
 
 [![NPM][npm-image]][npm-url]
@@ -12,8 +12,12 @@ Arrays considered implementing an `AIterable` interface as soon as they contain 
 
 An implementation is implemented in TypeScript and relies on `tslib` in iteration and generators support.
 
-Execution environment is expected to be es2015-compliant. So, polyfills like [core-js] may be of use. 
+Execution environment is expected to be es2015-compliant. So, polyfills like [core-js] may be of use.
 
+An `AIterable` interface contains only basic methods, not every one from the `Array` interface. The rest of the
+functionality could be achieved with the use of simple [utilities] this package also hosts.
+
+[utilities]: #utilities
 [core-js]: https://www.npmjs.com/package/core-js
 [npm-image]: https://img.shields.io/npm/v/a-iterable.svg
 [npm-url]: https://www.npmjs.com/package/a-iterable
@@ -82,9 +86,9 @@ Unlike [AIterable.of()] this function always creates new iterable instance. This
 and iterating over its elements. This way new array instances won't be created.
 
 ```TypeScript
-import { AIterable } from 'a-iterable';
+import { AIterable, itsFirst } from 'a-iterable';
 
-AIterable.from([1, 2, 3]).filter(x => x > 1);
+itsFirst(AIterable.from([1, 2, 3]).filter(x => x > 1)); // 2
 ```
 
 
@@ -161,6 +165,33 @@ import { AIterable } from 'a-iterable';
 const numbers = AIterable.of([1, 2, 3, 4]);
 
 numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0); // 10
+
+AIterable.from([1, 2, 3]).reduce((prev, x) => prev && x > 0, true); // `Array.every()` analog
 ```
 
 [Array.prototype.reduce()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+
+
+Utilities
+---------
+
+### `itsEmpty()`
+
+Checks whether the given iterable is empty.
+
+```TypeScript
+import { AIterable, itsEmpty } from 'a-iterable';  
+
+!itsEmpty(AIterable.from([1, 2, 3]).filter(x => x === 2)); // `Array.includes()` analog
+!itsEmpty(AIterable.from([1, 2, 3]).filter(x => x > 1)); // `Array.some()` analog
+```
+
+### `itsFirst()`
+
+Returns the first element of the given iterable.
+
+```TypeScript
+import { AIterable, itsFirst } from 'a-iterable';  
+
+itsFirst(AIterable.from([1, 2, 3]).filter(x => x === 2)); // `Array.find()` analog
+```
