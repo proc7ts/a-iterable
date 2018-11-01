@@ -48,6 +48,13 @@ describe('AIterable', () => {
     });
   });
 
+  describe('from', () => {
+    it('converts array to iterable', () => {
+      expect<Iterable<number>>(AIterable.from(elements)).not.toBe(elements);
+      expect([...AIterable.from(elements)]).toEqual(elements);
+    });
+  });
+
   describe('filter', () => {
     it('filters elements', () => {
       expect([...iter.filter(element => element > 11)]).toEqual([22, 33]);

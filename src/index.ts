@@ -21,18 +21,32 @@ export abstract class AIterable<T> implements Iterable<T> {
         && 'reduce' in source;
   }
 
+  static of<T>(source: T[]): T[];
+  static of<T>(source: Iterable<T>): AIterable<T>;
+
   /**
-   * Creates an `AIterable` instance that iterates over the same elements as the given iterable.
+   * Creates an `AIterable` instance that iterates over the same elements as the given one.
    *
    * @param source A source iterable.
    *
    * @return Either `source` itself if it implements `AIterable` already (see `is()` method),
    * or new `AIterable` instance.
    */
-  static of<T>(source: Iterable<T>): AIterable<T> {
+  static of<T>(source: Iterable<T>): AIterable<T> | T[] {
     if (AIterable.is(source)) {
       return source;
     }
+    return AIterable.from(source);
+  }
+
+  /**
+   * Creates an `AIterable` instance that iterates over the same elements as the given one.
+   *
+   * @param source A source iterable.
+   *
+   * @return Always new `AIterable` instance.
+   */
+  static from<T>(source: Iterable<T>): AIterable<T> {
 
     class IterableWrapper extends AIterable<T> {
 

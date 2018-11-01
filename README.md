@@ -71,6 +71,22 @@ AIterable.of({ *[Symbol.iterator]() { yield 'something'; } });
 When called for the object already implementing `AIterable` (such as `Array`), this method returns the source
 object itself.
 
+[AIterable.of()]: #aiterableof
+
+
+### `AIterable.from()`
+
+Converts the source `Iterable` to `AIterable`.
+
+Unlike [AIterable.of()] this function always creates new iterable instance. This may be useful when converting array 
+and iterating over its elements. This way new array instances won't be created.
+
+```TypeScript
+import { AIterable } from 'a-iterable';
+
+AIterable.from([1, 2, 3]).filter();
+```
+
 
 ### `filter()`
 
