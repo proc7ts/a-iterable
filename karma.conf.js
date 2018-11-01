@@ -39,9 +39,6 @@ module.exports = (config) => {
           'src/**/*.ts',
         ],
       },
-      remapOptions: {
-        exclude: /index\.ts/
-      },
       bundlerOptions: {
         entrypoints: /\.spec\.ts$/,
       },
