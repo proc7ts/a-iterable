@@ -1,4 +1,4 @@
-import { itsEmpty, itsFirst, itsLast, reverseArray } from './iteration';
+import { itsEmpty, itsFirst, itsLast } from './iteration';
 import { RevertibleIterable } from './revertible-iterable';
 
 describe('itsEmpty', () => {
@@ -47,11 +47,5 @@ describe('itsLast', () => {
     };
 
     expect(itsLast(it)).toBe(3);
-  });
-});
-
-describe('reverseArray', () => {
-  it('reverts array elements', () => {
-    expect([...reverseArray([1, 2, 3])]).toEqual([3, 2, 1]);
   });
 });
