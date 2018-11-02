@@ -10,7 +10,7 @@ A-Iterable
 
 Arrays considered implementing an `AIterable` interface as soon as they contain all expected methods.
 
-An implementation is implemented in TypeScript and relies on `tslib` in iteration and generators support.
+The library is implemented in TypeScript and relies on `tslib` in iteration and generators support.
 
 Execution environment is expected to be es2015-compliant. So, polyfills like [core-js] may be of use.
 
@@ -104,8 +104,7 @@ itsFirst(AIterable.from([1, 2, 3]).filter(x => x > 1)); // 2
 
 ### `every()`
 
-Tests whether all elements in the array pass the test implemented by the provided function. Corresponds to
-[Array.prototype.every()].
+Tests whether all elements pass the test implemented by the provided function. Corresponds to [Array.prototype.every()].
 
 ```TypeScript
 import { AIterable } from 'a-iterable';
