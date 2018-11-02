@@ -1,3 +1,4 @@
+import { reverseArray } from './iteration';
 import { itsRevertible, RevertibleIterable } from './revertible-iterable';
 
 /**
@@ -47,7 +48,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * @return Either `source` itself if it implements `AIterable` already (see `is()` method),
    * or new `AIterable` instance.
    */
-  static of<T>(source: Iterable<T> | RevertibleIterable<T>): AIterable<T> | T[] {
+  static of<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): AIterable<T> | T[] {
     if (AIterable.is(source)) {
       return source;
     }
@@ -57,14 +58,35 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
   /**
    * Creates an `AIterable` instance that iterates over the same elements as the given one.
    *
-   * If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed iterable.
-   * Otherwise implements reversion with default technique. I.e. by storing elements to array and reverting it.
+   * If the `source` iterable is an array, then uses `reverseArray()` function to revert the constructed iterable.
+   * If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed one.
+   * Otherwise implements reversion with default technique. I.e. by storing elements to array and reverting them
+   * with `reverseArray()` function.
    *
    * @param source A source iterable.
    *
    * @return Always new `AIterable` instance.
    */
-  static from<T>(source: Iterable<T> | RevertibleIterable<T>): AIterable<T> {
+  static from<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): AIterable<T> {
+    if (Array.isArray(source)) {
+
+      const array: T[] = source;
+
+      class ArrayWrapper extends AIterable<T> {
+
+        [Symbol.iterator](): Iterator<T> {
+          return source[Symbol.iterator]();
+        }
+
+        reverse() {
+          return AIterable.from(reverseArray(array));
+        }
+
+      }
+
+      return new ArrayWrapper();
+    }
+
     if (!itsRevertible(source)) {
 
       class IterableWrapper extends AIterable<T> {
@@ -230,7 +252,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
   /**
    * Constructs an iterable containing this iterable's elements in reverse order.
    *
-   * By default this method converts iterable to array and then calls its `reverse()` function.
+   * By default this method converts iterable to array and then reverts its elements with `reverseArray()` function.
    *
    * @return Reversed iterable instance.
    */
@@ -239,8 +261,8 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
     const elements = this;
 
     return AIterable.from({
-      [Symbol.iterator]() {
-        return [...elements].reverse()[Symbol.iterator]();
+      [Symbol.iterator] () {
+        return reverseArray([...elements])[Symbol.iterator]();
       }
     });
   }

@@ -1,4 +1,6 @@
 import { AIterable } from './a-iterable';
+import { RevertibleIterable } from './revertible-iterable';
+import SpyObj = jasmine.SpyObj;
 
 describe('AIterable', () => {
 
@@ -60,9 +62,18 @@ describe('AIterable', () => {
       expect<Iterable<number>>(AIterable.from(elements)).not.toBe(elements);
       expect([...AIterable.from(elements)]).toEqual(elements);
     });
-    it('reverts array elements in-place', () => {
-      AIterable.from(elements).reverse();
-      expect(elements).toEqual([33, 22, 11]);
+    it('converts revertible iterable to `AIterable`', () => {
+
+      const it: RevertibleIterable<number> = {
+        [Symbol.iterator]() {
+          return elements.values();
+        },
+        reverse() {
+          throw new Error('Unsupported');
+        },
+      };
+
+      expect([...AIterable.from(it)]).toEqual(elements);
     });
   });
 
@@ -128,8 +139,25 @@ describe('AIterable', () => {
   });
 
   describe('reverse', () => {
-    it('reverts values', () => {
+    it('reverts elements', () => {
       expect([...iter.reverse()]).toEqual(elements.reverse());
+    });
+    it('reverts array elements', () => {
+      expect([...AIterable.from(elements).reverse()]).toEqual([33, 22, 11]);
+    });
+    it('does not revert array elements in-place', () => {
+      AIterable.from(elements).reverse();
+      expect(elements).toEqual([11, 22, 33]);
+    });
+    it('reverts elements using source `reverse()` method', () => {
+
+      const reverted = [...elements].reverse();
+      const it: SpyObj<RevertibleIterable<number>> = jasmine.createSpyObj('it', ['reverse']);
+
+      it.reverse.and.returnValue(reverted);
+
+      expect([...AIterable.from(it).reverse()]).toEqual(reverted);
+      expect(it.reverse).toHaveBeenCalled();
     });
   });
 
