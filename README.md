@@ -106,8 +106,10 @@ Converts the source `Iterable` to `AIterable`.
 Unlike [AIterable.of()] this function always creates new iterable instance. This may be useful when converting array 
 and iterating over its elements. This way new array instances won't be created.
 
-If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed iterable.
-Otherwise implements reversion with default technique. I.e. by storing elements to array and reverting it.
+If the `source` iterable is an array, then uses `reverseArray()` function to revert the constructed iterable.
+If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed one.
+Otherwise implements reversion with default technique. I.e. by storing elements to array and reverting them
+with `reverseArray()` function.
 
 ```TypeScript
 import { AIterable, itsFirst } from 'a-iterable';
@@ -250,4 +252,29 @@ Returns the first element of the given iterable.
 import { AIterable, itsFirst } from 'a-iterable';  
 
 itsFirst(AIterable.from([1, 2, 3]).filter(x => x === 2)); // `Array.find()` analog
+```
+
+
+### `itsLast()`
+
+Returns the last element of the given iterable.
+
+If the given iterable is an array, then just returns its last element. If it is revertible, then extracts the first
+element of reverted iterable. Otherwise iterates over elements to find the last one.
+
+```TypeScript
+import { itsLast } from 'a-iterable';
+
+itsLast([1, 2, 3]); // 3
+```
+
+
+### `reverseArray()`
+
+Constructs an iterable of array elements in reverse order.
+
+```TypeScript
+import { reverseArray } from 'a-iterable';
+
+reverseArray([1, 2 ,3]); // [3, 2, 1]
 ```
