@@ -1,19 +1,32 @@
 import { AIterable } from './a-iterable';
+import { RevertibleIterable } from './revertible-iterable';
+import SpyObj = jasmine.SpyObj;
 
 describe('AIterable', () => {
 
   let elements: number[];
   let iter: AIterable<number>;
-  let empty: AIterable<number>;
+  let none: AIterable<number>;
 
   beforeEach(() => {
     elements = [11, 22, 33];
     iter = AIterable.of({
       [Symbol.iterator]() {
-        return elements[Symbol.iterator]();
+        return elements.values();
       },
     });
-    empty = AIterable.none();
+    none = AIterable.none();
+  });
+
+  describe('none', () => {
+    it('has no elements', () => {
+      expect([...none]).toEqual([]);
+    });
+    describe('reverse', () => {
+      it('returns the same instance', () => {
+        expect(none.reverse()).toBe(none);
+      });
+    });
   });
 
   describe('is', () => {
@@ -49,11 +62,24 @@ describe('AIterable', () => {
       expect<Iterable<number>>(AIterable.from(elements)).not.toBe(elements);
       expect([...AIterable.from(elements)]).toEqual(elements);
     });
+    it('converts revertible iterable to `AIterable`', () => {
+
+      const it: RevertibleIterable<number> = {
+        [Symbol.iterator]() {
+          return elements.values();
+        },
+        reverse() {
+          throw new Error('Unsupported');
+        },
+      };
+
+      expect([...AIterable.from(it)]).toEqual(elements);
+    });
   });
 
   describe('every', () => {
     it('returns `true` for empty iterable', () => {
-      expect(empty.every(() => false)).toBe(true);
+      expect(none.every(() => false)).toBe(true);
     });
     it('returns `true` when all elements pass the test', () => {
       expect(iter.every(element => element > 0)).toBe(true);
@@ -68,7 +94,7 @@ describe('AIterable', () => {
       expect([...iter.filter(element => element > 11)]).toEqual([22, 33]);
     });
     it('does not filter empty iterable', () => {
-      expect([...empty.filter(() => true)]).toEqual([]);
+      expect([...none.filter(() => true)]).toEqual([]);
     });
   });
 
@@ -91,7 +117,7 @@ describe('AIterable', () => {
 
       const spy = jasmine.createSpy('action');
 
-      empty.forEach(spy);
+      none.forEach(spy);
 
       expect(spy).not.toHaveBeenCalled();
     });
@@ -108,7 +134,30 @@ describe('AIterable', () => {
       expect(iter.reduce((prev, element) => prev + element, 1)).toBe(67);
     });
     it('returns initial value on empty iterable', () => {
-      expect(empty.reduce((prev, element) => prev + element, 1)).toBe(1);
+      expect(none.reduce((prev, element) => prev + element, 1)).toBe(1);
+    });
+  });
+
+  describe('reverse', () => {
+    it('reverts elements', () => {
+      expect([...iter.reverse()]).toEqual(elements.reverse());
+    });
+    it('reverts array elements', () => {
+      expect([...AIterable.from(elements).reverse()]).toEqual([33, 22, 11]);
+    });
+    it('does not revert array elements in-place', () => {
+      AIterable.from(elements).reverse();
+      expect(elements).toEqual([11, 22, 33]);
+    });
+    it('reverts elements using source `reverse()` method', () => {
+
+      const reverted = [...elements].reverse();
+      const it: SpyObj<RevertibleIterable<number>> = jasmine.createSpyObj('it', ['reverse']);
+
+      it.reverse.and.returnValue(reverted);
+
+      expect([...AIterable.from(it).reverse()]).toEqual(reverted);
+      expect(it.reverse).toHaveBeenCalled();
     });
   });
 

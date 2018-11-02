@@ -46,6 +46,16 @@ expect([...it.map(item => item * item)]).toBe([1, 4, 9]);
 ```
 
 
+`RevertibleIterable`
+--------------------
+
+The library contains a `RevertibleIterable` implemented by `AIterable`. It extends the standard `Iterable` interface
+with `reverse()` method, that constructs an iterable containing original iterable's elements in reverse order.
+
+Arrays implement this interface. Note however, that the array counterpart reverses elements _in place_ rather than
+creating a new array.
+
+
 API
 ___
 
@@ -95,6 +105,11 @@ Converts the source `Iterable` to `AIterable`.
 
 Unlike [AIterable.of()] this function always creates new iterable instance. This may be useful when converting array 
 and iterating over its elements. This way new array instances won't be created.
+
+If the `source` iterable is an array, then uses `reverseArray()` function to revert the constructed iterable.
+If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed one.
+Otherwise implements reversion with default technique. I.e. by storing elements to array and reverting them
+with `reverseArray()` function.
 
 ```TypeScript
 import { AIterable, itsFirst } from 'a-iterable';
@@ -195,6 +210,25 @@ numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0); //
 
 [Array.prototype.reduce()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
 
+### `reverse()`
+
+Constructs an iterable containing this iterable's elements in reverse order.
+
+Corresponds to [Array.prototype.reverse()]. Note however, that the array counterpart reverses elements _in place_
+rather than creating a new array.
+
+```TypeScript
+import { AIterable } from 'a-iterable';
+
+const numbers = [1, 2, 3, 4];
+const iter1 = AIterable.from(numbers);
+
+iter1.reverse(); // [4, 3, 2, 1], `numbers` are also reverted.
+```
+
+
+[Array.prototype.reverse()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse
+
 
 Utilities
 ---------
@@ -218,4 +252,29 @@ Returns the first element of the given iterable.
 import { AIterable, itsFirst } from 'a-iterable';  
 
 itsFirst(AIterable.from([1, 2, 3]).filter(x => x === 2)); // `Array.find()` analog
+```
+
+
+### `itsLast()`
+
+Returns the last element of the given iterable.
+
+If the given iterable is an array, then just returns its last element. If it is revertible, then extracts the first
+element of reverted iterable. Otherwise iterates over elements to find the last one.
+
+```TypeScript
+import { itsLast } from 'a-iterable';
+
+itsLast([1, 2, 3]); // 3
+```
+
+
+### `reverseArray()`
+
+Constructs an iterable of array elements in reverse order.
+
+```TypeScript
+import { reverseArray } from 'a-iterable';
+
+reverseArray([1, 2 ,3]); // [3, 2, 1]
 ```
