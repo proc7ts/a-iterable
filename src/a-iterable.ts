@@ -1,9 +1,11 @@
+import { itsRevertible, RevertibleIterable } from './revertible-iterable';
+
 /**
  * Abstract `Iterable` implementation with Array-like iteration operations.
  *
  * @param <T> E type of elements.
  */
-export abstract class AIterable<T> implements Iterable<T> {
+export abstract class AIterable<T> implements RevertibleIterable<T> {
 
   /**
    * Returns an iterable without elements.
@@ -24,13 +26,14 @@ export abstract class AIterable<T> implements Iterable<T> {
    * @returns `true` is the `source` has all `AIterable` methods (like `Array` or `AIterable` instance),
    * or `false` otherwise.
    */
-  static is<T>(source: Iterable<T>): source is AIterable<T> {
+  static is<T>(source: Iterable<T> | RevertibleIterable<T>): source is AIterable<T> {
     return 'every' in source
         && 'filter' in source
         && 'flatMap' in source
         && 'forEach' in source
         && 'map' in source
-        && 'reduce' in source;
+        && 'reduce' in source
+        && itsRevertible(source);
   }
 
   static of<T>(source: T[]): T[];
@@ -44,7 +47,7 @@ export abstract class AIterable<T> implements Iterable<T> {
    * @return Either `source` itself if it implements `AIterable` already (see `is()` method),
    * or new `AIterable` instance.
    */
-  static of<T>(source: Iterable<T>): AIterable<T> | T[] {
+  static of<T>(source: Iterable<T> | RevertibleIterable<T>): AIterable<T> | T[] {
     if (AIterable.is(source)) {
       return source;
     }
@@ -54,21 +57,42 @@ export abstract class AIterable<T> implements Iterable<T> {
   /**
    * Creates an `AIterable` instance that iterates over the same elements as the given one.
    *
+   * If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed iterable.
+   * Otherwise implements reversion with default technique. I.e. by storing elements to array and reverting it.
+   *
    * @param source A source iterable.
    *
    * @return Always new `AIterable` instance.
    */
-  static from<T>(source: Iterable<T>): AIterable<T> {
+  static from<T>(source: Iterable<T> | RevertibleIterable<T>): AIterable<T> {
+    if (!itsRevertible(source)) {
 
-    class IterableWrapper extends AIterable<T> {
+      class IterableWrapper extends AIterable<T> {
+
+        [Symbol.iterator](): Iterator<T> {
+          return source[Symbol.iterator]();
+        }
+
+      }
+
+      return new IterableWrapper();
+    }
+
+    const revertible: RevertibleIterable<T> = source;
+
+    class RevertibleIterableWrapper extends AIterable<T> {
 
       [Symbol.iterator](): Iterator<T> {
         return source[Symbol.iterator]();
       }
 
+      reverse(): AIterable<T> {
+        return AIterable.from(revertible.reverse());
+      }
+
     }
 
-    return new IterableWrapper();
+    return new RevertibleIterableWrapper();
   }
 
   abstract [Symbol.iterator](): Iterator<T>;
@@ -203,11 +227,33 @@ export abstract class AIterable<T> implements Iterable<T> {
     return reduced;
   }
 
+  /**
+   * Constructs an iterable containing this iterable's elements in reverse order.
+   *
+   * By default this method converts iterable to array and then calls its `reverse()` function.
+   *
+   * @return Reversed iterable instance.
+   */
+  reverse(): AIterable<T> {
+
+    const elements = this;
+
+    return AIterable.from({
+      [Symbol.iterator]() {
+        return [...elements].reverse()[Symbol.iterator]();
+      }
+    });
+  }
+
 }
 
 class NoneIterable extends AIterable<any> {
 
   *[Symbol.iterator](): Iterator<any> {}
+
+  reverse() {
+    return this;
+  }
 
 }
 

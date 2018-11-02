@@ -46,6 +46,16 @@ expect([...it.map(item => item * item)]).toBe([1, 4, 9]);
 ```
 
 
+`RevertibleIterable`
+--------------------
+
+The library contains a `RevertibleIterable` implemented by `AIterable`. It extends the standard `Iterable` interface
+with `reverse()` method, that constructs an iterable containing original iterable's elements in reverse order.
+
+Arrays implement this interface. Note however, that the array counterpart reverses elements _in place_ rather than
+creating a new array.
+
+
 API
 ___
 
@@ -95,6 +105,9 @@ Converts the source `Iterable` to `AIterable`.
 
 Unlike [AIterable.of()] this function always creates new iterable instance. This may be useful when converting array 
 and iterating over its elements. This way new array instances won't be created.
+
+If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed iterable.
+Otherwise implements reversion with default technique. I.e. by storing elements to array and reverting it.
 
 ```TypeScript
 import { AIterable, itsFirst } from 'a-iterable';
@@ -194,6 +207,25 @@ numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0); //
 ```
 
 [Array.prototype.reduce()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+
+### `reverse()`
+
+Constructs an iterable containing this iterable's elements in reverse order.
+
+Corresponds to [Array.prototype.reverse()]. Note however, that the array counterpart reverses elements _in place_
+rather than creating a new array.
+
+```TypeScript
+import { AIterable } from 'a-iterable';
+
+const numbers = [1, 2, 3, 4];
+const iter1 = AIterable.from(numbers);
+
+iter1.reverse(); // [4, 3, 2, 1], `numbers` are also reverted.
+```
+
+
+[Array.prototype.reverse()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse
 
 
 Utilities
