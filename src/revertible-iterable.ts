@@ -13,7 +13,7 @@ export interface RevertibleIterable<T> extends Iterable<T> {
    *
    * @return Reversed iterable instance.
    */
-  reverse(): RevertibleIterable<T>;
+  reverse(): Iterable<T>;
 
 }
 
