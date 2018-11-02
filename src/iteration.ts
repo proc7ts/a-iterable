@@ -1,3 +1,5 @@
+import { itsRevertible, RevertibleIterable } from './revertible-iterable';
+
 /**
  * Checks whether the given iterable is empty.
  *
@@ -18,4 +20,31 @@ export function itsEmpty(iterable: Iterable<any>): boolean {
  */
 export function itsFirst<T>(iterable: Iterable<T>): T | undefined {
   return iterable[Symbol.iterator]().next().value;
+}
+
+/**
+ * Returns the last element of the given iterable.
+ *
+ * If the given `iterable` is array, the just returns its last item. If it is revertible, then extracts the first
+ * element of reverted iterable. Otherwise iterates over elements to find the last one.
+ *
+ * @param iterable Iterable to extract element from.
+ *
+ * @return Either the last element, or `undefined` if the given `iterable` is empty.
+ */
+export function itsLast<T>(iterable: Iterable<T> | RevertibleIterable<T> | T[]): T | undefined {
+  if (Array.isArray(iterable)) {
+    return iterable[iterable.length - 1];
+  }
+  if (itsRevertible(iterable)) {
+    return itsFirst(iterable.reverse());
+  }
+
+  let last: T | undefined;
+
+  for (const element of iterable) {
+    last = element;
+  }
+
+  return last;
 }
