@@ -1,4 +1,4 @@
-import { itsRevertible, reverseArray, RevertibleIterable } from './revertible-iterable';
+import { itsRevertible, reverseArray, reverseIterable, RevertibleIterable } from './revertible-iterable';
 
 /**
  * Abstract `Iterable` implementation with Array-like iteration operations.
@@ -57,63 +57,27 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
   /**
    * Creates an `AIterable` instance that iterates over the same elements as the given one.
    *
-   * If the `source` iterable is an array, then uses `reverseArray()` function to revert the constructed iterable.
-   * If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed one.
-   * Otherwise implements reversion with default technique. I.e. by storing elements to array and reverting them
-   * with `reverseArray()` function.
+   * Uses `reverseIterable()` function to revert the constructed iterable.
    *
    * @param source A source iterable.
    *
    * @return Always new `AIterable` instance.
    */
   static from<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): AIterable<T> {
-    if (Array.isArray(source)) {
 
-      const array: T[] = source;
-
-      class ArrayWrapper extends AIterable<T> {
-
-        [Symbol.iterator](): Iterator<T> {
-          return source[Symbol.iterator]();
-        }
-
-        reverse() {
-          return AIterable.from(reverseArray(array));
-        }
-
-      }
-
-      return new ArrayWrapper();
-    }
-
-    if (!itsRevertible(source)) {
-
-      class IterableWrapper extends AIterable<T> {
-
-        [Symbol.iterator](): Iterator<T> {
-          return source[Symbol.iterator]();
-        }
-
-      }
-
-      return new IterableWrapper();
-    }
-
-    const revertible: RevertibleIterable<T> = source;
-
-    class RevertibleIterableWrapper extends AIterable<T> {
+    class IterableWrapper extends AIterable<T> {
 
       [Symbol.iterator](): Iterator<T> {
         return source[Symbol.iterator]();
       }
 
-      reverse(): AIterable<T> {
-        return AIterable.from(revertible.reverse());
+      reverse() {
+        return AIterable.from(reverseIterable(source));
       }
 
     }
 
-    return new RevertibleIterableWrapper();
+    return new IterableWrapper();
   }
 
   abstract [Symbol.iterator](): Iterator<T>;
