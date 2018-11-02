@@ -31,6 +31,27 @@ export function itsRevertible<T>(iterable: Iterable<T>): iterable is RevertibleI
 }
 
 /**
+ * Constructs a reversed iterable.
+ *
+ * If the `source` iterable is an array, then uses `reverseArray()` function to revert the constructed iterable.
+ * If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed one.
+ * Otherwise stores elements to array and reverts them with `reverseArray()` function.
+ *
+ * @param source A source iterable.
+ *
+ * @returns An iterable of the `source` elements in reverse order.
+ */
+export function reverseIterable<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): Iterable<T> {
+  if (Array.isArray(source)) {
+    return reverseArray(source);
+  }
+  if (itsRevertible(source)) {
+    return source.reverse();
+  }
+  return reverseArray([...source]);
+}
+
+/**
  * Constructs an iterable of array elements in reverse order.
  *
  * @param array Source array.
