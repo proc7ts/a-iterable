@@ -1,5 +1,4 @@
-import { reverseArray } from './iteration';
-import { itsRevertible, RevertibleIterable } from './revertible-iterable';
+import { itsRevertible, reverseArray, RevertibleIterable } from './revertible-iterable';
 
 /**
  * Abstract `Iterable` implementation with Array-like iteration operations.

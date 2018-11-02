@@ -29,3 +29,23 @@ export interface RevertibleIterable<T> extends Iterable<T> {
 export function itsRevertible<T>(iterable: Iterable<T>): iterable is RevertibleIterable<T> {
   return 'reverse' in iterable;
 }
+
+/**
+ * Constructs an iterable of array elements in reverse order.
+ *
+ * @param array Source array.
+ *
+ * @returns Reversed array elements iterable.
+ */
+export function reverseArray<T>(array: T[]): Iterable<T> {
+  return {
+    *[Symbol.iterator]() {
+
+      const len = array.length;
+
+      for (let i = len - 1; i >= 0; --i) {
+        yield array[i];
+      }
+    }
+  };
+}

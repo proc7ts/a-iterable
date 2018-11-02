@@ -1,4 +1,4 @@
-import { itsRevertible } from './revertible-iterable';
+import { itsRevertible, reverseArray } from './revertible-iterable';
 
 describe('itsRevertible', () => {
   it('recognizes arrays as revertible', () => {
@@ -10,5 +10,11 @@ describe('itsRevertible', () => {
         yield 1;
       }
     })).toBe(false);
+  });
+});
+
+describe('reverseArray', () => {
+  it('reverts array elements', () => {
+    expect([...reverseArray([1, 2, 3])]).toEqual([3, 2, 1]);
   });
 });
