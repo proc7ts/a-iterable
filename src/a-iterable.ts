@@ -74,13 +74,15 @@ export abstract class AIterable<T> implements Iterable<T> {
   abstract [Symbol.iterator](): Iterator<T>;
 
   /**
-   * Tests whether all elements in the array pass the test implemented by the provided function.
+   * Tests whether all elements pass the test implemented by the provided function.
    *
    * Corresponds to `Array.prototype.every()`.
    *
-   * @param test A predicate function to test each element.
+   * @param test A predicate function to test each element. Returns `true` to continue tests, or `false` to stop it
+   * and return `false` from the method call. It accepts the tested element as the only parameter.
    *
    * @returns `true` if the `test` function returned a truthy value for every element, or `false` otherwise.
+   * Returns `true` for empty iterable.
    */
   every(test: (element: T) => boolean): boolean {
     for (const element of this) {
@@ -96,10 +98,10 @@ export abstract class AIterable<T> implements Iterable<T> {
    *
    * Corresponds to `Array.prototype.filter()`.
    *
-   * @param test A predicate function to test each element. Returns `true` to keep the element,
-   * or `false` otherwise. It accepts the tested element as the only parameter.
+   * @param test A predicate function to test each element. Returns `true` to keep the element, or `false` otherwise.
+   * It accepts the tested element as the only parameter.
    *
-   * @return A new iterable with the elements that pass the test. If no elements pass the test, an empty iterable will
+   * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
    * be returned.
    */
   filter(test: (element: T) => boolean): AIterable<T> {
@@ -145,8 +147,8 @@ export abstract class AIterable<T> implements Iterable<T> {
    *
    * Corresponds to `Array.prototype.forEach()`.
    *
-   * @param action An action to perform on each iterable element. This is a function accepting an element consumer
-   * as its only argument.
+   * @param action An action to perform on each iterable element. This is a function accepting an element as its only
+   * parameter.
    */
   forEach(action: (element: T) => void) {
     for (const element of this) {
