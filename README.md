@@ -293,6 +293,18 @@ itsLast([1, 2, 3]); // 3
 ```
 
 
+### `overNone()`
+
+Returns an iterable without elements revertible to itself.
+
+```TypeScript
+import { overNone } from 'a-iterable';
+
+expect([...overNone()]).toEqual([]);
+expect([...overNone().reverse()]).toEqual([]);
+```
+
+
 ### `reverseIt()`
 
 [reverseIt()]: #reverseit
