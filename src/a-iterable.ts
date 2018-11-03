@@ -1,4 +1,4 @@
-import { itsRevertible, reverseArray, reverseIterable, RevertibleIterable } from './revertible-iterable';
+import { itsRevertible, reverseArray, reverseIt, RevertibleIterable } from './revertible-iterable';
 
 /**
  * Abstract `Iterable` implementation with Array-like iteration operations.
@@ -57,7 +57,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
   /**
    * Creates an `AIterable` instance that iterates over the same elements as the given one.
    *
-   * Uses `reverseIterable()` function to revert the constructed iterable.
+   * Uses `reverseIt()` function to revert the constructed iterable.
    *
    * @param source A source iterable.
    *
@@ -72,7 +72,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
       }
 
       reverse() {
-        return AIterable.from(reverseIterable(source));
+        return AIterable.from(reverseIt(source));
       }
 
     }

@@ -1,4 +1,4 @@
-import { itsRevertible, reverseArray, reverseIterable, RevertibleIterable } from './revertible-iterable';
+import { itsRevertible, reverseArray, reverseIt, RevertibleIterable } from './revertible-iterable';
 import SpyObj = jasmine.SpyObj;
 
 describe('itsRevertible', () => {
@@ -14,9 +14,9 @@ describe('itsRevertible', () => {
   });
 });
 
-describe('reverseIterable', () => {
+describe('reverseIt', () => {
   it('reverts array elements', () => {
-    expect([...reverseIterable([1, 2, 3])]).toEqual([3, 2, 1]);
+    expect([...reverseIt([1, 2, 3])]).toEqual([3, 2, 1]);
   });
 
   it('reverts iterable elements', () => {
@@ -29,7 +29,7 @@ describe('reverseIterable', () => {
       }
     };
 
-    expect([...reverseIterable(it)]).toEqual([3, 2, 1]);
+    expect([...reverseIt(it)]).toEqual([3, 2, 1]);
   });
 });
 
@@ -45,7 +45,7 @@ describe('reverseArray', () => {
 
     it.reverse.and.returnValue(reverted);
 
-    expect([...reverseIterable(it)]).toEqual(reverted);
+    expect([...reverseIt(it)]).toEqual(reverted);
     expect(it.reverse).toHaveBeenCalled();
   });
   it('does not revert array elements in-place', () => {

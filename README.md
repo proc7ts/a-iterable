@@ -49,6 +49,8 @@ expect([...it.map(item => item * item)]).toBe([1, 4, 9]);
 `RevertibleIterable`
 --------------------
 
+[RevertibleIterable]: #revertibleiterable
+
 The library contains a `RevertibleIterable` implemented by `AIterable`. It extends the standard `Iterable` interface
 with `reverse()` method, that constructs an iterable containing original iterable's elements in reverse order.
 
@@ -56,8 +58,11 @@ Arrays implement this interface. Note however, that the array counterpart revers
 creating a new array.
 
 
-API
-___
+`AIterable`
+-----------
+
+This is an abstract class implementing [RevertibleIterable] interface and a subset of Array-like API.
+
 
 ### `AIterable.none()`
 
@@ -106,7 +111,7 @@ Converts the source `Iterable` to `AIterable`.
 Unlike [AIterable.of()] this function always creates new iterable instance. This may be useful when converting array 
 and iterating over its elements. This way new array instances won't be created.
 
-Uses `reverseIterable()` function to revert the constructed iterable.
+Uses [reverseIt()] function to revert the constructed iterable.
 
 ```TypeScript
 import { AIterable, itsFirst } from 'a-iterable';
@@ -266,22 +271,26 @@ itsLast([1, 2, 3]); // 3
 ```
 
 
-### `reverseIterable()`
+### `reverseIt()`
+
+[reverseIt()]: #reverseit
 
 Constructs a reversed iterable.
 
-If the `source` iterable is an array, then uses `reverseArray()` function to revert the constructed iterable.
+If the `source` iterable is an array, then uses [reverseArray()] function to revert the constructed iterable.
 If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed one.
-Otherwise stores elements to array and reverts them with `reverseArray()` function.
+Otherwise stores elements to array and reverts them with [reverseArray()] function.
 
 ```TypeScript
-import { reverseIterable } from 'a-iterable';
+import { reverseIt } from 'a-iterable';
 
-reverseIterable([1, 2 ,3]); // [3, 2, 1]
+reverseIt([1, 2 ,3]); // [3, 2, 1]
 ```
 
 
 ### `reverseArray()`
+
+[reverseArray()]: #reversearray
 
 Constructs an iterable of array elements in reverse order.
 

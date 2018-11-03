@@ -41,7 +41,7 @@ export function itsRevertible<T>(iterable: Iterable<T>): iterable is RevertibleI
  *
  * @returns An iterable of the `source` elements in reverse order.
  */
-export function reverseIterable<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): Iterable<T> {
+export function reverseIt<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): Iterable<T> {
   if (Array.isArray(source)) {
     return reverseArray(source);
   }
