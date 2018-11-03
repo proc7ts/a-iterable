@@ -1,9 +1,11 @@
-import { itsRevertible, reverseArray, reverseIterable, RevertibleIterable } from './revertible-iterable';
+import { itsRevertible, reverseArray, reverseIt, RevertibleIterable } from './revertible-iterable';
+import { itsEach, itsEvery, itsReduction } from './termination';
+import { filterIt, flatMapIt, mapIt } from './transform';
 
 /**
  * Abstract `Iterable` implementation with Array-like iteration operations.
  *
- * @param <T> E type of elements.
+ * @param <T> A type of elements.
  */
 export abstract class AIterable<T> implements RevertibleIterable<T> {
 
@@ -57,7 +59,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
   /**
    * Creates an `AIterable` instance that iterates over the same elements as the given one.
    *
-   * Uses `reverseIterable()` function to revert the constructed iterable.
+   * Uses `reverseIt()` function to revert the constructed iterable.
    *
    * @param source A source iterable.
    *
@@ -72,7 +74,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
       }
 
       reverse() {
-        return AIterable.from(reverseIterable(source));
+        return AIterable.from(reverseIt(source));
       }
 
     }
@@ -94,12 +96,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * Returns `true` for empty iterable.
    */
   every(test: (element: T) => boolean): boolean {
-    for (const element of this) {
-      if (!test(element)) {
-        return false;
-      }
-    }
-    return true;
+    return itsEvery(this, test);
   }
 
   /**
@@ -114,18 +111,9 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * be returned.
    */
   filter(test: (element: T) => boolean): AIterable<T> {
-
-    const elements = this;
-
-    return AIterable.of({
-      *[Symbol.iterator]() {
-        for (const element of elements) {
-          if (test(element)) {
-            yield element;
-          }
-        }
-      }
-    });
+    return make(
+        () => filterIt(this, test),
+        () => filterIt(this.reverse(), test));
   }
 
   /**
@@ -139,16 +127,9 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * @returns A new iterable with each element being the flattened result of the `convert` function call.
    */
   flatMap<R>(convert: (element: T) => Iterable<R>): AIterable<R> {
-
-    const elements = this;
-
-    return AIterable.of({
-      *[Symbol.iterator]() {
-        for (const element of elements) {
-          yield *convert(element);
-        }
-      }
-    });
+    return make(
+        () => flatMapIt(this, convert),
+        () => flatMapIt(this.reverse(), element => reverseIt(convert(element))));
   }
 
   /**
@@ -160,9 +141,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * parameter.
    */
   forEach(action: (element: T) => void) {
-    for (const element of this) {
-      action(element);
-    }
+    itsEach(this, action);
   }
 
   /**
@@ -177,16 +156,9 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * @return A new iterable with each element being the result of the `convert` function call.
    */
   map<R>(convert: (element: T) => R): AIterable<R> {
-
-    const elements = this;
-
-    return AIterable.of({
-      *[Symbol.iterator]() {
-        for (const element of elements) {
-          yield convert(element);
-        }
-      }
-    });
+    return make(
+        () => mapIt(this, convert),
+        () => mapIt(this.reverse(), convert));
   }
 
   /**
@@ -202,14 +174,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * iterable.
    */
   reduce<R>(reducer: (prev: R, element: T) => R, initialValue: R): R {
-
-    let reduced = initialValue;
-
-    for (const element of this) {
-      reduced = reducer(reduced, element);
-    }
-
-    return reduced;
+    return itsReduction(this, reducer, initialValue);
   }
 
   /**
@@ -243,3 +208,24 @@ class NoneIterable extends AIterable<any> {
 }
 
 const NONE = new NoneIterable();
+
+function make<T>(iterate: () => Iterable<T>, reverse: () => Iterable<T>): AIterable<T> {
+
+  class Result extends AIterable<T> {
+
+    [Symbol.iterator]() {
+      return iterate()[Symbol.iterator]();
+    }
+
+    reverse() {
+      return AIterable.from({
+        [Symbol.iterator]() {
+          return reverse()[Symbol.iterator]();
+        }
+      });
+    }
+
+  }
+
+  return new Result();
+}

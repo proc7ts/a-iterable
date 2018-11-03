@@ -95,11 +95,17 @@ describe('AIterable', () => {
     it('does not filter empty iterable', () => {
       expect([...none.filter(() => true)]).toEqual([]);
     });
+    it('filters elements in reverse order', () => {
+      expect([...iter.filter(element => element > 11).reverse()]).toEqual([33, 22]);
+    });
   });
 
   describe('flatMap', () => {
     it('maps and flattens elements', () => {
       expect([...iter.flatMap(element => [element, element + 1])]).toEqual([11, 12, 22, 23, 33, 34]);
+    });
+    it('maps and flattens elements in reverse order', () => {
+      expect([...iter.flatMap(element => [element, element + 1]).reverse()]).toEqual([34, 33, 23, 22, 12, 11]);
     });
   });
 
@@ -125,6 +131,9 @@ describe('AIterable', () => {
   describe('map', () => {
     it('converts elements', () => {
       expect([...iter.map(element => `${element}!`)]).toEqual(['11!', '22!', '33!']);
+    });
+    it('converts elements in reverse order', () => {
+      expect([...iter.map(element => `${element}!`).reverse()]).toEqual(['33!', '22!', '11!']);
     });
   });
 
