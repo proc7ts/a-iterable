@@ -1,7 +1,21 @@
 import { itsRevertible, RevertibleIterable } from './revertible-iterable';
 
 /**
- * Checks whether the given iterable is empty.
+ * Performs the given `action` for each element of the given `iterable`.
+ *
+ * @param <T> A type of `iterable` elements.
+ * @param iterable An iterable of elements to perform actions on.
+ * @param action An action to perform on each iterable element. This is a function accepting an element as its only
+ * parameter.
+ */
+export function itsEach<T>(iterable: Iterable<T>, action: (element: T) => void) {
+  for (const element of iterable) {
+    action(element);
+  }
+}
+
+/**
+ * Checks whether the given `iterable` is empty.
  *
  * @param iterable Iterable to check for elements.
  *
@@ -14,6 +28,7 @@ export function itsEmpty(iterable: Iterable<any>): boolean {
 /**
  * Tests whether all elements of the given `iterable` pass the test implemented by the provided function.
  *
+ * @param <T> A type of `iterable` elements.
  * @param iterable An iterable to test elements of.
  * @param test A predicate function to test each element. Returns `true` to continue tests, or `false` to stop it
  * and return `false` from the method call. It accepts the tested element as the only parameter.
@@ -33,6 +48,7 @@ export function itsEvery<T>(iterable: Iterable<T>, test: (element: T) => boolean
 /**
  * Returns the first element of the given iterable.
  *
+ * @param <T> A type of `iterable` elements.
  * @param iterable Iterable to extract element from.
  *
  * @return Either the first element, or `undefined` if the given `iterable` is empty.
@@ -42,11 +58,12 @@ export function itsFirst<T>(iterable: Iterable<T>): T | undefined {
 }
 
 /**
- * Returns the last element of the given iterable.
+ * Returns the last element of the given `iterable`.
  *
  * If the given `iterable` is an array, then just returns its last element. If it is revertible, then extracts the first
  * element of reverted iterable. Otherwise iterates over elements to find the last one.
  *
+ * @param <T> A type of `iterable` elements.
  * @param iterable Iterable to extract element from.
  *
  * @return Either the last element, or `undefined` if the given `iterable` is empty.

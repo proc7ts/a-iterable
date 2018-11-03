@@ -185,10 +185,13 @@ flatMapIt(numbers, x => [x, x + 10]); // Plain iterable counterpart
 
 Performs the given action for each element. Corresponds to [Array.prototype.forEach()].
 
+The utility function counterpart operating over plain iterables is `itsEach()`.
+
 ```TypeScript
-import { AIterable } from 'a-iterable';
+import { AIterable, itsEach } from 'a-iterable';
 
 AIterable.is([1, 2, 3]).forEach(console.log); // 1, 2, 3
+itsEach([1, 2, 3], console.log); // Plain iterable counterpart
 ```
 
 [Array.prototype.forEach()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach

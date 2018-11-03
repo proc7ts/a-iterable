@@ -1,5 +1,5 @@
 import { itsRevertible, reverseArray, reverseIt, RevertibleIterable } from './revertible-iterable';
-import { itsEvery } from './termination';
+import { itsEach, itsEvery } from './termination';
 import { filterIt, flatMapIt, mapIt } from './transform';
 
 /**
@@ -141,9 +141,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * parameter.
    */
   forEach(action: (element: T) => void) {
-    for (const element of this) {
-      action(element);
-    }
+    itsEach(this, action);
   }
 
   /**

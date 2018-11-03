@@ -1,5 +1,25 @@
-import { itsEmpty, itsEvery, itsFirst, itsLast } from './termination';
+import { itsEach, itsEmpty, itsEvery, itsFirst, itsLast } from './termination';
 import { RevertibleIterable } from './revertible-iterable';
+
+describe('itsEach', () => {
+  it('iterates over elements', () => {
+
+    const elements = [11, 22, 33];
+    const spy = jasmine.createSpy('action');
+
+    itsEach(elements, spy);
+
+    expect(spy.calls.allArgs()).toEqual([[11], [22], [33]]);
+  });
+  it('does not iterate over empty iterable elements', () => {
+
+    const spy = jasmine.createSpy('action');
+
+    itsEach([], spy);
+
+    expect(spy).not.toHaveBeenCalled();
+  });
+});
 
 describe('itsEmpty', () => {
   it('detects empty iterable', () => {
