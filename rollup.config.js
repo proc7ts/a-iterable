@@ -59,7 +59,7 @@ function baseConfig(tsconfig) {
     output: {
       format: 'umd',
       sourcemap: true,
-      name: 'wesib',
+      name: 'aIterable',
     },
   };
 }
