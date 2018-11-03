@@ -1,4 +1,27 @@
 /**
+ * Creates an iterable with all `source` iterable elements that pass the test implemented by the provided function.
+ *
+ * @param <T> A type of source elements.
+ * @param source A source iterable.
+ * @param test A predicate function to test each element. Returns `true` to keep the element, or `false` otherwise.
+ * It accepts the tested element as the only parameter.
+ *
+ * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
+ * be returned.
+ */
+export function filterIt<T>(source: Iterable<T>, test: (element: T) => boolean): Iterable<T> {
+  return {
+    *[Symbol.iterator]() {
+      for (const element of source) {
+        if (test(element)) {
+          yield element;
+        }
+      }
+    }
+  };
+}
+
+/**
  * First maps each element of the `source` iterable using a mapping function, then flattens the result into a new
  * iterable.
  *

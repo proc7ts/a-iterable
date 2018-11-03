@@ -1,4 +1,13 @@
-import { flatMapIt, mapIt } from './transform';
+import { filterIt, flatMapIt, mapIt } from './transform';
+
+describe('filterIt', () => {
+  it('filters elements', () => {
+    expect([...filterIt([11, 22, 33], element => element > 11)]).toEqual([22, 33]);
+  });
+  it('does not filter empty iterable', () => {
+    expect([...filterIt([], () => true)]).toEqual([]);
+  });
+});
 
 describe('flatMapIt', () => {
   it('maps and flattens elements', () => {

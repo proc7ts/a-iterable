@@ -95,6 +95,9 @@ describe('AIterable', () => {
     it('does not filter empty iterable', () => {
       expect([...none.filter(() => true)]).toEqual([]);
     });
+    it('filters elements in reverse order', () => {
+      expect([...iter.filter(element => element > 11).reverse()]).toEqual([33, 22]);
+    });
   });
 
   describe('flatMap', () => {

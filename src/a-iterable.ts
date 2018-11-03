@@ -1,6 +1,6 @@
 import { itsRevertible, reverseArray, reverseIt, RevertibleIterable } from './revertible-iterable';
 import { itsEvery } from './termination';
-import { flatMapIt, mapIt } from './transform';
+import { filterIt, flatMapIt, mapIt } from './transform';
 
 /**
  * Abstract `Iterable` implementation with Array-like iteration operations.
@@ -111,18 +111,9 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * be returned.
    */
   filter(test: (element: T) => boolean): AIterable<T> {
-
-    const elements = this;
-
-    return AIterable.of({
-      *[Symbol.iterator]() {
-        for (const element of elements) {
-          if (test(element)) {
-            yield element;
-          }
-        }
-      }
-    });
+    return make(
+        () => filterIt(this, test),
+        () => filterIt(this.reverse(), test));
   }
 
   /**
