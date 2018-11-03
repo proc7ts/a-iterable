@@ -7,29 +7,38 @@ describe('itsRevertible', () => {
   });
   it('recognizes simple iterables not to be revertible', () => {
     expect(itsRevertible({
-      *[Symbol.iterator]() {
+      * [Symbol.iterator]() {
         yield 1;
-      }
+      },
     })).toBe(false);
   });
 });
 
 describe('reverseIt', () => {
-  it('reverts array elements', () => {
-    expect([...reverseIt([1, 2, 3])]).toEqual([3, 2, 1]);
+
+  let iter: SpyObj<RevertibleIterable<number>>;
+  let elements: number[];
+
+  beforeEach(() => {
+    iter = jasmine.createSpyObj('iter', ['reverse']);
+    elements = [1, 2, 3];
+    (iter as Iterable<number>)[Symbol.iterator] = () => elements.values();
+    iter.reverse.and.returnValue([...elements].reverse());
   });
 
-  it('reverts iterable elements', () => {
-
-    const it: Iterable<number> = {
-      *[Symbol.iterator]() {
-        yield 1;
-        yield 2;
-        yield 3;
-      }
-    };
-
-    expect([...reverseIt(it)]).toEqual([3, 2, 1]);
+  it('reverts array elements', () => {
+    expect([...reverseIt(elements)]).toEqual(elements.reverse());
+  });
+  it('reverts revertible iterable elements', () => {
+    expect([...reverseIt(iter)]).toEqual(elements.reverse());
+  });
+  it('builds an iterable revertible to original elements', () => {
+    expect([...reverseIt(iter).reverse()]).toEqual(elements);
+    expect(iter.reverse).toHaveBeenCalled();
+  });
+  it('reverts non-revertible iterable elements', () => {
+    delete iter.reverse;
+    expect([...reverseIt(iter)]).toEqual(elements.reverse());
   });
 });
 
@@ -55,5 +64,11 @@ describe('reverseArray', () => {
     reverseArray(elements);
 
     expect(elements).toEqual([1, 2, 3]);
+  });
+  it('builds an iterable revertible to original array', () => {
+
+    const elements = [1, 2, 3];
+
+    expect(reverseArray(elements).reverse()).toBe(elements);
   });
 });

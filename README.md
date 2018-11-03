@@ -281,6 +281,8 @@ If the `source` iterable is an array, then uses [reverseArray()] function to rev
 If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed one.
 Otherwise stores elements to array and reverts them with [reverseArray()] function.
 
+The returned iterable is revertible to the source one.
+
 ```TypeScript
 import { reverseIt } from 'a-iterable';
 
@@ -293,6 +295,8 @@ reverseIt([1, 2 ,3]); // [3, 2, 1]
 [reverseArray()]: #reversearray
 
 Constructs an iterable of array elements in reverse order.
+
+The returned iterable is revertible to the source array.
 
 ```TypeScript
 import { reverseArray } from 'a-iterable';

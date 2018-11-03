@@ -39,14 +39,25 @@ export function itsRevertible<T>(iterable: Iterable<T>): iterable is RevertibleI
  *
  * @param source A source iterable.
  *
- * @returns An iterable of the `source` elements in reverse order.
+ * @returns An iterable of the `source` elements in reverse order. The returned iterable is revertible to the `source`
+ * one.
  */
-export function reverseIt<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): Iterable<T> {
+export function reverseIt<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): RevertibleIterable<T> {
   if (Array.isArray(source)) {
     return reverseArray(source);
   }
   if (itsRevertible(source)) {
-    return source.reverse();
+
+    const reversed = source.reverse();
+
+    return {
+      [Symbol.iterator]() {
+        return reversed[Symbol.iterator]();
+      },
+      reverse() {
+        return source;
+      },
+    };
   }
   return reverseArray([...source]);
 }
@@ -56,9 +67,9 @@ export function reverseIt<T>(source: Iterable<T> | RevertibleIterable<T> | T[]):
  *
  * @param array Source array.
  *
- * @returns Reversed array elements iterable.
+ * @returns Reversed array elements iterable. The returned iterable is revertible to the `source` array.
  */
-export function reverseArray<T>(array: T[]): Iterable<T> {
+export function reverseArray<T>(array: T[]): RevertibleIterable<T> {
   return {
     *[Symbol.iterator]() {
 
@@ -67,6 +78,9 @@ export function reverseArray<T>(array: T[]): Iterable<T> {
       for (let i = len - 1; i >= 0; --i) {
         yield array[i];
       }
+    },
+    reverse() {
+      return array;
     }
   };
 }
