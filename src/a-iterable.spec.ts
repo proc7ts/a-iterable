@@ -101,6 +101,9 @@ describe('AIterable', () => {
     it('maps and flattens elements', () => {
       expect([...iter.flatMap(element => [element, element + 1])]).toEqual([11, 12, 22, 23, 33, 34]);
     });
+    it('maps and flattens elements in reverse order', () => {
+      expect([...iter.flatMap(element => [element, element + 1]).reverse()]).toEqual([34, 33, 23, 22, 12, 11]);
+    });
   });
 
   describe('forEach', () => {

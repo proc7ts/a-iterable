@@ -1,9 +1,10 @@
 import { itsRevertible, reverseArray, reverseIt, RevertibleIterable } from './revertible-iterable';
+import { flatMapIt } from './transform';
 
 /**
  * Abstract `Iterable` implementation with Array-like iteration operations.
  *
- * @param <T> E type of elements.
+ * @param <T> A type of elements.
  */
 export abstract class AIterable<T> implements RevertibleIterable<T> {
 
@@ -139,16 +140,9 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * @returns A new iterable with each element being the flattened result of the `convert` function call.
    */
   flatMap<R>(convert: (element: T) => Iterable<R>): AIterable<R> {
-
-    const elements = this;
-
-    return AIterable.of({
-      *[Symbol.iterator]() {
-        for (const element of elements) {
-          yield *convert(element);
-        }
-      }
-    });
+    return make(
+        () => flatMapIt(this, convert),
+        () => flatMapIt(this.reverse(), element => reverseIt(convert(element))));
   }
 
   /**
@@ -243,3 +237,24 @@ class NoneIterable extends AIterable<any> {
 }
 
 const NONE = new NoneIterable();
+
+function make<T>(iterate: () => Iterable<T>, reverse: () => Iterable<T>): AIterable<T> {
+
+  class Result extends AIterable<T> {
+
+    [Symbol.iterator]() {
+      return iterate()[Symbol.iterator]();
+    }
+
+    reverse() {
+      return AIterable.from({
+        [Symbol.iterator]() {
+          return reverse()[Symbol.iterator]();
+        }
+      });
+    }
+
+  }
+
+  return new Result();
+}

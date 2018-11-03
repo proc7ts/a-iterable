@@ -17,6 +17,11 @@ Execution environment is expected to be es2015-compliant. So, polyfills like [co
 An `AIterable` interface contains only basic methods, not every one from the `Array` interface. The rest of the
 functionality could be achieved with the use of simple [utilities] this package also hosts.
 
+Every `AIterable` method has an utility function counterpart, that performs the same operation over plain `Iterable`.
+You can use these functions if you don't want to deal with `AIterable` class, as they are tree-shakeable.
+This is advised approach when your code utilizes only a few functions. However, an `AIterable` class is more handy
+and does not add too much of the code to the final bundle. 
+
 [utilities]: #utilities
 [core-js]: https://www.npmjs.com/package/core-js
 [npm-image]: https://img.shields.io/npm/v/a-iterable.svg
@@ -156,14 +161,16 @@ words.filter(word => word.length > 6); // "exuberant", "destruction", "present"
 First maps each element using a mapping function, then flattens the result into a new iterable. Corresponds to
 [Array.prototype.flatMap()].
 
+The utility function counterpart operating over plain iterables is `flatMapIt()`.
+
 ```TypeScript
-import { AIterable } from 'a-iterable';
+import { AIterable, flatMapIt } from 'a-iterable';
 
 const numbers = AIterable.of([1, 2, 3]);
 
 numbers.flatMap(x => [x, x + 10]); // 1, 11, 2, 12, 3, 13
+flatMapIt(numbers, x => [x, x + 10]);
 ```
-
 
 [Array.prototype.flatMap()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap
 
