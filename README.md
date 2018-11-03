@@ -148,12 +148,15 @@ numbers.every(x => x < 20); // false
 Creates an iterable with all elements that pass the test implemented by the provided function. Corresponds to 
 [Array.prototype.filter()].
 
+The utility function counterpart operating over plain iterables is `filterIt()`.
+
 ```TypeScript
-import { AIterable } from 'a-iterable';
+import { AIterable, filterIt } from 'a-iterable';
 
 const words = AIterable.of(['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present']);
 
 words.filter(word => word.length > 6); // "exuberant", "destruction", "present"
+filterIt(words, word => word.length > 6); // Plain iterable counterpart
 ```
 
 [Array.prototype.filter()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter
