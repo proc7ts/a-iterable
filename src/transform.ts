@@ -18,3 +18,22 @@ export function flatMapIt<T, R>(source: Iterable<T>, convert: (element: T) => It
     }
   };
 }
+
+/**
+ * Creates a new iterable with the results of calling a provided function on every element of the `source` one.
+ *
+ * @param <T> A type of source elements.
+ * @param <R> A type of converted elements.
+ * @param source A source iterable.
+ * @param convert A function that produces an element of the new iterable, taking the source element as the only
+ * parameter.
+ */
+export function mapIt<T, R>(source: Iterable<T>, convert: (element: T) => R): Iterable<R> {
+  return {
+    *[Symbol.iterator]() {
+      for (const element of source) {
+        yield convert(element);
+      }
+    }
+  };
+}

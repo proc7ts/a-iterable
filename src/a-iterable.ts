@@ -1,5 +1,5 @@
 import { itsRevertible, reverseArray, reverseIt, RevertibleIterable } from './revertible-iterable';
-import { flatMapIt } from './transform';
+import { flatMapIt, mapIt } from './transform';
 
 /**
  * Abstract `Iterable` implementation with Array-like iteration operations.
@@ -171,16 +171,9 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * @return A new iterable with each element being the result of the `convert` function call.
    */
   map<R>(convert: (element: T) => R): AIterable<R> {
-
-    const elements = this;
-
-    return AIterable.of({
-      *[Symbol.iterator]() {
-        for (const element of elements) {
-          yield convert(element);
-        }
-      }
-    });
+    return make(
+        () => mapIt(this, convert),
+        () => mapIt(this.reverse(), convert));
   }
 
   /**

@@ -129,6 +129,9 @@ describe('AIterable', () => {
     it('converts elements', () => {
       expect([...iter.map(element => `${element}!`)]).toEqual(['11!', '22!', '33!']);
     });
+    it('converts elements in reverse order', () => {
+      expect([...iter.map(element => `${element}!`).reverse()]).toEqual(['33!', '22!', '11!']);
+    });
   });
 
   describe('reduce', () => {

@@ -169,7 +169,7 @@ import { AIterable, flatMapIt } from 'a-iterable';
 const numbers = AIterable.of([1, 2, 3]);
 
 numbers.flatMap(x => [x, x + 10]); // 1, 11, 2, 12, 3, 13
-flatMapIt(numbers, x => [x, x + 10]);
+flatMapIt(numbers, x => [x, x + 10]); // Plain iterable counterpart
 ```
 
 [Array.prototype.flatMap()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap
@@ -193,12 +193,15 @@ AIterable.is([1, 2, 3]).forEach(console.log); // 1, 2, 3
 Creates a new iterable with the results of calling a provided function on every element.
 Corresponds to [Array.prototype.map()].
 
+The utility function counterpart operating over plain iterables is `mapIt()`.
+
 ```TypeScript
-import { AIterable } from 'a-iterable';
+import { AIterable, mapIt } from 'a-iterable';
 
 const numbers = AIterable.of([1, 4, 9, 16]);
 
 numbers.map(x => x * 2); // 2, 8, 18, 32
+mapIt(numbers, x => x * 2); // Plain iterable counterpart
 ```
 
 [Array.prototype.map()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map
