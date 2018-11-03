@@ -128,12 +128,15 @@ itsFirst(AIterable.from([1, 2, 3]).filter(x => x > 1)); // 2
 
 Tests whether all elements pass the test implemented by the provided function. Corresponds to [Array.prototype.every()].
 
+The utility function counterpart operating over plain iterables is `itsEvery()`.
+
 ```TypeScript
-import { AIterable } from 'a-iterable';
+import { AIterable, itsEvery } from 'a-iterable';
 
 const numbers = AIterable.from([1, 30, 39, 29, 10, 13]);
 
 numbers.every(x => x < 40); // true
+itsEvery(numbers, x => x < 40); // Plain iterable counterpart
 numbers.every(x => x < 20); // false
 ```
 

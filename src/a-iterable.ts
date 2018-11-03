@@ -1,4 +1,5 @@
 import { itsRevertible, reverseArray, reverseIt, RevertibleIterable } from './revertible-iterable';
+import { itsEvery } from './termination';
 import { flatMapIt, mapIt } from './transform';
 
 /**
@@ -95,12 +96,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * Returns `true` for empty iterable.
    */
   every(test: (element: T) => boolean): boolean {
-    for (const element of this) {
-      if (!test(element)) {
-        return false;
-      }
-    }
-    return true;
+    return itsEvery(this, test);
   }
 
   /**

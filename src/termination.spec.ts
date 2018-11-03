@@ -1,4 +1,4 @@
-import { itsEmpty, itsFirst, itsLast } from './termination';
+import { itsEmpty, itsEvery, itsFirst, itsLast } from './termination';
 import { RevertibleIterable } from './revertible-iterable';
 
 describe('itsEmpty', () => {
@@ -7,6 +7,18 @@ describe('itsEmpty', () => {
   });
   it('detects non-empty iterable', () => {
     expect(itsEmpty([1])).toBe(false);
+  });
+});
+
+describe('itsEvery', () => {
+  it('returns `true` for empty iterable', () => {
+    expect(itsEvery([], () => false)).toBe(true);
+  });
+  it('returns `true` when all elements pass the test', () => {
+    expect(itsEvery([1, 2, 3], element => element > 0)).toBe(true);
+  });
+  it('returns `false` when some elements do not pass the test', () => {
+    expect(itsEvery([1, 2, 3], element => element > 1)).toBe(false);
   });
 });
 
