@@ -293,6 +293,18 @@ itsLast([1, 2, 3]); // 3
 ```
 
 
+### `overArray()`
+
+Builds an revertible iterable over elements of array-like structure, like `Array` or DOM `NodeList`.
+
+```TypeScript
+import { overArray } from 'a-iterable';
+
+expect([...overArray([1, 2, 3])]).toEqual([1, 2, 3]);
+expect([...overArray([1, 2, 3]).reverse()]).toEqual([3, 2, 1]);
+```
+
+
 ### `overNone()`
 
 Returns an iterable without elements revertible to itself.
