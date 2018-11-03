@@ -1,4 +1,4 @@
-import { itsEach, itsEmpty, itsEvery, itsFirst, itsLast } from './termination';
+import { itsEach, itsEmpty, itsEvery, itsFirst, itsLast, itsReduction } from './termination';
 import { RevertibleIterable } from './revertible-iterable';
 
 describe('itsEach', () => {
@@ -79,5 +79,14 @@ describe('itsLast', () => {
     };
 
     expect(itsLast(it)).toBe(3);
+  });
+});
+
+describe('itsReduction', () => {
+  it('reduces value', () => {
+    expect(itsReduction([11, 22, 33], (prev, element) => prev + element, 1)).toBe(67);
+  });
+  it('returns initial value on empty iterable', () => {
+    expect(itsReduction([], (prev, element) => prev + element, 1)).toBe(1);
   });
 });

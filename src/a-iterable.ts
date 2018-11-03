@@ -1,5 +1,5 @@
 import { itsRevertible, reverseArray, reverseIt, RevertibleIterable } from './revertible-iterable';
-import { itsEach, itsEvery } from './termination';
+import { itsEach, itsEvery, itsReduction } from './termination';
 import { filterIt, flatMapIt, mapIt } from './transform';
 
 /**
@@ -174,14 +174,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * iterable.
    */
   reduce<R>(reducer: (prev: R, element: T) => R, initialValue: R): R {
-
-    let reduced = initialValue;
-
-    for (const element of this) {
-      reduced = reducer(reduced, element);
-    }
-
-    return reduced;
+    return itsReduction(this, reducer, initialValue);
   }
 
   /**

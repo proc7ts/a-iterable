@@ -221,15 +221,19 @@ mapIt(numbers, x => x * 2); // Plain iterable counterpart
 Applies a function against an accumulator and each element to reduce elements to a single value.
 Corresponds to [Array.prototype.reduce()].
 
+The utility function counterpart operating over plain iterables is `itsReduction()`.
+
 ```TypeScript
-import { AIterable } from 'a-iterable';
+import { AIterable, itsReduction } from 'a-iterable';
 
 const numbers = AIterable.of([1, 2, 3, 4]);
 
 numbers.reduce((accumulator, currentValue) => accumulator + currentValue, 0); // 10
+itsReduction(numbers, (accumulator, currentValue) => accumulator + currentValue, 0); // Plain iterable counterpart
 ```
 
 [Array.prototype.reduce()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce
+
 
 ### `reverse()`
 
@@ -246,7 +250,6 @@ const iter1 = AIterable.from(numbers);
 
 iter1.reverse(); // [4, 3, 2, 1], `numbers` are also reverted.
 ```
-
 
 [Array.prototype.reverse()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse
 
