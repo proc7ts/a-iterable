@@ -20,10 +20,6 @@ describe('reverseIt', () => {
   it('reverts revertible iterable elements', () => {
     expect([...reverseIt(iter)]).toEqual(elements.reverse());
   });
-  it('builds an iterable revertible to original elements', () => {
-    expect([...reverseIt(iter).reverse()]).toEqual(elements);
-    expect(iter.reverse).toHaveBeenCalled();
-  });
   it('reverts non-revertible iterable elements', () => {
     delete iter.reverse;
     expect([...reverseIt(iter)]).toEqual(elements.reverse());
@@ -52,11 +48,5 @@ describe('reverseArray', () => {
     reverseArray(elements);
 
     expect(elements).toEqual([1, 2, 3]);
-  });
-  it('builds an iterable revertible to original array', () => {
-
-    const elements = [1, 2, 3];
-
-    expect(reverseArray(elements).reverse()).toBe(elements);
   });
 });

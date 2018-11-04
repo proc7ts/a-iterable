@@ -1,3 +1,4 @@
+import { reverseArray } from './reverse';
 import { RevertibleIterable } from './revertible-iterable';
 import { makeIt } from './util';
 
@@ -15,11 +16,7 @@ export function overArray<T>(array: ArrayLike<T>): RevertibleIterable<T> {
           yield array[i];
         }
       },
-      () => makeIt<T>(function* () {
-        for (let i = array.length - 1; i >= 0; --i) {
-          yield array[i];
-        }
-      }));
+      () => reverseArray(array));
 }
 
 const NONE: RevertibleIterable<any> = {

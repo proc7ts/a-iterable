@@ -1,3 +1,4 @@
+import { isArrayLike } from './api';
 import { itsRevertible, RevertibleIterable } from './revertible-iterable';
 import { itsIterator } from './util';
 
@@ -61,16 +62,16 @@ export function itsFirst<T>(iterable: Iterable<T>): T | undefined {
 /**
  * Returns the last element of the given `iterable`.
  *
- * If the given `iterable` is an array, then just returns its last element. If it is revertible, then extracts the first
- * element of reverted iterable. Otherwise iterates over elements to find the last one.
+ * If the given `iterable` is an array-like structure, then just returns its last element. If it is revertible,
+ * then extracts the first element of reverted one. Otherwise iterates over elements to find the last one.
  *
  * @param <T> A type of `iterable` elements.
  * @param iterable Iterable to extract element from.
  *
  * @return Either the last element, or `undefined` if the given `iterable` is empty.
  */
-export function itsLast<T>(iterable: Iterable<T> | RevertibleIterable<T> | T[]): T | undefined {
-  if (Array.isArray(iterable)) {
+export function itsLast<T>(iterable: Iterable<T> | RevertibleIterable<T> | ArrayLike<T>): T | undefined {
+  if (isArrayLike(iterable)) {
     return iterable[iterable.length - 1];
   }
   if (itsRevertible(iterable)) {
