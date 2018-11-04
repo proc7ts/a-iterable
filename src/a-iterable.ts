@@ -1,9 +1,20 @@
+import { IterableElement, IterableClass } from './api';
 import { ArrayLikeIterable } from './array-like-iterable';
 import { reverseArray, reverseIt } from './reverse';
 import { itsRevertible, RevertibleIterable } from './revertible-iterable';
 import { itsEach, itsEvery, itsReduction } from './termination';
 import { filterIt, flatMapIt, mapIt } from './transform';
 import { itsIterator, makeIt } from './util';
+
+const API_METHODS: (keyof ArrayLikeIterable<any>)[] = [
+  'every',
+  'filter',
+  'flatMap',
+  'forEach',
+  'map',
+  'reduce',
+  'reverse',
+];
 
 /**
  * Abstract `Iterable` implementation with array-like iteration operations.
@@ -32,13 +43,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * or `false` otherwise.
    */
   static is<T>(source: Iterable<T>): source is ArrayLikeIterable<T> {
-    return 'every' in source
-        && 'filter' in source
-        && 'flatMap' in source
-        && 'forEach' in source
-        && 'map' in source
-        && 'reduce' in source
-        && itsRevertible(source);
+    return API_METHODS.every(name => name in source);
   }
 
   /**
@@ -97,8 +102,18 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
     return itsEvery(this, test);
   }
 
+  /**
+   * Creates an iterable with all elements that pass the test implemented by the provided function.
+   *
+   * Corresponds to `Array.prototype.filter()`.
+   *
+   * @param test A predicate function to test each element. Returns `true` to keep the element, or `false` otherwise.
+   * It accepts the tested element as the only parameter.
+   *
+   * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
+   * be returned.
+   */
   filter(test: (element: T) => boolean): AIterable<T>;
-  filter<S extends T>(test: (element: T) => element is S): AIterable<S>;
 
   /**
    * Creates an iterable with all elements that pass the test implemented by the provided function.
@@ -111,6 +126,8 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
    * be returned.
    */
+  filter<S extends T>(test: (element: T) => element is S): AIterable<S>;
+
   filter(test: (element: T) => boolean): AIterable<T> {
     return make(
         () => filterIt(this, test),
@@ -228,4 +245,35 @@ function make<T>(iterate: () => Iterable<T>, reverse: () => Iterable<T>): AItera
   }
 
   return new Iterable();
+}
+
+/**
+ * Extends an iterable class with `AIterable` API.
+ *
+ * @param <C> A type of iterable class to extend.
+ * @param <E> A type of elements to iterate.
+ * @param iterableClass A class to extend.
+ *
+ * @returns A new class extending original `iterableClass` and implementing the missing `AIterable` methods.
+ */
+export function toAIterable<C extends IterableClass<any, E>, E = IterableElement<InstanceType<C>>>(
+    iterableClass: C):
+    C & IterableClass<AIterable<E>, E> {
+
+  class ExtendedIterable extends iterableClass {
+  }
+
+  const extended = ExtendedIterable;
+  const proto = extended.prototype;
+
+  API_METHODS.forEach(name => {
+    if (!(name in proto)) {
+      Object.defineProperty(proto, name, {
+        configurable: true,
+        value: AIterable.prototype[name],
+      });
+    }
+  });
+
+  return extended as C & IterableClass<AIterable<E>, E>;
 }

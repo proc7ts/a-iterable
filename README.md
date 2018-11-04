@@ -262,8 +262,32 @@ iter1.reverse(); // [4, 3, 2, 1], `numbers` are also reverted.
 [Array.prototype.reverse()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse
 
 
+`extendIterable()`
+------------------
+
+Extends an iterable class with `AIterable` API.
+
+```TypeScript
+import { AIterable, toAIterable } from 'a-iterable';
+
+class BaseIterable implements Iterable<number> {
+  * [Symbol.iterator](): Iterator<number> {
+    yield 1;
+    yield 2;
+    yield 3;
+  }
+}
+
+const ExtendedIterable = toAIterable(BaseIterable);
+const extended = new ExtendedIterable();
+
+extended.forEach(console.log); // Prints 1, 2, 3 as `forEach` method is present in `ExtendedIterable`
+```
+
+
 Utilities
 ---------
+
 
 ### `itsEmpty()`
 
