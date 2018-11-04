@@ -46,7 +46,7 @@ describe('AIterable', () => {
 
   describe('of', () => {
     it('returns array itself', () => {
-      expect<Iterable<number>>(AIterable.of(elements)).toBe(elements);
+      expect(AIterable.of(elements)).toBe(elements);
     });
     it('returns `AIterable` itself', () => {
       expect(AIterable.of(iter)).toBe(iter);

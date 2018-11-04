@@ -12,7 +12,8 @@
     "importHelpers": true,
     "noEmitHelpers": true,
     "lib": [
-      "es2015"
+      "es2015",
+      "esnext.array"
     ],
     "outDir": "target/js",
     "sourceMap": true,
