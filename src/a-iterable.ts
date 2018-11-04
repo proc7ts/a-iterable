@@ -97,8 +97,18 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
     return itsEvery(this, test);
   }
 
+  /**
+   * Creates an iterable with all elements that pass the test implemented by the provided function.
+   *
+   * Corresponds to `Array.prototype.filter()`.
+   *
+   * @param test A predicate function to test each element. Returns `true` to keep the element, or `false` otherwise.
+   * It accepts the tested element as the only parameter.
+   *
+   * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
+   * be returned.
+   */
   filter(test: (element: T) => boolean): AIterable<T>;
-  filter<S extends T>(test: (element: T) => element is S): AIterable<S>;
 
   /**
    * Creates an iterable with all elements that pass the test implemented by the provided function.
@@ -111,6 +121,8 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
    * be returned.
    */
+  filter<S extends T>(test: (element: T) => element is S): AIterable<S>;
+
   filter(test: (element: T) => boolean): AIterable<T> {
     return make(
         () => filterIt(this, test),
