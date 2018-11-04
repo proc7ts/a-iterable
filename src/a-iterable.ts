@@ -1,9 +1,20 @@
+import { IterableElement, IterableClass } from './api';
 import { ArrayLikeIterable } from './array-like-iterable';
 import { reverseArray, reverseIt } from './reverse';
 import { itsRevertible, RevertibleIterable } from './revertible-iterable';
 import { itsEach, itsEvery, itsReduction } from './termination';
 import { filterIt, flatMapIt, mapIt } from './transform';
 import { itsIterator, makeIt } from './util';
+
+const API_METHODS: (keyof ArrayLikeIterable<any>)[] = [
+  'every',
+  'filter',
+  'flatMap',
+  'forEach',
+  'map',
+  'reduce',
+  'reverse',
+];
 
 /**
  * Abstract `Iterable` implementation with array-like iteration operations.
@@ -32,13 +43,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * or `false` otherwise.
    */
   static is<T>(source: Iterable<T>): source is ArrayLikeIterable<T> {
-    return 'every' in source
-        && 'filter' in source
-        && 'flatMap' in source
-        && 'forEach' in source
-        && 'map' in source
-        && 'reduce' in source
-        && itsRevertible(source);
+    return API_METHODS.every(name => name in source);
   }
 
   /**
@@ -240,4 +245,35 @@ function make<T>(iterate: () => Iterable<T>, reverse: () => Iterable<T>): AItera
   }
 
   return new Iterable();
+}
+
+/**
+ * Extends an iterable class with `AIterable` API.
+ *
+ * @param <C> A type of iterable class to extend.
+ * @param <E> A type of elements to iterate.
+ * @param iterableClass A class to extend.
+ *
+ * @returns A new class extending original `iterableClass` and implementing the missing `AIterable` methods.
+ */
+export function toAIterable<C extends IterableClass<any, E>, E = IterableElement<InstanceType<C>>>(
+    iterableClass: C):
+    C & IterableClass<AIterable<E>, E> {
+
+  class ExtendedIterable extends iterableClass {
+  }
+
+  const extended = ExtendedIterable;
+  const proto = extended.prototype;
+
+  API_METHODS.forEach(name => {
+    if (!(name in proto)) {
+      Object.defineProperty(proto, name, {
+        configurable: true,
+        value: AIterable.prototype[name],
+      });
+    }
+  });
+
+  return extended as C & IterableClass<AIterable<E>, E>;
 }

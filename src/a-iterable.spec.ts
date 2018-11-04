@@ -1,5 +1,7 @@
-import { AIterable } from './a-iterable';
+import { AIterable, toAIterable } from './a-iterable';
+import { IterableClass } from './api';
 import { RevertibleIterable } from './revertible-iterable';
+import { itsIterator, makeIt } from './util';
 
 describe('AIterable', () => {
 
@@ -165,4 +167,34 @@ describe('AIterable', () => {
     });
   });
 
+});
+
+describe('toAIterable', () => {
+
+  class BaseIterable implements RevertibleIterable<number> {
+    * [Symbol.iterator](): Iterator<number> {
+      yield 1;
+      yield 2;
+      yield 3;
+    }
+    reverse() {
+      return makeIt(() => itsIterator([3, 3, 3]));
+    }
+  }
+
+  let ExtendedIterable: IterableClass<BaseIterable & AIterable<number>>;
+  let extended: BaseIterable & AIterable<number> ;
+
+  beforeEach(() => {
+    ExtendedIterable = toAIterable(BaseIterable);
+    extended = new ExtendedIterable();
+  });
+
+  it('implements missing methods', () => {
+    expect(extended.every(x => x > 0)).toBe(true);
+    expect([...extended.filter(x => x > 1)]).toEqual([2, 3]);
+  });
+  it('does not override implemented methods', () => {
+    expect([...extended.reverse()]).toEqual([3, 3, 3]);
+  });
 });

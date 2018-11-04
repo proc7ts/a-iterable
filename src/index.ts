@@ -1,4 +1,5 @@
 export * from './a-iterable';
+export * from './api';
 export * from './array-like-iterable';
 export * from './construction';
 export * from './objects';
