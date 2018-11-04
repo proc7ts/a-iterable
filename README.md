@@ -313,6 +313,36 @@ expect([...overArray([1, 2, 3]).reverse()]).toEqual([3, 2, 1]);
 ```
 
 
+### `overEntries()`
+
+Builds an iterable over the key/value entries of the given object.
+
+```TypeScript
+import { overEntries } from 'a-iterable';
+
+overEntries({
+  a: 1,
+  [1]: 'one',
+  [Symbol.iterator]: null,
+}) // Contains `['a', 1]`, `['1', 'one']`, and `[Symbol.iterator, null]`
+```
+
+
+### `overKeys()`
+
+Builds an iterable over the keys of the given object.
+
+```TypeScript
+import { overKeys } from 'a-iterable';
+
+overKeys({
+  a: 1,
+  [1]: 'one',
+  [Symbol.iterator]: null,
+}) // Contains `'a'`, `'1'`, and `Symbol.iterator`
+```
+
+
 ### `overNone()`
 
 Returns an iterable without elements revertible to itself.
