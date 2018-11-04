@@ -1,4 +1,5 @@
 import { itsRevertible, RevertibleIterable } from './revertible-iterable';
+import { itsIterator } from './util';
 
 /**
  * Performs the given `action` for each element of the given `iterable`.
@@ -22,7 +23,7 @@ export function itsEach<T>(iterable: Iterable<T>, action: (element: T) => void) 
  * @return `true` if the given iterable contains at least one element, or `false` otherwise.
  */
 export function itsEmpty(iterable: Iterable<any>): boolean {
-  return iterable[Symbol.iterator]().next().done;
+  return itsIterator(iterable).next().done;
 }
 
 /**
@@ -54,7 +55,7 @@ export function itsEvery<T>(iterable: Iterable<T>, test: (element: T) => boolean
  * @return Either the first element, or `undefined` if the given `iterable` is empty.
  */
 export function itsFirst<T>(iterable: Iterable<T>): T | undefined {
-  return iterable[Symbol.iterator]().next().value;
+  return itsIterator(iterable).next().value;
 }
 
 /**

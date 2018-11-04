@@ -1,7 +1,9 @@
 import { ArrayLikeIterable } from './array-like-iterable';
-import { itsRevertible, reverseArray, reverseIt, RevertibleIterable } from './revertible-iterable';
+import { reverseArray, reverseIt } from './reverse';
+import { itsRevertible, RevertibleIterable } from './revertible-iterable';
 import { itsEach, itsEvery, itsReduction } from './termination';
 import { filterIt, flatMapIt, mapIt } from './transform';
+import { itsIterator, makeIt } from './util';
 
 /**
  * Abstract `Iterable` implementation with array-like iteration operations.
@@ -39,8 +41,14 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
         && itsRevertible(source);
   }
 
+  /**
+   * Creates an `AIterable` instance that iterates over the same elements as the given one if necessary.
+   *
+   * @param source A source array-like iterable.
+   *
+   * @return A `source` itself.
+   */
   static of<T>(source: ArrayLikeIterable<T>): typeof source;
-  static of<T>(source: Iterable<T>): AIterable<T>;
 
   /**
    * Creates an `AIterable` instance that iterates over the same elements as the given one if necessary.
@@ -50,6 +58,8 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @return Either `source` itself if it implements `ArrayLikeIterable` already (see `is()` method),
    * or new `AIterable` instance iterating over the `source`.
    */
+  static of<T>(source: Iterable<T>): AIterable<T>;
+
   static of<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): ArrayLikeIterable<T> {
     if (AIterable.is(source)) {
       return source;
@@ -67,20 +77,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @return Always new `AIterable` instance.
    */
   static from<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): AIterable<T> {
-
-    class IterableWrapper extends AIterable<T> {
-
-      [Symbol.iterator](): Iterator<T> {
-        return source[Symbol.iterator]();
-      }
-
-      reverse() {
-        return AIterable.from(reverseIt(source));
-      }
-
-    }
-
-    return new IterableWrapper();
+    return make(() => source, () => reverseIt(source));
   }
 
   abstract [Symbol.iterator](): Iterator<T>;
@@ -195,16 +192,12 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
 
     const elements = this;
 
-    return AIterable.from({
-      [Symbol.iterator] () {
-        return reverseArray([...elements])[Symbol.iterator]();
-      }
-    });
+    return AIterable.from(makeIt(() => itsIterator(reverseArray([...elements]))));
   }
 
 }
 
-class NoneIterable extends AIterable<any> {
+class None extends AIterable<any> {
 
   *[Symbol.iterator](): Iterator<any> {}
 
@@ -214,25 +207,25 @@ class NoneIterable extends AIterable<any> {
 
 }
 
-const NONE = new NoneIterable();
+const NONE = new None();
 
 function make<T>(iterate: () => Iterable<T>, reverse: () => Iterable<T>): AIterable<T> {
 
-  class Result extends AIterable<T> {
+  class Iterable extends AIterable<T> {
 
     [Symbol.iterator]() {
-      return iterate()[Symbol.iterator]();
+      return itsIterator(iterate());
     }
 
     reverse() {
       return AIterable.from({
         [Symbol.iterator]() {
-          return reverse()[Symbol.iterator]();
+          return itsIterator(reverse());
         }
       });
     }
 
   }
 
-  return new Result();
+  return new Iterable();
 }
