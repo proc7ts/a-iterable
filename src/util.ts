@@ -14,7 +14,7 @@ export function itsIterator<T>(iterable: Iterable<T>): Iterator<T> {
 }
 
 /**
- * Creates a custom iterable.
+ * Creates custom iterable.
  *
  * @param iterate A no-arg function constructing an iterator.
  * @param reverse When `undefined` or unspecified the created iterable won't be reversible.
@@ -24,7 +24,7 @@ export function itsIterator<T>(iterable: Iterable<T>): Iterator<T> {
 export function makeIt<T>(iterate: (this: Iterable<T>) => Iterator<T>, reverse?: undefined): Iterable<T>;
 
 /**
- * Creates a custom revertible iterable.
+ * Creates custom revertible iterable.
  *
  * @param iterate A no-arg function constructing an iterator.
  * @param reverse A no-arg function constructing a reverse iterable.

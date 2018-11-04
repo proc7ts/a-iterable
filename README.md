@@ -316,7 +316,7 @@ itsIterator([1, 2, 3]).next().value; // 1
 
 ### `makeIt()`
 
-Creates a custom iterable.
+Creates custom iterable.
 
 ```TypeScript
 import { itsIterator, makeIt } from 'a-iterable';
