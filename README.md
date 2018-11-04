@@ -315,8 +315,8 @@ itsFirst(AIterable.from([1, 2, 3]).filter(x => x === 2)); // `Array.find()` anal
 
 Returns the last element of the given iterable.
 
-If the given iterable is an array, then just returns its last element. If it is revertible, then extracts the first
-element of reverted iterable. Otherwise iterates over elements to find the last one.
+If the given `iterable` is an array-like structure, then just returns its last element. If it is revertible,
+then extracts the first element of the reverted one. Otherwise iterates over elements to find the last one.
 
 ```TypeScript
 import { itsLast } from 'a-iterable';
@@ -416,8 +416,6 @@ If the `source` iterable is an array, then uses [reverseArray()] function to rev
 If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed one.
 Otherwise stores elements to array and reverts them with [reverseArray()] function.
 
-The returned iterable is revertible to the source one.
-
 ```TypeScript
 import { reverseIt } from 'a-iterable';
 
@@ -429,9 +427,7 @@ reverseIt([1, 2 ,3]); // [3, 2, 1]
 
 [reverseArray()]: #reversearray
 
-Constructs an iterable of array elements in reverse order.
-
-The returned iterable is revertible to the source array.
+Constructs an iterable of array-like structure elements in reverse order.
 
 ```TypeScript
 import { reverseArray } from 'a-iterable';
