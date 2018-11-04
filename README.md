@@ -63,10 +63,18 @@ Arrays implement this interface. Note however, that the array counterpart revers
 creating a new array.
 
 
+`ArrayLikeIterable`
+-------------------
+
+[ArrayLikeIterable]: #arraylikeiterable
+
+An iterable with Array-like iteration operations. Both `Array` and `AIterable` implement it.
+
+
 `AIterable`
 -----------
 
-This is an abstract class implementing [RevertibleIterable] interface and a subset of Array-like API.
+Abstract `Iterable` implementation with array-like iteration operations.
 
 
 ### `AIterable.none()`
@@ -82,7 +90,7 @@ expect(AIterable.none()[Symbol.iterator]().next().done).toBe(true);
 
 ### `AIterable.is()`
 
-Checks whether the source `Iterable` implements an `AIterable` interface.
+Checks whether the given iterable is an array-like one.
 
 ```TypeScript
 import { AIterable } from 'a-iterable';
@@ -94,7 +102,7 @@ AIterable.is({ *[Symbol.iterator]() { yield 'something'; } }); // false
 
 ### `AIterable.of()`
 
-Converts the source `Iterable` to `AIterable` if necessary.
+Creates an `AIterable` instance that iterates over the same elements as the given one if necessary.
 
 ```TypeScript
 import { AIterable } from 'a-iterable';
@@ -103,7 +111,7 @@ AIterable.of([1, 2, 3]);
 AIterable.of({ *[Symbol.iterator]() { yield 'something'; } });
 ```
 
-When called for the object already implementing `AIterable` (such as `Array`), this method returns the source
+When called for the object already implementing `ArrayLikeIterable` (such as `Array`), this method returns the source
 object itself.
 
 [AIterable.of()]: #aiterableof
@@ -111,12 +119,12 @@ object itself.
 
 ### `AIterable.from()`
 
-Converts the source `Iterable` to `AIterable`.
+Creates an `AIterable` instance that iterates over the same elements as the given one.
 
-Unlike [AIterable.of()] this function always creates new iterable instance. This may be useful when converting array 
+Unlike [AIterable.of()] this function always creates new `AIterable` instance. This may be useful when converting array 
 and iterating over its elements. This way new array instances won't be created.
 
-Uses [reverseIt()] function to revert the constructed iterable.
+Uses [reverseIt()] function to reverse the constructed iterable.
 
 ```TypeScript
 import { AIterable, itsFirst } from 'a-iterable';

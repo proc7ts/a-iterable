@@ -6,7 +6,7 @@
 export interface RevertibleIterable<T> extends Iterable<T> {
 
   /**
-   * Constructs an iterable containing this iterable's elements in reverse order.
+   * Returns an iterable containing this iterable's elements in reverse order.
    *
    * Corresponds to `Array.prototype.reverse()`. Note however, that the array counterpart reverses elements _in place_
    * rather than creating a new array.

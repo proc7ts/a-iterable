@@ -1,13 +1,14 @@
+import { ArrayLikeIterable } from './array-like-iterable';
 import { itsRevertible, reverseArray, reverseIt, RevertibleIterable } from './revertible-iterable';
 import { itsEach, itsEvery, itsReduction } from './termination';
 import { filterIt, flatMapIt, mapIt } from './transform';
 
 /**
- * Abstract `Iterable` implementation with Array-like iteration operations.
+ * Abstract `Iterable` implementation with array-like iteration operations.
  *
  * @param <T> A type of elements.
  */
-export abstract class AIterable<T> implements RevertibleIterable<T> {
+export abstract class AIterable<T> implements ArrayLikeIterable<T> {
 
   /**
    * Returns an iterable without elements.
@@ -21,14 +22,14 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
   }
 
   /**
-   * Checks whether the given iterable implements an `AIterable` interface.
+   * Checks whether the given iterable is an array-like one.
    *
    * @param source An iterable to check.
    *
-   * @returns `true` is the `source` has all `AIterable` methods (like `Array` or `AIterable` instance),
+   * @returns `true` is the `source` has all `ArrayLikeIterable` methods (like `Array` or `AIterable` instance),
    * or `false` otherwise.
    */
-  static is<T>(source: Iterable<T> | RevertibleIterable<T>): source is AIterable<T> {
+  static is<T>(source: Iterable<T>): source is ArrayLikeIterable<T> {
     return 'every' in source
         && 'filter' in source
         && 'flatMap' in source
@@ -38,18 +39,18 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
         && itsRevertible(source);
   }
 
-  static of<T>(source: T[]): T[];
+  static of<T>(source: ArrayLikeIterable<T>): typeof source;
   static of<T>(source: Iterable<T>): AIterable<T>;
 
   /**
-   * Creates an `AIterable` instance that iterates over the same elements as the given one.
+   * Creates an `AIterable` instance that iterates over the same elements as the given one if necessary.
    *
    * @param source A source iterable.
    *
-   * @return Either `source` itself if it implements `AIterable` already (see `is()` method),
-   * or new `AIterable` instance.
+   * @return Either `source` itself if it implements `ArrayLikeIterable` already (see `is()` method),
+   * or new `AIterable` instance iterating over the `source`.
    */
-  static of<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): AIterable<T> | T[] {
+  static of<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): ArrayLikeIterable<T> {
     if (AIterable.is(source)) {
       return source;
     }
@@ -59,7 +60,7 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
   /**
    * Creates an `AIterable` instance that iterates over the same elements as the given one.
    *
-   * Uses `reverseIt()` function to revert the constructed iterable.
+   * Uses `reverseIt()` function to reverse the constructed iterable.
    *
    * @param source A source iterable.
    *
@@ -99,6 +100,9 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
     return itsEvery(this, test);
   }
 
+  filter(test: (element: T) => boolean): AIterable<T>;
+  filter<S extends T>(test: (element: T) => element is S): AIterable<S>;
+
   /**
    * Creates an iterable with all elements that pass the test implemented by the provided function.
    *
@@ -120,6 +124,9 @@ export abstract class AIterable<T> implements RevertibleIterable<T> {
    * First maps each element using a mapping function, then flattens the result into a new iterable.
    *
    * Corresponds to `Array.prototype.flatMap()`.
+   *
+   * Note that the overridden `flatMap` method of `ArrayLikeIterable` expects an array to be returned from `convert`
+   * callback, while in this method it may return arbitrary iterable.
    *
    * @param <R> A type of converted elements.
    * @param convert A function that produces a new iterable, taking the source element as the only parameter.

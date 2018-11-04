@@ -53,7 +53,8 @@ module.exports = (config) => {
         'forceConsistentCasingInFileNames': false,
         'experimentalDecorators': true,
         'lib': [
-          'es6',
+          'es2015',
+          'esnext.array',
         ],
         'sourceMap': true,
         'newLine': 'LF'
