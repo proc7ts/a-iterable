@@ -301,6 +301,33 @@ itsLast([1, 2, 3]); // 3
 ```
 
 
+### `itsIterator()`
+
+Starts iteration over the given iterable.
+
+This is a shortcut for `iterable[Symbol.iterator]` to make it friendlier to minification.
+
+```TypeScript
+import { itsIterator } from 'a-iterable';
+
+itsIterator([1, 2, 3]).next().value; // 1
+```
+
+
+### `makeIt()`
+
+Creates a custom iterable.
+
+```TypeScript
+import { itsIterator, makeIt } from 'a-iterable';
+
+const array = [1, 2, 3];
+
+makeIt(() => itsIterator(array)); // Iterable over array elements
+makeIt(() => itsIterable(array), () => [...array].reverse()); // Revertible iterable over array elements 
+```
+
+
 ### `overArray()`
 
 Builds an revertible iterable over elements of array-like structure, like `Array` or DOM `NodeList`.

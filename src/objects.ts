@@ -1,6 +1,7 @@
 import { overArray } from './construction';
 import { RevertibleIterable } from './revertible-iterable';
 import { mapIt } from './transform';
+import { itsIterator, makeIt } from './util';
 
 /**
  * Builds an iterable over the keys of the given object.
@@ -33,12 +34,5 @@ export function overEntries<T extends object>(target: T): RevertibleIterable<Obj
     return mapIt(_keys, key => [key, target[key]] as ObjectEntry<T>);
   }
 
-  return {
-    [Symbol.iterator]() {
-      return mapToEntries(keys)[Symbol.iterator]();
-    },
-    reverse() {
-      return mapToEntries(keys.reverse());
-    },
-  };
+  return makeIt(() => itsIterator(mapToEntries(keys)), () => mapToEntries(keys.reverse()));
 }

@@ -1,4 +1,5 @@
 import { RevertibleIterable } from './revertible-iterable';
+import { makeIt } from './util';
 
 /**
  * Builds an iterable over elements of array-like structure.
@@ -8,25 +9,17 @@ import { RevertibleIterable } from './revertible-iterable';
  * @returns A revertible iterable over array elements.
  */
 export function overArray<T>(array: ArrayLike<T>): RevertibleIterable<T> {
-  return {
-
-    *[Symbol.iterator]() {
-      for (let i = 0; i < array.length; ++i) {
-        yield array[i];
-      }
-    },
-
-    reverse() {
-      return {
-        *[Symbol.iterator]() {
-          for (let i = array.length - 1; i >= 0; --i) {
-            yield array[i];
-          }
+  return makeIt<T>(
+      function* () {
+        for (let i = 0; i < array.length; ++i) {
+          yield array[i];
         }
-      };
-
-    },
-  };
+      },
+      () => makeIt<T>(function* () {
+        for (let i = array.length - 1; i >= 0; --i) {
+          yield array[i];
+        }
+      }));
 }
 
 const NONE: RevertibleIterable<any> = {
