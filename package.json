@@ -14,7 +14,7 @@
   "license": "MIT",
   "author": "Ruslan Lopatin<ruslan.lopatin@gmail.com>",
   "bugs": {
-    "url": "https://github.com/wesib/wesib/issues"
+    "url": "https://github.com/surol/a-iterable/issues"
   },
   "main": "dist/a-iterable.umd.js",
   "module": "dist/a-iterable.esm5.js",
