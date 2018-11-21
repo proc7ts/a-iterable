@@ -44,9 +44,9 @@ describe('overEntries', () => {
 
     const entries = [...overEntries(obj)];
 
-    expect(entries).toContain(['a', 1]);
-    expect(entries).toContain(['1', 'two']);
-    expect(entries).toContain([Symbol.iterator, null]);
+    expect(entries).toContainEqual(['a', 1]);
+    expect(entries).toContainEqual(['1', 'two']);
+    expect(entries).toContainEqual([Symbol.iterator, null]);
   });
   it('iterates over object entries in reverse order', () => {
 

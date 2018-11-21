@@ -1,6 +1,7 @@
 import { AIterable, toAIterable } from './a-iterable';
 import { IterableClass } from './api';
 import { RevertibleIterable } from './revertible-iterable';
+import { augmentArrays } from './specs';
 import { itsIterator, makeIt } from './util';
 
 describe('AIterable', () => {
@@ -31,6 +32,9 @@ describe('AIterable', () => {
   });
 
   describe('is', () => {
+    beforeEach(() => {
+      augmentArrays();
+    });
     it('returns `true` for arrays', () => {
       expect(AIterable.is([])).toBe(true);
     });
@@ -114,15 +118,15 @@ describe('AIterable', () => {
   describe('forEach', () => {
     it('iterates over elements', () => {
 
-      const spy = jasmine.createSpy('action');
+      const spy = jest.fn();
 
       iter.forEach(spy);
 
-      expect(spy.calls.allArgs()).toEqual([[11], [22], [33]]);
+      expect(spy.mock.calls).toEqual([[11], [22], [33]]);
     });
     it('does not iterate over empty iterable elements', () => {
 
-      const spy = jasmine.createSpy('action');
+      const spy = jest.fn();
 
       none.forEach(spy);
 
