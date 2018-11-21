@@ -1,17 +1,20 @@
 import { reverseArray, reverseIt } from './reverse';
 import { RevertibleIterable } from './revertible-iterable';
-import SpyObj = jasmine.SpyObj;
+import Mocked = jest.Mocked;
 
 describe('reverseIt', () => {
 
-  let iter: SpyObj<RevertibleIterable<number>>;
+  let iter: Mocked<RevertibleIterable<number>>;
   let elements: number[];
 
   beforeEach(() => {
-    iter = jasmine.createSpyObj('iter', ['reverse']);
     elements = [1, 2, 3];
-    (iter as Iterable<number>)[Symbol.iterator] = () => elements.values();
-    iter.reverse.and.returnValue([...elements].reverse());
+    iter = {
+      [Symbol.iterator]() {
+        return elements.values();
+      },
+      reverse: jest.fn(() => [...elements].reverse()) as any,
+    };
   });
 
   it('reverts array elements', () => {
@@ -34,9 +37,9 @@ describe('reverseArray', () => {
 
     const elements = [1, 2, 3];
     const reverted = [...elements].reverse();
-    const it: SpyObj<RevertibleIterable<number>> = jasmine.createSpyObj('it', ['reverse']);
-
-    it.reverse.and.returnValue(reverted);
+    const it: Mocked<RevertibleIterable<number>> = {
+      reverse: jest.fn(() => reverted),
+    } as any;
 
     expect([...reverseIt(it)]).toEqual(reverted);
     expect(it.reverse).toHaveBeenCalled();

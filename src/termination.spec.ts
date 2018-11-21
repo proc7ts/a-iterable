@@ -5,15 +5,15 @@ describe('itsEach', () => {
   it('iterates over elements', () => {
 
     const elements = [11, 22, 33];
-    const spy = jasmine.createSpy('action');
+    const spy = jest.fn();
 
     itsEach(elements, spy);
 
-    expect(spy.calls.allArgs()).toEqual([[11], [22], [33]]);
+    expect(spy.mock.calls).toEqual([[11], [22], [33]]);
   });
   it('does not iterate over empty iterable elements', () => {
 
-    const spy = jasmine.createSpy('action');
+    const spy = jest.fn();
 
     itsEach([], spy);
 
