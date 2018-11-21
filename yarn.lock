@@ -521,6 +521,13 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
+call-thru@~1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-1.0.0.tgz#08d64704f2435b1398f7cc0f114d13913144c82d"
+  integrity sha512-28cKsB9bUE55QB3la0dZpTrioFgEEnNgJmEXS+caFmD0h2vA8YHP6m58JwynjDLtzJecj1pzX4rzxeptIVK9Fg==
+  dependencies:
+    tslib "^1.9.0"
+
 callsites@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/callsites/-/callsites-2.0.0.tgz#06eb84f00eea413da86affefacbffb36093b3c50"
