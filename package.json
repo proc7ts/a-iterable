@@ -1,6 +1,6 @@
 {
   "name": "a-iterable",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "An Iterable implementation with ES6 Array-like API",
   "keywords": [
     "iterable",
