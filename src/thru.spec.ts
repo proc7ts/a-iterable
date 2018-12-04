@@ -3,12 +3,22 @@ import { thruIt } from './thru';
 
 describe('thruIt', () => {
   it('transforms elements', () => {
-    expect([
-      ...thruIt(
-          [1, 2, 3],
-          n => n * n,
-          passIf(n => n > 1),
-      )
-    ]).toEqual([undefined, 4, 9]);
+
+    const outcome = thruIt(
+        [1, 2, 3],
+        n => n * n,
+    );
+
+    expect([...outcome]).toEqual([1, 4, 9]);
+  });
+  it('removes skipped elements', () => {
+
+    const outcome: Iterable<number> = thruIt(
+        [1, 2, 3],
+        passIf((n: number) => n > 1),
+        n => n * n,
+    );
+
+    expect([...outcome]).toEqual([4, 9]);
   });
 });
