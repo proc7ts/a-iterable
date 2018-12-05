@@ -209,7 +209,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
 
     const elements = this;
 
-    return AIterable.from(makeIt(() => itsIterator(reverseArray([...elements]))));
+    return make(() => reverseArray([...elements]), () => this);
   }
 
 }
@@ -226,7 +226,7 @@ class None extends AIterable<any> {
 
 const NONE = new None();
 
-function make<T>(iterate: () => Iterable<T>, reverse: () => Iterable<T>): AIterable<T> {
+function make<T>(iterate: () => Iterable<T>, reverse?: () => Iterable<T>): AIterable<T> {
 
   class Iterable extends AIterable<T> {
 
@@ -234,12 +234,11 @@ function make<T>(iterate: () => Iterable<T>, reverse: () => Iterable<T>): AItera
       return itsIterator(iterate());
     }
 
-    reverse() {
-      return AIterable.from({
-        [Symbol.iterator]() {
-          return itsIterator(reverse());
-        }
-      });
+    reverse(): Iterable {
+      if (!reverse) {
+        return super.reverse();
+      }
+      return AIterable.from(makeIt(() => itsIterator(reverse()), () => this));
     }
 
   }
