@@ -1,5 +1,5 @@
-import { itsEach, itsEmpty, itsEvery, itsFirst, itsLast, itsReduction } from './termination';
 import { RevertibleIterable } from './revertible-iterable';
+import { itsEach, itsEmpty, itsEvery, itsFirst, itsLast, itsReduction } from './termination';
 
 describe('itsEach', () => {
   it('iterates over elements', () => {

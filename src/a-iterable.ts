@@ -1,4 +1,4 @@
-import { callThru, NextCall, nextEach, PassedThru } from 'call-thru';
+import { NextCall, PassedThru } from 'call-thru';
 import { IterableClass, IterableElement } from './api';
 import { ArrayLikeIterable } from './array-like-iterable';
 import { reverseArray, reverseIt } from './reverse';

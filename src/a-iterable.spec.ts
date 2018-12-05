@@ -3,7 +3,6 @@ import { AIterable, toAIterable } from './a-iterable';
 import { IterableClass } from './api';
 import { RevertibleIterable } from './revertible-iterable';
 import { augmentArrays } from './specs';
-import { thruIt } from './thru';
 import { itsIterator, makeIt } from './util';
 
 describe('AIterable', () => {
