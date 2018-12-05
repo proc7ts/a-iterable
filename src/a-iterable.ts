@@ -1,10 +1,15 @@
-import { IterableElement, IterableClass } from './api';
+import { callThru, NextCall, nextEach, PassedThru } from 'call-thru';
+import { IterableClass, IterableElement } from './api';
 import { ArrayLikeIterable } from './array-like-iterable';
 import { reverseArray, reverseIt } from './reverse';
-import { itsRevertible, RevertibleIterable } from './revertible-iterable';
+import { RevertibleIterable } from './revertible-iterable';
 import { itsEach, itsEvery, itsReduction } from './termination';
+import { thruIt } from './thru';
 import { filterIt, flatMapIt, mapIt } from './transform';
 import { itsIterator, makeIt } from './util';
+import Args = NextCall.Callee.Args;
+import Last = NextCall.LastOutcome;
+import Out = NextCall.Outcome;
 
 const API_METHODS: (keyof ArrayLikeIterable<any>)[] = [
   'every',
@@ -209,7 +214,252 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
 
     const elements = this;
 
-    return AIterable.from(makeIt(() => itsIterator(reverseArray([...elements]))));
+    return make(() => reverseArray([...elements]), () => this);
+  }
+
+  thru<R1>(
+      fn: (this: void, arg: T) => R1):
+      AIterable<PassedThru.Item<Last<R1>>>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2):
+      AIterable<PassedThru.Item<Out<R1, Last<R2>>>>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3):
+      AIterable<PassedThru.Item<Out<R1, Out<R2, Last<R3>>>>>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4):
+      AIterable<PassedThru.Item<Out<R1, Out<R2, Out<R3, Last<R4>>>>>>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5):
+      AIterable<PassedThru.Item<Out<R1, Out<R2, Out<R3, Out<R4, Last<R5>>>>>>>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6):
+      AIterable<PassedThru.Item<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+          Last<R6>>>>>>>>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7):
+      AIterable<PassedThru.Item<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+          Out<R6, Last<R7>>>>>>>>>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      P8 extends Args<R7>, R8>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8):
+      AIterable<PassedThru.Item<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+          Out<R6, Out<R7, Last<R8>>>>>>>>>>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      P8 extends Args<R7>, R8,
+      P9 extends Args<R8>, R9>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9):
+      AIterable<PassedThru.Item<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+          Out<R6, Out<R7, Out<R8, Last<R9>>>>>>>>>>>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      P8 extends Args<R7>, R8,
+      P9 extends Args<R8>, R9,
+      P10 extends Args<R9>, R10>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+      fn10: (this: void, ...args: P10) => R10):
+      AIterable<PassedThru.Item<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+          Out<R6, Out<R7, Out<R8, Out<R9, Last<R10>>>>>>>>>>>>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      P8 extends Args<R7>, R8,
+      P9 extends Args<R8>, R9,
+      P10 extends Args<R9>, R10,
+      P11 extends Args<R10>, R11>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+      fn10: (this: void, ...args: P10) => R10,
+      fn11: (this: void, ...args: P11) => R11):
+      AIterable<PassedThru.Item<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+          Out<R6, Out<R7, Out<R8, Out<R9, Out<R10,
+              Last<R11>>>>>>>>>>>>>;
+
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      P8 extends Args<R7>, R8,
+      P9 extends Args<R8>, R9,
+      P10 extends Args<R9>, R10,
+      P11 extends Args<R10>, R11,
+      P12 extends Args<R11>, R12>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+      fn10: (this: void, ...args: P10) => R10,
+      fn11: (this: void, ...args: P11) => R11,
+      fn12: (this: void, ...args: P12) => R12):
+      AIterable<PassedThru.Item<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+          Out<R6, Out<R7, Out<R8, Out<R9, Out<R10,
+              Out<R11, Last<R12>>>>>>>>>>>>>>;
+
+  /**
+   * Passes each element of this iterable trough a chain of transformation passes.
+   *
+   * The passes are preformed by `callThru()` function.
+   *
+   * @returns Next iterable of transformed elements.
+   */
+  thru<
+      R1,
+      P2 extends Args<R1>, R2,
+      P3 extends Args<R2>, R3,
+      P4 extends Args<R3>, R4,
+      P5 extends Args<R4>, R5,
+      P6 extends Args<R5>, R6,
+      P7 extends Args<R6>, R7,
+      P8 extends Args<R7>, R8,
+      P9 extends Args<R8>, R9,
+      P10 extends Args<R9>, R10,
+      P11 extends Args<R10>, R11,
+      P12 extends Args<R11>, R12,
+      P13 extends Args<R12>, R13>(
+      fn1: (this: void, arg: T) => R1,
+      fn2: (this: void, ...args: P2) => R2,
+      fn3: (this: void, ...args: P3) => R3,
+      fn4: (this: void, ...args: P4) => R4,
+      fn5: (this: void, ...args: P5) => R5,
+      fn6: (this: void, ...args: P6) => R6,
+      fn7: (this: void, ...args: P7) => R7,
+      fn8: (this: void, ...args: P8) => R8,
+      fn9: (this: void, ...args: P9) => R9,
+      fn10: (this: void, ...args: P10) => R10,
+      fn11: (this: void, ...args: P11) => R11,
+      fn12: (this: void, ...args: P12) => R12,
+      fn13: (this: void, ...args: P13) => R13):
+      AIterable<PassedThru.Item<Out<R1, Out<R2, Out<R3, Out<R4, Out<R5,
+          Out<R6, Out<R7, Out<R8, Out<R9, Out<R10,
+              Out<R11, Out<R12, Last<R13>>>>>>>>>>>>>>>;
+
+  thru<R>(...fns: ((...args: any[]) => any)[]): AIterable<PassedThru.Item<R>> {
+
+    const thru = thruIt as any;
+
+    return make(() => thru(this, ...fns));
   }
 
 }
@@ -226,7 +476,7 @@ class None extends AIterable<any> {
 
 const NONE = new None();
 
-function make<T>(iterate: () => Iterable<T>, reverse: () => Iterable<T>): AIterable<T> {
+function make<T>(iterate: () => Iterable<T>, reverse?: () => Iterable<T>): AIterable<T> {
 
   class Iterable extends AIterable<T> {
 
@@ -234,12 +484,11 @@ function make<T>(iterate: () => Iterable<T>, reverse: () => Iterable<T>): AItera
       return itsIterator(iterate());
     }
 
-    reverse() {
-      return AIterable.from({
-        [Symbol.iterator]() {
-          return itsIterator(reverse());
-        }
-      });
+    reverse(): Iterable {
+      if (!reverse) {
+        return super.reverse();
+      }
+      return AIterable.from(makeIt(() => itsIterator(reverse()), () => this));
     }
 
   }

@@ -6,5 +6,6 @@ export * from './objects';
 export * from './reverse';
 export * from './revertible-iterable';
 export * from './termination';
+export * from './thru';
 export * from './transform';
 export * from './util';

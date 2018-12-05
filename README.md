@@ -250,16 +250,47 @@ Constructs an iterable containing this iterable's elements in reverse order.
 Corresponds to [Array.prototype.reverse()]. Note however, that the array counterpart reverses elements _in place_
 rather than creating a new array.
 
+The utility function counterpart operating over plain iterables is `reverseIt()`.
+
 ```TypeScript
-import { AIterable } from 'a-iterable';
+import { AIterable, reverseIt } from 'a-iterable';
 
 const numbers = [1, 2, 3, 4];
-const iter1 = AIterable.from(numbers);
+const iter = AIterable.from(numbers);
 
-iter1.reverse(); // [4, 3, 2, 1], `numbers` are also reverted.
+iter.reverse(); // 4, 3, 2, 1
+reverseIt(numbers); // Plain iterable counterpart
 ```
 
 [Array.prototype.reverse()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse
+
+
+### `thru()`
+
+Passes each element of this iterable trough a chain of transformation passes.
+
+The passes are preformed by [callThru()] function.
+
+The utility function counterpart operating over plain iterables is `thruIt()`.
+
+```TypeScript
+import { AIterable, passIf, thruIt } from 'a-iterable';
+
+const numbers = [1, 2, 3];
+const iter = AIterable.from(numbers);
+
+iter.thru(
+    passIf((n: number) => n > 1),
+    n => n * n,
+); // 4, 9
+thruIt(
+    passIf((n: number) => n > 1),
+    n => n * n,    
+); // Plain iterable counterpart
+```
+
+
+[callThru()]: https://github.io/surol/call-thru
 
 
 `extendIterable()`
