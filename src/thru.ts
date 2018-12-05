@@ -1,6 +1,4 @@
-import { callThru, nextCall, NextCall, nextEach, PassedThru } from 'call-thru';
-import { overNone } from './construction';
-import { flatMapIt, mapIt } from './transform';
+import { callThru, NextCall, nextEach, PassedThru } from 'call-thru';
 import Args = NextCall.Callee.Args;
 import Last = NextCall.LastOutcome;
 import Out = NextCall.Outcome;

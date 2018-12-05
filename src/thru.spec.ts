@@ -4,7 +4,7 @@ import { thruIt } from './thru';
 describe('thruIt', () => {
   it('transforms elements', () => {
 
-    const outcome = thruIt(
+    const outcome: Iterable<number> = thruIt(
         [1, 2, 3],
         n => n * n,
     );

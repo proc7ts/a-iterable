@@ -1,7 +1,9 @@
+import { passIf } from 'call-thru';
 import { AIterable, toAIterable } from './a-iterable';
 import { IterableClass } from './api';
 import { RevertibleIterable } from './revertible-iterable';
 import { augmentArrays } from './specs';
+import { thruIt } from './thru';
 import { itsIterator, makeIt } from './util';
 
 describe('AIterable', () => {
@@ -157,6 +159,7 @@ describe('AIterable', () => {
       expect([...iter.reverse()]).toEqual(elements.reverse());
     });
     it('reverts element with default implementation', () => {
+
       class DefaultIterable extends AIterable<number> {
 
         [Symbol.iterator](): Iterator<number> {
@@ -168,6 +171,37 @@ describe('AIterable', () => {
       const it = new DefaultIterable();
 
       expect([...it.reverse()]).toEqual(elements.reverse());
+    });
+    it('returns original elements when called for the second time', () => {
+      expect([...iter.reverse().reverse()]).toEqual([...iter]);
+    });
+  });
+
+  describe('thru', () => {
+    it('transforms elements', () => {
+
+      const outcome: AIterable<number> = iter.thru(
+          n => n + 1,
+      );
+
+      expect([...outcome]).toEqual([12, 23, 34]);
+    });
+    it('removes skipped elements', () => {
+
+      const outcome: Iterable<number> = iter.thru(
+          passIf((n: number) => n > 20),
+          n => n + 1,
+      );
+
+      expect([...outcome]).toEqual([23, 34]);
+    });
+    it('transforms elements in reverse order', () => {
+
+      const outcome: AIterable<number> = iter.thru(
+          n => n + 1,
+      ).reverse();
+
+      expect([...outcome]).toEqual([34, 23, 12]);
     });
   });
 
