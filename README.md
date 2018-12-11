@@ -35,7 +35,7 @@ and does not add too much of the code to the final bundle.
 Example
 -------
 
-```TypeScript
+```typescript
 import { AIterable } from 'a-iterable';
 
 const it = AIterable.of({
@@ -81,7 +81,7 @@ Abstract `Iterable` implementation with array-like iteration operations.
 
 Returns an iterable without elements.
 
-```TypeScript
+```typescript
 import { AIterable } from 'a-iterable';
 
 expect(AIterable.none()[Symbol.iterator]().next().done).toBe(true);
@@ -92,7 +92,7 @@ expect(AIterable.none()[Symbol.iterator]().next().done).toBe(true);
 
 Checks whether the given iterable is an array-like one.
 
-```TypeScript
+```typescript
 import { AIterable } from 'a-iterable';
 
 AIterable.is([1, 2, 3]); // true
@@ -104,7 +104,7 @@ AIterable.is({ *[Symbol.iterator]() { yield 'something'; } }); // false
 
 Creates an `AIterable` instance that iterates over the same elements as the given one if necessary.
 
-```TypeScript
+```typescript
 import { AIterable } from 'a-iterable';
 
 AIterable.of([1, 2, 3]);
@@ -126,7 +126,7 @@ and iterating over its elements. This way new array instances won't be created.
 
 Uses [reverseIt()] function to reverse the constructed iterable.
 
-```TypeScript
+```typescript
 import { AIterable, itsFirst } from 'a-iterable';
 
 itsFirst(AIterable.from([1, 2, 3]).filter(x => x > 1)); // 2
@@ -138,7 +138,7 @@ Tests whether all elements pass the test implemented by the provided function. C
 
 The utility function counterpart operating over plain iterables is `itsEvery()`.
 
-```TypeScript
+```typescript
 import { AIterable, itsEvery } from 'a-iterable';
 
 const numbers = AIterable.from([1, 30, 39, 29, 10, 13]);
@@ -158,7 +158,7 @@ Creates an iterable with all elements that pass the test implemented by the prov
 
 The utility function counterpart operating over plain iterables is `filterIt()`.
 
-```TypeScript
+```typescript
 import { AIterable, filterIt } from 'a-iterable';
 
 const words = AIterable.of(['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present']);
@@ -177,7 +177,7 @@ First maps each element using a mapping function, then flattens the result into 
 
 The utility function counterpart operating over plain iterables is `flatMapIt()`.
 
-```TypeScript
+```typescript
 import { AIterable, flatMapIt } from 'a-iterable';
 
 const numbers = AIterable.of([1, 2, 3]);
@@ -195,7 +195,7 @@ Performs the given action for each element. Corresponds to [Array.prototype.forE
 
 The utility function counterpart operating over plain iterables is `itsEach()`.
 
-```TypeScript
+```typescript
 import { AIterable, itsEach } from 'a-iterable';
 
 AIterable.is([1, 2, 3]).forEach(console.log); // 1, 2, 3
@@ -212,7 +212,7 @@ Corresponds to [Array.prototype.map()].
 
 The utility function counterpart operating over plain iterables is `mapIt()`.
 
-```TypeScript
+```typescript
 import { AIterable, mapIt } from 'a-iterable';
 
 const numbers = AIterable.of([1, 4, 9, 16]);
@@ -231,7 +231,7 @@ Corresponds to [Array.prototype.reduce()].
 
 The utility function counterpart operating over plain iterables is `itsReduction()`.
 
-```TypeScript
+```typescript
 import { AIterable, itsReduction } from 'a-iterable';
 
 const numbers = AIterable.of([1, 2, 3, 4]);
@@ -252,7 +252,7 @@ rather than creating a new array.
 
 The utility function counterpart operating over plain iterables is `reverseIt()`.
 
-```TypeScript
+```typescript
 import { AIterable, reverseIt } from 'a-iterable';
 
 const numbers = [1, 2, 3, 4];
@@ -273,7 +273,7 @@ The passes are preformed by [callThru()] function.
 
 The utility function counterpart operating over plain iterables is `thruIt()`.
 
-```TypeScript
+```typescript
 import { AIterable, passIf, thruIt } from 'a-iterable';
 
 const numbers = [1, 2, 3];
@@ -298,7 +298,7 @@ thruIt(
 
 Extends an iterable class with `AIterable` API.
 
-```TypeScript
+```typescript
 import { AIterable, toAIterable } from 'a-iterable';
 
 class BaseIterable implements Iterable<number> {
@@ -324,7 +324,7 @@ Utilities
 
 Checks whether the given iterable is empty.
 
-```TypeScript
+```typescript
 import { AIterable, itsEmpty } from 'a-iterable';  
 
 !itsEmpty(AIterable.from([1, 2, 3]).filter(x => x === 2)); // `Array.includes()` analog
@@ -335,7 +335,7 @@ import { AIterable, itsEmpty } from 'a-iterable';
 
 Returns the first element of the given iterable.
 
-```TypeScript
+```typescript
 import { AIterable, itsFirst } from 'a-iterable';  
 
 itsFirst(AIterable.from([1, 2, 3]).filter(x => x === 2)); // `Array.find()` analog
@@ -349,7 +349,7 @@ Returns the last element of the given iterable.
 If the given `iterable` is an array-like structure, then just returns its last element. If it is revertible,
 then extracts the first element of the reverted one. Otherwise iterates over elements to find the last one.
 
-```TypeScript
+```typescript
 import { itsLast } from 'a-iterable';
 
 itsLast([1, 2, 3]); // 3
@@ -362,7 +362,7 @@ Starts iteration over the given iterable.
 
 This is a shortcut for `iterable[Symbol.iterator]` to make it friendlier to minification.
 
-```TypeScript
+```typescript
 import { itsIterator } from 'a-iterable';
 
 itsIterator([1, 2, 3]).next().value; // 1
@@ -373,7 +373,7 @@ itsIterator([1, 2, 3]).next().value; // 1
 
 Creates custom iterable.
 
-```TypeScript
+```typescript
 import { itsIterator, makeIt } from 'a-iterable';
 
 const array = [1, 2, 3];
@@ -387,7 +387,7 @@ makeIt(() => itsIterable(array), () => [...array].reverse()); // Revertible iter
 
 Builds an revertible iterable over elements of array-like structure, like `Array` or DOM `NodeList`.
 
-```TypeScript
+```typescript
 import { overArray } from 'a-iterable';
 
 expect([...overArray([1, 2, 3])]).toEqual([1, 2, 3]);
@@ -399,7 +399,7 @@ expect([...overArray([1, 2, 3]).reverse()]).toEqual([3, 2, 1]);
 
 Builds an iterable over the key/value entries of the given object.
 
-```TypeScript
+```typescript
 import { overEntries } from 'a-iterable';
 
 overEntries({
@@ -414,7 +414,7 @@ overEntries({
 
 Builds an iterable over the keys of the given object.
 
-```TypeScript
+```typescript
 import { overKeys } from 'a-iterable';
 
 overKeys({
@@ -429,7 +429,7 @@ overKeys({
 
 Returns an iterable without elements revertible to itself.
 
-```TypeScript
+```typescript
 import { overNone } from 'a-iterable';
 
 expect([...overNone()]).toEqual([]);
@@ -447,7 +447,7 @@ If the `source` iterable is an array, then uses [reverseArray()] function to rev
 If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed one.
 Otherwise stores elements to array and reverts them with [reverseArray()] function.
 
-```TypeScript
+```typescript
 import { reverseIt } from 'a-iterable';
 
 reverseIt([1, 2 ,3]); // [3, 2, 1]
@@ -460,7 +460,7 @@ reverseIt([1, 2 ,3]); // [3, 2, 1]
 
 Constructs an iterable of array-like structure elements in reverse order.
 
-```TypeScript
+```typescript
 import { reverseArray } from 'a-iterable';
 
 reverseArray([1, 2 ,3]); // [3, 2, 1]
