@@ -290,7 +290,7 @@ thruIt(
 ```
 
 
-[callThru()]: https://github.io/surol/call-thru
+[callThru()]: https://npmjs.com/package/call-thru
 
 
 `extendIterable()`
