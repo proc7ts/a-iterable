@@ -8,6 +8,7 @@ const mainConfig = makeConfig(
     baseConfig('tsconfig.main.json'),
     {
       output: {
+        format: 'umd',
         file: pkg.main,
       },
     });
@@ -16,7 +17,6 @@ const esmConfig = makeConfig(
     baseConfig('tsconfig.esm.json'),
     {
       output: {
-        format: 'esm',
         file: pkg.module,
       },
     });
@@ -25,7 +25,6 @@ const esm5Config = makeConfig(
     baseConfig('tsconfig.umd.json'),
     {
       output: {
-        format: 'esm',
         file: pkg.esm5,
       },
     });
@@ -64,7 +63,7 @@ function baseConfig(tsconfig) {
       'tslib',
     ],
     output: {
-      format: 'umd',
+      format: 'esm',
       sourcemap: true,
       name: 'aIterable',
       globals: {
