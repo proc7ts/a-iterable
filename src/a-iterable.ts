@@ -34,9 +34,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @returns An empty iterable instance.
    */
   static none<T>(): AIterable<T> {
-    // tslint:disable:no-use-before-declare
-    return NONE;
-    // tslint:enable:no-use-before-declare
+    return NONE; // tslint:disable-line:no-use-before-declare
   }
 
   /**
@@ -474,7 +472,7 @@ class None extends AIterable<any> {
 
 }
 
-const NONE = new None();
+const NONE = /*#__PURE__*/ new None();
 
 function make<T>(iterate: () => Iterable<T>, reverse?: () => Iterable<T>): AIterable<T> {
 
