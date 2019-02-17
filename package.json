@@ -17,7 +17,6 @@
     "url": "https://github.com/surol/a-iterable/issues"
   },
   "main": "dist/a-iterable.js",
-  "browser": "dist/a-iterable.umd.js",
   "module": "dist/a-iterable.mjs",
   "esm5": "dist/a-iterable.esm5.js",
   "typings": "index.d.ts",
