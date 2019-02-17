@@ -1,10 +1,34 @@
 import nodeResolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import sourcemaps from 'rollup-plugin-sourcemaps';
-import { terser } from 'rollup-plugin-terser';
 import typescript from 'rollup-plugin-typescript2';
-import { uglify } from 'rollup-plugin-uglify';
 import pkg from './package.json';
+
+const mainConfig = makeConfig(
+    baseConfig('tsconfig.main.json'),
+    {
+      output: {
+        file: pkg.main,
+      },
+    });
+
+const esmConfig = makeConfig(
+    baseConfig('tsconfig.esm.json'),
+    {
+      output: {
+        format: 'esm',
+        file: pkg.module,
+      },
+    });
+
+const esm5Config = makeConfig(
+    baseConfig('tsconfig.umd.json'),
+    {
+      output: {
+        format: 'esm',
+        file: pkg.esm5,
+      },
+    });
 
 function makeConfig(baseConfig, ...configs) {
   return configs.reduce(
@@ -17,35 +41,13 @@ function makeConfig(baseConfig, ...configs) {
       baseConfig);
 }
 
-const uglifyConfig = {
-  plugins: [
-    uglify({
-      compress: {
-        typeofs: false,
-      },
-      output: {
-        ascii_only: true,
-      },
-    }),
-  ]
-};
-
-const terserConfig = {
-  plugins: [
-    terser({
-      module: true,
-      keep_classnames: true,
-    }),
-  ],
-};
-
 function baseConfig(tsconfig) {
   return {
     plugins: [
       commonjs(),
       typescript({
         typescript: require('typescript'),
-        tsconfig: tsconfig,
+        tsconfig,
         cacheRoot: 'target/.rts2_cache',
         useTsconfigDeclarationDir: true,
       }),
@@ -72,35 +74,6 @@ function baseConfig(tsconfig) {
     },
   };
 }
-
-const mainConfig = makeConfig(
-    baseConfig('tsconfig.main.json'),
-    {
-      output: {
-        file: pkg.main,
-      },
-    },
-    terserConfig);
-
-const esmConfig = makeConfig(
-    baseConfig('tsconfig.esm.json'),
-    {
-      output: {
-        format: 'esm',
-        file: pkg.module,
-      },
-    },
-    terserConfig);
-
-const esm5Config = makeConfig(
-    baseConfig('tsconfig.umd.json'),
-    {
-      output: {
-        format: 'esm',
-        file: pkg.esm5,
-      },
-    },
-    terserConfig);
 
 export default [
   mainConfig,
