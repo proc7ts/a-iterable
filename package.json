@@ -24,11 +24,11 @@
     "tslib": "^1.9.0"
   },
   "peerDependencies": {
-    "call-thru": "^2.1.0"
+    "call-thru": "^2.2.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.5",
-    "call-thru": "^2.1.0",
+    "call-thru": "^2.2.0",
     "codecov": "^3.2.0",
     "fs-extra": "^7.0.1",
     "jest": "^23.6.0",

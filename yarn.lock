@@ -533,7 +533,7 @@ cache-base@^1.0.1:
     union-value "^1.0.0"
     unset-value "^1.0.0"
 
-call-thru@^2.1.0:
+call-thru@^2.2.0:
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/call-thru/-/call-thru-2.2.0.tgz#032af8f79cfbcbc2e747d262e6e4817b1606c9fd"
   integrity sha512-3MMnbCzEfv5tN9jLmw7REOovlxkl4kgRhDtZzd0O+XGmEIbzkzVDHo35j9W7cfb91aF+weGbUeJHVVEGVbkKzA==
