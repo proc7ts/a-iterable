@@ -1,6 +1,7 @@
 import { passIf } from 'call-thru';
 import { AIterable, toAIterable } from './a-iterable';
 import { IterableClass } from './api';
+import { reverseIt } from './reverse';
 import { RevertibleIterable } from './revertible-iterable';
 import { augmentArrays } from './specs';
 import { itsIterator, makeIt } from './util';
@@ -201,6 +202,14 @@ describe('AIterable', () => {
       ).reverse();
 
       expect([...outcome]).toEqual([34, 23, 12]);
+    });
+    it('transforms elements in original order when reversed twice', () => {
+
+      const outcome: AIterable<number> = iter.thru(
+          n => n + 1,
+      ).reverse().reverse();
+
+      expect([...outcome]).toEqual([12, 23, 34]);
     });
   });
 
