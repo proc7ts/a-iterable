@@ -11,6 +11,22 @@ import { makeIt } from './util';
  * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
  * be returned.
  */
+export function filterIt<T>(source: Iterable<T>, test: (element: T) => boolean): Iterable<T>;
+
+/**
+ * Creates an iterable with all `source` iterable elements extending the given type.
+ *
+ * @param <T> A type of source elements
+ * @param <R> Target type.
+ * @param source A source iterable.
+ * @param test A predicate function to test that element extends the type `R`. Returns `true` to keep the element, or
+ * `false` otherwise. It accepts the tested element as the only parameter.
+ *
+ * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
+ * be returned.
+ */
+export function filterIt<T, R extends T>(source: Iterable<T>, test: (element: T) => element is R): Iterable<R>;
+
 export function filterIt<T>(source: Iterable<T>, test: (element: T) => boolean): Iterable<T> {
   return makeIt(function* () {
     for (const element of source) {
