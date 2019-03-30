@@ -15,8 +15,8 @@ describe('thruIt', () => {
 
     const outcome: Iterable<number> = thruIt(
         [1, 2, 3],
-        passIf((n: number) => n > 1),
-        n => n * n,
+        passIf(n => n > 1),
+        (n: number) => n * n,
     );
 
     expect([...outcome]).toEqual([4, 9]);

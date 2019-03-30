@@ -189,8 +189,8 @@ describe('AIterable', () => {
     it('removes skipped elements', () => {
 
       const outcome: Iterable<number> = iter.thru(
-          passIf((n: number) => n > 20),
-          n => n + 1,
+          passIf(n => n > 20),
+          (n: number) => n + 1,
       );
 
       expect([...outcome]).toEqual([23, 34]);
