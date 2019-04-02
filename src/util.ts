@@ -14,6 +14,17 @@ export function itsIterator<T>(iterable: Iterable<T>): Iterator<T> {
 }
 
 /**
+ * Builds an iterable iterator over the given `iterable`.
+ *
+ * @param iterable An iterable to iterate over.
+ *
+ * @return An iterator.
+ */
+export function itsIterable<T>(iterable: Iterable<T>): IterableIterator<T> {
+  return function* () { yield* iterable; }();
+}
+
+/**
  * Creates custom iterable.
  *
  * @param iterate A no-arg function constructing an iterator.

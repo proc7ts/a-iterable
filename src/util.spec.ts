@@ -1,5 +1,5 @@
 import { itsRevertible } from './revertible-iterable';
-import { itsIterator, makeIt } from './util';
+import { itsIterable, itsIterator, makeIt } from './util';
 
 describe('itsIterator', () => {
   it('accesses iterator', () => {
@@ -11,6 +11,20 @@ describe('itsIterator', () => {
     };
 
     expect(itsIterator(iterable).next()).toEqual({ done: false, value: 1 });
+  });
+});
+
+describe('itsIterable', () => {
+  it('constructs iterable iterator', () => {
+
+    const iterable: Iterable<number> = {
+      * [Symbol.iterator]() {
+        yield 1;
+        yield 2;
+      }
+    };
+
+    expect([...itsIterable(iterable)]).toEqual([1, 2]);
   });
 });
 
