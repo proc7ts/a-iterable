@@ -21,7 +21,7 @@
   "esm5": "dist/a-iterable.esm5.js",
   "typings": "index.d.ts",
   "dependencies": {
-    "call-thru": "^2.4.0",
+    "call-thru": "^2.5.0-rc.1",
     "tslib": "^1.9.0"
   },
   "devDependencies": {
@@ -37,7 +37,7 @@
     "rollup-plugin-typescript2": "^0.21.1",
     "ts-jest": "^24.0.2",
     "tslint": "^5.16.0",
-    "typescript": "^3.4.5"
+    "typescript": "^3.5.0-rc"
   },
   "scripts": {
     "build": "rollup --config ./rollup.config.js",
