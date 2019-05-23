@@ -24,7 +24,7 @@ const API_METHODS: (keyof ArrayLikeIterable<any>)[] = [
 /**
  * Abstract `Iterable` implementation with array-like iteration operations.
  *
- * @param <T> A type of elements.
+ * @typeparam T A type of elements.
  */
 export abstract class AIterable<T> implements ArrayLikeIterable<T> {
 
@@ -123,7 +123,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    *
    * Corresponds to `Array.prototype.filter()`.
    *
-   * @param <R> Target type.
+   * @typeparam R Target type.
    * @param test A predicate function to test that element extends the type R. Returns `true` to keep the element, or
    * `false` otherwise. It accepts the tested element as the only parameter.
    *
@@ -146,7 +146,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * Note that the overridden `flatMap` method of `ArrayLikeIterable` expects an array to be returned from `convert`
    * callback, while in this method it may return arbitrary iterable.
    *
-   * @param <R> A type of converted elements.
+   * @typeparam R A type of converted elements.
    * @param convert A function that produces a new iterable, taking the source element as the only parameter.
    *
    * @returns A new iterable with each element being the flattened result of the `convert` function call.
@@ -174,7 +174,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    *
    * Corresponds to `Array.prototype.map()`.
    *
-   * @param <R> A type of converted elements.
+   * @typeparam R A type of converted elements.
    * @param convert A function that produces an element of the new iterable, taking the source element as the only
    * parameter.
    *
@@ -191,7 +191,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    *
    * Corresponds to `Array.prototype.reduce()`.
    *
-   * @param <R> A type of reduced value.
+   * @typeparam R A type of reduced value.
    * @param reducer A function to apply the value returned from the previous `reducer` call and to each element.
    * @param initialValue Initial value passed to the first `reducer` call.
    *
@@ -498,8 +498,8 @@ function make<T>(iterate: () => Iterable<T>, reverse?: () => Iterable<T>): AIter
 /**
  * Extends an iterable class with `AIterable` API.
  *
- * @param <C> A type of iterable class to extend.
- * @param <E> A type of elements to iterate.
+ * @typeparam C A type of iterable class to extend.
+ * @typeparam E A type of elements to iterate.
  * @param iterableClass A class to extend.
  *
  * @returns A new class extending original `iterableClass` and implementing the missing `AIterable` methods.
