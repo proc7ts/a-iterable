@@ -30,7 +30,7 @@ const NONE: RevertibleIterable<any> = {
 /**
  * Returns an iterable without elements.
  *
- * @param <T> A type of constructed iterable elements.
+ * @typeparam T A type of constructed iterable elements.
  *
  * @returns An empty iterable instance revertible to itself.
  */

@@ -3,7 +3,7 @@ import { RevertibleIterable } from './revertible-iterable';
 /**
  * An iterable with array-like iteration operations. Both `Array` and `AIterable` implement it.
  *
- * @param <T> A type of elements.
+ * @typeparam T A type of elements.
  */
 export interface ArrayLikeIterable<T> extends RevertibleIterable<T> {
 
