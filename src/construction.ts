@@ -1,3 +1,6 @@
+/**
+ * @module a-iterable
+ */
 import { reverseArray } from './reverse';
 import { RevertibleIterable } from './revertible-iterable';
 import { makeIt } from './util';
@@ -5,7 +8,7 @@ import { makeIt } from './util';
 /**
  * Builds an iterable over elements of array-like structure.
  *
- * @param array An array-like structure. E.g. `Array`, DOM `NodeList`, etc.
+ * @param array  An array-like structure. E.g. `Array`, DOM `NodeList`, etc.
  *
  * @returns A revertible iterable over array elements.
  */
@@ -30,7 +33,7 @@ const NONE: RevertibleIterable<any> = {
 /**
  * Returns an iterable without elements.
  *
- * @typeparam T A type of constructed iterable elements.
+ * @typeparam T  A type of constructed iterable elements.
  *
  * @returns An empty iterable instance revertible to itself.
  */

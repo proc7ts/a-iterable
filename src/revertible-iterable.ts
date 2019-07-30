@@ -1,4 +1,7 @@
 /**
+ * @module a-iterable
+ */
+/**
  * An iterable which elements order can be reversed.
  *
  * Arrays implement this interface.
@@ -22,7 +25,7 @@ export interface RevertibleIterable<T> extends Iterable<T> {
  *
  * This is always `true` for arrays.
  *
- * @param iterable Iterable to check.
+ * @param iterable  Iterable to check.
  *
  * @returns `true` if `iterable` has a `reverse` property, or `false` otherwise.
  */

@@ -1,3 +1,6 @@
+/**
+ * @module a-iterable
+ */
 import { overArray } from './construction';
 import { RevertibleIterable } from './revertible-iterable';
 import { mapIt } from './transform';
@@ -8,7 +11,7 @@ import { itsIterator, makeIt } from './util';
  *
  * A list of keys is constructed using `Reflect.ownKeys()`.
  *
- * @param target An object to select keys from.
+ * @param target  An object to select keys from.
  */
 export function overKeys<T extends object>(target: T): RevertibleIterable<keyof T> {
   return overArray(Reflect.ownKeys(target) as (keyof T)[]);
@@ -24,7 +27,7 @@ export type ObjectEntry<T, K extends keyof T = keyof T> = [K, T[K]];
  *
  * A list of keys is constructed using `Reflect.ownKeys()`.
  *
- * @param target An object to select keys and values from.
+ * @param target  An object to select keys and values from.
  */
 export function overEntries<T extends object>(target: T): RevertibleIterable<ObjectEntry<T>> {
 

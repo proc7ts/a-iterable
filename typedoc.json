@@ -1,0 +1,8 @@
+{
+  "exclude": ["**/specs.ts"],
+  "excludeNotExported": true,
+  "mode": "file",
+  "name": "A-Iterable",
+  "out": "./target/typedoc",
+  "tsconfig": "tsconfig.main.json"
+}

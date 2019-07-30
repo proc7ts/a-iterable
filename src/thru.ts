@@ -1,8 +1,18 @@
+/**
+ * @module a-iterable
+ */
 import { callThru, NextCall, nextEach, PassedThru } from 'call-thru';
 import Last = NextCall.LastResult;
 import Out = NextCall.Outcome;
 import Result = NextCall.CallResult;
 
+/**
+ * Passes each element of the given iterable trough a chain of transformation passes.
+ *
+ * The passes are preformed by `callThru()` function.
+ *
+ * @returns Next iterable of transformed elements.
+ */
 export function thruIt<T, R1>(
     it: Iterable<T>,
     fn: (this: void, arg: T) => Last<R1>,
@@ -215,13 +225,6 @@ export function thruIt<
     Out<R6, Out<R7, Out<R8, Out<R9, Out<R10,
         Out<R11, R12>>>>>>>>>>>>>;
 
-/**
- * Passes each element of the given iterable trough a chain of transformation passes.
- *
- * The passes are preformed by `callThru()` function.
- *
- * @returns Next iterable of transformed elements.
- */
 export function thruIt<
     T, R1 extends Result<P2>,
     P2 extends any[], R2 extends Result<P3>,

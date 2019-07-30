@@ -1,9 +1,11 @@
 A-Iterable
-=========
+==========
 
 [![NPM][npm-image]][npm-url]
 [![CircleCI][ci-image]][ci-url]
 [![codecov][codecov-image]][codecov-url]
+[![GitHub Project][github-image]][github-url]
+[![API Documentation][api-docs-image]][api-docs-url]
 
 `AIterable` is an abstract implementation of ES6 `Iterable` interface with methods of `Array`, like `forEach`, `reduce`,
 `filter`, `map`, etc. Unlike arrays these methods return `AIterable` instances instead of arrays.
@@ -24,12 +26,16 @@ and does not add too much of the code to the final bundle.
 
 [utilities]: #utilities
 [core-js]: https://www.npmjs.com/package/core-js
-[npm-image]: https://img.shields.io/npm/v/a-iterable.svg
+[npm-image]: https://img.shields.io/npm/v/a-iterable.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/a-iterable
-[ci-image]:https://circleci.com/gh/surol/a-iterable.svg?style=shield
-[ci-url]:https://circleci.com/gh/surol/a-iterable  
+[ci-image]: https://img.shields.io/circleci/build/github/surol/a-iterable?logo=circleci
+[ci-url]: https://img.shields.io/codecov/c/github/surol/a-iterable?logo=codecov
 [codecov-image]: https://codecov.io/gh/surol/a-iterable/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/surol/a-iterable 
+[codecov-url]: https://codecov.io/gh/surol/a-iterable
+[github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
+[github-url]: https://github.com/surol/a-iterable
+[api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
+[api-docs-url]: https://surol.github.io/a-iterable/
 
 
 Example

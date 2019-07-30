@@ -1,3 +1,6 @@
+/**
+ * @module a-iterable
+ */
 import { isArrayLike } from './api';
 import { itsRevertible, RevertibleIterable } from './revertible-iterable';
 import { itsIterator, makeIt } from './util';
@@ -10,7 +13,7 @@ import { itsIterator, makeIt } from './util';
  * If the `source` iterable is revertible, then uses its `reverse()` method to revert the constructed one.
  * Otherwise stores elements to array and reverts them with `reverseArray()` function.
  *
- * @param source A source iterable.
+ * @param source  A source iterable.
  *
  * @returns An iterable of the `source` elements in reverse order.
  */
@@ -30,7 +33,7 @@ export function reverseIt<T>(source: Iterable<T> | RevertibleIterable<T> | Array
 /**
  * Constructs an iterable of array-like structure elements in reverse order.
  *
- * @param array Source array.
+ * @param array  Source array.
  *
  * @returns An iterable of the `source` elements in reverse order.
  */

@@ -1,3 +1,6 @@
+/**
+ * @module a-iterable
+ */
 import { NextCall, PassedThru } from 'call-thru';
 import { IterableClass, IterableElement } from './api';
 import { ArrayLikeIterable } from './array-like-iterable';
@@ -24,7 +27,7 @@ const API_METHODS: (keyof ArrayLikeIterable<any>)[] = [
 /**
  * Abstract `Iterable` implementation with array-like iteration operations.
  *
- * @typeparam T A type of elements.
+ * @typeparam T  A type of elements.
  */
 export abstract class AIterable<T> implements ArrayLikeIterable<T> {
 
@@ -40,7 +43,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
   /**
    * Checks whether the given iterable is an array-like one.
    *
-   * @param source An iterable to check.
+   * @param source  An iterable to check.
    *
    * @returns `true` is the `source` has all `ArrayLikeIterable` methods (like `Array` or `AIterable` instance),
    * or `false` otherwise.
@@ -50,21 +53,21 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
   }
 
   /**
-   * Creates an `AIterable` instance that iterates over the same elements as the given one if necessary.
+   * Creates an [[AIterable]] instance that iterates over the same elements as the given one if necessary.
    *
-   * @param source A source array-like iterable.
+   * @param source  A source array-like iterable.
    *
    * @return A `source` itself.
    */
   static of<T>(source: ArrayLikeIterable<T>): typeof source;
 
   /**
-   * Creates an `AIterable` instance that iterates over the same elements as the given one if necessary.
+   * Creates an [[AIterable]] instance that iterates over the same elements as the given one if necessary.
    *
-   * @param source A source iterable.
+   * @param source  A source iterable.
    *
    * @return Either `source` itself if it implements `ArrayLikeIterable` already (see `is()` method),
-   * or new `AIterable` instance iterating over the `source`.
+   * or new [[AIterable]] instance iterating over the `source`.
    */
   static of<T>(source: Iterable<T>): AIterable<T>;
 
@@ -78,9 +81,9 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
   /**
    * Creates an `AIterable` instance that iterates over the same elements as the given one.
    *
-   * Uses `reverseIt()` function to reverse the constructed iterable.
+   * Uses [[reverseIt]] function to reverse the constructed iterable.
    *
-   * @param source A source iterable.
+   * @param source  A source iterable.
    *
    * @return Always new `AIterable` instance.
    */
@@ -95,7 +98,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    *
    * Corresponds to `Array.prototype.every()`.
    *
-   * @param test A predicate function to test each element. Returns `true` to continue tests, or `false` to stop it
+   * @param test  A predicate function to test each element. Returns `true` to continue tests, or `false` to stop it
    * and return `false` from the method call. It accepts the tested element as the only parameter.
    *
    * @returns `true` if the `test` function returned a truthy value for every element, or `false` otherwise.
@@ -110,11 +113,11 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    *
    * Corresponds to `Array.prototype.filter()`.
    *
-   * @param test A predicate function to test each element. Returns `true` to keep the element, or `false` otherwise.
+   * @param test  A predicate function to test each element. Returns `true` to keep the element, or `false` otherwise.
    * It accepts the tested element as the only parameter.
    *
-   * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
-   * be returned.
+   * @return A new [[AIterable]] with the elements that pass the test. If no elements passed the test, an empty iterable
+   * will be returned.
    */
   filter(test: (element: T) => boolean): AIterable<T>;
 
@@ -123,12 +126,12 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    *
    * Corresponds to `Array.prototype.filter()`.
    *
-   * @typeparam R Target type.
-   * @param test A predicate function to test that element extends the type R. Returns `true` to keep the element, or
+   * @typeparam R  Target type.
+   * @param test  A predicate function to test that element extends the type R. Returns `true` to keep the element, or
    * `false` otherwise. It accepts the tested element as the only parameter.
    *
-   * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
-   * be returned.
+   * @return A new [[AIterable]] with the elements that pass the test. If no elements passed the test, an empty iterable
+   * will be returned.
    */
   filter<R extends T>(test: (element: T) => element is R): AIterable<R>;
 
@@ -146,10 +149,10 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * Note that the overridden `flatMap` method of `ArrayLikeIterable` expects an array to be returned from `convert`
    * callback, while in this method it may return arbitrary iterable.
    *
-   * @typeparam R A type of converted elements.
-   * @param convert A function that produces a new iterable, taking the source element as the only parameter.
+   * @typeparam R  A type of converted elements.
+   * @param convert  A function that produces a new iterable, taking the source element as the only parameter.
    *
-   * @returns A new iterable with each element being the flattened result of the `convert` function call.
+   * @returns A new [[AIterable]] with each element being the flattened result of the `convert` function call.
    */
   flatMap<R>(convert: (element: T) => Iterable<R>): AIterable<R> {
     return make(
@@ -162,7 +165,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    *
    * Corresponds to `Array.prototype.forEach()`.
    *
-   * @param action An action to perform on each iterable element. This is a function accepting an element as its only
+   * @param action  An action to perform on each iterable element. This is a function accepting an element as its only
    * parameter.
    */
   forEach(action: (element: T) => void) {
@@ -174,11 +177,11 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    *
    * Corresponds to `Array.prototype.map()`.
    *
-   * @typeparam R A type of converted elements.
-   * @param convert A function that produces an element of the new iterable, taking the source element as the only
+   * @typeparam R  A type of converted elements.
+   * @param convert  A function that produces an element of the new iterable, taking the source element as the only
    * parameter.
    *
-   * @return A new iterable with each element being the result of the `convert` function call.
+   * @return A new [[AIterable]] with each element being the result of the `convert` function call.
    */
   map<R>(convert: (element: T) => R): AIterable<R> {
     return make(
@@ -191,9 +194,9 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    *
    * Corresponds to `Array.prototype.reduce()`.
    *
-   * @typeparam R A type of reduced value.
-   * @param reducer A function to apply the value returned from the previous `reducer` call and to each element.
-   * @param initialValue Initial value passed to the first `reducer` call.
+   * @typeparam R  A type of reduced value.
+   * @param reducer  A function to apply the value returned from the previous `reducer` call and to each element.
+   * @param initialValue  Initial value passed to the first `reducer` call.
    *
    * @return Reduced value returned from the last `reducer` call, or `initialValue` if there is no elements in this
    * iterable.
@@ -205,9 +208,9 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
   /**
    * Constructs an iterable containing this iterable's elements in reverse order.
    *
-   * By default this method converts iterable to array and then reverts its elements with `reverseArray()` function.
+   * By default this method converts iterable to array and then reverts its elements with [[reverseArray]] function.
    *
-   * @return Reversed iterable instance.
+   * @return Reversed [[AIterable]] instance.
    */
   reverse(): AIterable<T> {
 
@@ -216,6 +219,13 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
     return make(() => reverseArray([...elements]), () => this);
   }
 
+  /**
+   * Passes each element of this iterable trough a chain of transformation passes.
+   *
+   * The passes are preformed by `callThru()` function.
+   *
+   * @returns Next iterable of transformed elements.
+   */
   thru<R1>(
       fn: (this: void, arg: T) => Last<R1>,
   ): AIterable<PassedThru.Item<R1>>;
@@ -416,13 +426,6 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
       Out<R6, Out<R7, Out<R8, Out<R9, Out<R10,
           Out<R11, R12>>>>>>>>>>>>>;
 
-  /**
-   * Passes each element of this iterable trough a chain of transformation passes.
-   *
-   * The passes are preformed by `callThru()` function.
-   *
-   * @returns Next iterable of transformed elements.
-   */
   thru<
       R1 extends Result<P2>,
       P2 extends any[], R2 extends Result<P3>,
@@ -498,11 +501,11 @@ function make<T>(iterate: () => Iterable<T>, reverse?: () => Iterable<T>): AIter
 /**
  * Extends an iterable class with `AIterable` API.
  *
- * @typeparam C A type of iterable class to extend.
- * @typeparam E A type of elements to iterate.
- * @param iterableClass A class to extend.
+ * @typeparam C  A type of iterable class to extend.
+ * @typeparam E  A type of elements to iterate.
+ * @param iterableClass  A class to extend.
  *
- * @returns A new class extending original `iterableClass` and implementing the missing `AIterable` methods.
+ * @returns A new class extending original `iterableClass` and implementing the missing [[AIterable]] methods.
  */
 export function toAIterable<C extends IterableClass<any, E>, E = IterableElement<InstanceType<C>>>(
     iterableClass: C):

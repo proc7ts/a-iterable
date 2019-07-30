@@ -1,3 +1,6 @@
+/**
+ * @module a-iterable
+ */
 import { RevertibleIterable } from './revertible-iterable';
 
 /**
@@ -5,7 +8,7 @@ import { RevertibleIterable } from './revertible-iterable';
  *
  * This is a shortcut for `iterable[Symbol.iterator]` to make it friendlier to minification.
  *
- * @param iterable An iterable to iterate over.
+ * @param iterable  An iterable to iterate over.
  *
  * @return An iterator.
  */
@@ -16,7 +19,7 @@ export function itsIterator<T>(iterable: Iterable<T>): Iterator<T> {
 /**
  * Builds an iterable iterator over the given `iterable`.
  *
- * @param iterable An iterable to iterate over.
+ * @param iterable  An iterable to iterate over.
  *
  * @return An iterator.
  */
@@ -27,8 +30,8 @@ export function itsIterable<T>(iterable: Iterable<T>): IterableIterator<T> {
 /**
  * Creates custom iterable.
  *
- * @param iterate A no-arg function constructing an iterator.
- * @param reverse When `undefined` or unspecified the created iterable won't be reversible.
+ * @param iterate  A no-arg function constructing an iterator.
+ * @param reverse  When `undefined` or unspecified the created iterable won't be reversible.
  *
  * @returns New iterable.
  */
@@ -37,8 +40,8 @@ export function makeIt<T>(iterate: (this: Iterable<T>) => Iterator<T>, reverse?:
 /**
  * Creates custom revertible iterable.
  *
- * @param iterate A no-arg function constructing an iterator.
- * @param reverse A no-arg function constructing a reverse iterable.
+ * @param iterate  A no-arg function constructing an iterator.
+ * @param reverse  A no-arg function constructing a reverse iterable.
  *
  * @returns New reversible iterable.
  */
