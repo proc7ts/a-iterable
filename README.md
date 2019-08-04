@@ -29,7 +29,7 @@ and does not add too much of the code to the final bundle.
 [npm-image]: https://img.shields.io/npm/v/a-iterable.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/a-iterable
 [ci-image]: https://img.shields.io/circleci/build/github/surol/a-iterable?logo=circleci
-[ci-url]: https://img.shields.io/codecov/c/github/surol/a-iterable?logo=codecov
+[ci-url]: https://circleci.com/gh/surol/a-iterable
 [codecov-image]: https://codecov.io/gh/surol/a-iterable/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/surol/a-iterable
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
