@@ -18,7 +18,6 @@
   },
   "main": "dist/a-iterable.js",
   "module": "dist/a-iterable.mjs",
-  "esm5": "dist/a-iterable.esm5.js",
   "typings": "index.d.ts",
   "dependencies": {
     "call-thru": "^2.5.2",
