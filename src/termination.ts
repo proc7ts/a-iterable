@@ -27,7 +27,7 @@ export function itsEach<T>(iterable: Iterable<T>, action: (element: T) => void) 
  * @return `true` if the given iterable contains at least one element, or `false` otherwise.
  */
 export function itsEmpty(iterable: Iterable<any>): boolean {
-  return itsIterator(iterable).next().done;
+  return !!itsIterator(iterable).next().done;
 }
 
 /**
