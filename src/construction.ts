@@ -26,7 +26,7 @@ const NONE: RevertibleIterable<any> = {
 
   *[Symbol.iterator](): Iterator<any> {},
 
-  reverse() { return this; }
+  reverse() { return this; },
 
 };
 

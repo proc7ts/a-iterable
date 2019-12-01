@@ -75,7 +75,7 @@ describe('itsLast', () => {
         yield 1;
         yield 2;
         yield 3;
-      }
+      },
     };
 
     expect(itsLast(it)).toBe(3);

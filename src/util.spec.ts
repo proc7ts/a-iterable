@@ -7,7 +7,7 @@ describe('itsIterator', () => {
     const iterable: Iterable<number> = {
       * [Symbol.iterator]() {
         yield 1;
-      }
+      },
     };
 
     expect(itsIterator(iterable).next()).toEqual({ done: false, value: 1 });
@@ -21,7 +21,7 @@ describe('itsIterable', () => {
       * [Symbol.iterator]() {
         yield 1;
         yield 2;
-      }
+      },
     };
 
     expect([...itsIterable(iterable)]).toEqual([1, 2]);
