@@ -27,7 +27,7 @@ export function reverseIt<T>(source: Iterable<T> | RevertibleIterable<T> | Array
 
     return makeIt(() => itsIterator(reversed));
   }
-  return reverseArray([...source]);
+  return reverseArray(Array.from(source));
 }
 
 /**

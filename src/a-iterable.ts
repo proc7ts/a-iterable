@@ -216,7 +216,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
 
     const elements = this;
 
-    return make(() => reverseArray([...elements]), () => this);
+    return make(() => reverseArray(Array.from(elements)), () => this);
   }
 
   /**
