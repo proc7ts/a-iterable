@@ -1,7 +1,6 @@
 import { passIf } from 'call-thru';
 import { AIterable, toAIterable } from './a-iterable';
 import { IterableClass } from './api';
-import { reverseIt } from './reverse';
 import { RevertibleIterable } from './revertible-iterable';
 import { augmentArrays } from './specs';
 import { itsIterator, makeIt } from './util';
