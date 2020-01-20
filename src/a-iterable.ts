@@ -14,7 +14,10 @@ import Result = NextCall.CallResult;
 import Last = NextCall.LastResult;
 import Out = NextCall.Outcome;
 
-const API_METHODS: (keyof ArrayLikeIterable<any>)[] = [
+/**
+ * @internal
+ */
+const ArrayLikeIterableMethods: (keyof ArrayLikeIterable<any>)[] = [
   'every',
   'filter',
   'flatMap',
@@ -37,7 +40,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @returns An empty iterable instance.
    */
   static none<T>(): AIterable<T> {
-    return notIterable; // eslint-disable-line @typescript-eslint/no-use-before-define
+    return noneAIterable; // eslint-disable-line @typescript-eslint/no-use-before-define
   }
 
   /**
@@ -49,7 +52,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * or `false` otherwise.
    */
   static is<T>(source: Iterable<T>): source is ArrayLikeIterable<T> {
-    return API_METHODS.every(name => name in source);
+    return ArrayLikeIterableMethods.every(name => name in source);
   }
 
   /**
@@ -88,7 +91,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @return Always new `AIterable` instance.
    */
   static from<T>(source: Iterable<T> | RevertibleIterable<T> | T[]): AIterable<T> {
-    return make(() => source, () => reverseIt(source));
+    return makeAIterable(() => source, () => reverseIt(source));
   }
 
   abstract [Symbol.iterator](): Iterator<T>;
@@ -136,7 +139,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
   filter<R extends T>(test: (element: T) => element is R): AIterable<R>;
 
   filter(test: (element: T) => boolean): AIterable<T> {
-    return make(
+    return makeAIterable(
         () => filterIt(this, test),
         () => filterIt(this.reverse(), test),
     );
@@ -156,7 +159,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @returns A new [[AIterable]] with each element being the flattened result of the `convert` function call.
    */
   flatMap<R>(convert: (element: T) => Iterable<R>): AIterable<R> {
-    return make(
+    return makeAIterable(
         () => flatMapIt(this, convert),
         () => flatMapIt(this.reverse(), element => reverseIt(convert(element))),
     );
@@ -186,7 +189,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @return A new [[AIterable]] with each element being the result of the `convert` function call.
    */
   map<R>(convert: (element: T) => R): AIterable<R> {
-    return make(
+    return makeAIterable(
         () => mapIt(this, convert),
         () => mapIt(this.reverse(), convert),
     );
@@ -216,7 +219,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @return Reversed [[AIterable]] instance.
    */
   reverse(): AIterable<T> {
-    return make(() => reverseArray(Array.from(this)), () => this);
+    return makeAIterable(() => reverseArray(Array.from(this)), () => this);
   }
 
   /**
@@ -461,12 +464,15 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
 
     const thru = thruIt as any;
 
-    return make(() => thru(this, ...fns));
+    return makeAIterable(() => thru(this, ...fns));
   }
 
 }
 
-class NotIterable extends AIterable<any> {
+/**
+ * @internal
+ */
+class NoneAIterable extends AIterable<any> {
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   *[Symbol.iterator](): Iterator<any> {}
@@ -477,9 +483,15 @@ class NotIterable extends AIterable<any> {
 
 }
 
-const notIterable = (/*#__PURE__*/ new NotIterable());
+/**
+ * @internal
+ */
+const noneAIterable = (/*#__PURE__*/ new NoneAIterable());
 
-function make<T>(iterate: () => Iterable<T>, reverse?: () => Iterable<T>): AIterable<T> {
+/**
+ * @internal
+ */
+function makeAIterable<T>(iterate: () => Iterable<T>, reverse?: () => Iterable<T>): AIterable<T> {
 
   class Iterable extends AIterable<T> {
 
@@ -518,7 +530,7 @@ export function toAIterable<C extends IterableClass<any, E>, E = IterableElement
   const extended = ExtendedIterable;
   const proto = extended.prototype;
 
-  API_METHODS.forEach(name => {
+  ArrayLikeIterableMethods.forEach(name => {
     if (!(name in proto)) {
       Object.defineProperty(proto, name, {
         configurable: true,

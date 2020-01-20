@@ -24,10 +24,12 @@ export function overArray<T>(array: ArrayLike<T>): RevertibleIterable<T> {
   );
 }
 
-const NONE: RevertibleIterable<any> = {
+/**
+ * @internal
+ */
+const noneIterable: RevertibleIterable<any> = {
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  *[Symbol.iterator](): Iterator<any> {},
+  *[Symbol.iterator](): Iterator<any> {/* do not iterate */},
 
   reverse() { return this; },
 
@@ -41,5 +43,5 @@ const NONE: RevertibleIterable<any> = {
  * @returns An empty iterable instance revertible to itself.
  */
 export function overNone<T>(): RevertibleIterable<T> {
-  return NONE;
+  return noneIterable;
 }
