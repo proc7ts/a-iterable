@@ -15,15 +15,18 @@ import { makeIt } from './util';
 export function overArray<T>(array: ArrayLike<T>): RevertibleIterable<T> {
   return makeIt<T>(
       function* () {
+        // eslint-disable-next-line @typescript-eslint/prefer-for-of
         for (let i = 0; i < array.length; ++i) {
           yield array[i];
         }
       },
-      () => reverseArray(array));
+      () => reverseArray(array),
+  );
 }
 
 const NONE: RevertibleIterable<any> = {
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   *[Symbol.iterator](): Iterator<any> {},
 
   reverse() { return this; },

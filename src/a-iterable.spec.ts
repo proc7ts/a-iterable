@@ -217,14 +217,17 @@ describe('AIterable', () => {
 describe('toAIterable', () => {
 
   class BaseIterable implements RevertibleIterable<number> {
+
     * [Symbol.iterator](): Iterator<number> {
       yield 1;
       yield 2;
       yield 3;
     }
-    reverse() {
+
+    reverse(): Iterable<number> {
       return makeIt(() => itsIterator([3, 3, 3]));
     }
+
   }
 
   let ExtendedIterable: IterableClass<BaseIterable & AIterable<number>>;

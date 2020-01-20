@@ -1,6 +1,9 @@
 import { flatMapIt } from './transform';
 
-export function augmentArrays() {
+/**
+ * @internal
+ */
+export function augmentArrays(): void {
   if (!('flatMap' in Array.prototype)) {
     (Array.prototype as any).flatMap = function (convert: (element: any) => any) {
       flatMapIt(this, convert);

@@ -46,5 +46,6 @@ export function reverseArray<T>(array: ArrayLike<T>): Iterable<T> {
         for (let i = len - 1; i >= 0; --i) {
           yield array[i];
         }
-      });
+      },
+  );
 }

@@ -13,7 +13,7 @@ import { itsIterator } from './util';
  * @param action  An action to perform on each iterable element. This is a function accepting an element as its only
  * parameter.
  */
-export function itsEach<T>(iterable: Iterable<T>, action: (element: T) => void) {
+export function itsEach<T>(iterable: Iterable<T>, action: (element: T) => void): void {
   for (const element of iterable) {
     action(element);
   }
@@ -106,7 +106,8 @@ export function itsLast<T>(iterable: Iterable<T> | RevertibleIterable<T> | Array
 export function itsReduction<T, R>(
     iterable: Iterable<T>,
     reducer: (prev: R, element: T) => R,
-    initialValue: R): R {
+    initialValue: R,
+): R {
 
   let reduced = initialValue;
 

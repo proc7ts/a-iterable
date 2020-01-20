@@ -47,11 +47,13 @@ export function makeIt<T>(iterate: (this: Iterable<T>) => Iterator<T>, reverse?:
  */
 export function makeIt<T>(
     iterate: (this: RevertibleIterable<T>) => Iterator<T>,
-    reverse: (this: RevertibleIterable<T>) => Iterable<T>): RevertibleIterable<T>;
+    reverse: (this: RevertibleIterable<T>) => Iterable<T>,
+): RevertibleIterable<T>;
 
 export function makeIt<T>(
     iterate: (this: RevertibleIterable<T>) => Iterator<T>,
-    reverse?: (this: RevertibleIterable<T>) => Iterable<T>): Iterable<T> {
+    reverse?: (this: RevertibleIterable<T>) => Iterable<T>,
+): Iterable<T> {
 
   const iterable: Iterable<T> = {
     [Symbol.iterator]: iterate,

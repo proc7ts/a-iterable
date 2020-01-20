@@ -259,11 +259,13 @@ export function thruIt<
 
 export function thruIt<T, R>(
     it: Iterable<T>,
-    ...fns: ((...args: any[]) => any)[]): Iterable<PassedThru.Item<R>> {
+    ...fns: ((...args: any[]) => any)[]
+): Iterable<PassedThru.Item<R>> {
 
   const thru: () => Iterable<PassedThru.Item<R>> = (callThru as any)(
       nextEach(it),
-      ...fns);
+      ...fns,
+  );
 
   return thru();
 }

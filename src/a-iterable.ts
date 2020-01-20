@@ -37,7 +37,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @returns An empty iterable instance.
    */
   static none<T>(): AIterable<T> {
-    return NONE; // tslint:disable-line:no-use-before-declare
+    return notIterable; // eslint-disable-line @typescript-eslint/no-use-before-define
   }
 
   /**
@@ -138,7 +138,8 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
   filter(test: (element: T) => boolean): AIterable<T> {
     return make(
         () => filterIt(this, test),
-        () => filterIt(this.reverse(), test));
+        () => filterIt(this.reverse(), test),
+    );
   }
 
   /**
@@ -157,7 +158,8 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
   flatMap<R>(convert: (element: T) => Iterable<R>): AIterable<R> {
     return make(
         () => flatMapIt(this, convert),
-        () => flatMapIt(this.reverse(), element => reverseIt(convert(element))));
+        () => flatMapIt(this.reverse(), element => reverseIt(convert(element))),
+    );
   }
 
   /**
@@ -168,7 +170,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @param action  An action to perform on each iterable element. This is a function accepting an element as its only
    * parameter.
    */
-  forEach(action: (element: T) => void) {
+  forEach(action: (element: T) => void): void {
     itsEach(this, action);
   }
 
@@ -186,7 +188,8 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
   map<R>(convert: (element: T) => R): AIterable<R> {
     return make(
         () => mapIt(this, convert),
-        () => mapIt(this.reverse(), convert));
+        () => mapIt(this.reverse(), convert),
+    );
   }
 
   /**
@@ -213,10 +216,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
    * @return Reversed [[AIterable]] instance.
    */
   reverse(): AIterable<T> {
-
-    const elements = this;
-
-    return make(() => reverseArray(Array.from(elements)), () => this);
+    return make(() => reverseArray(Array.from(this)), () => this);
   }
 
   /**
@@ -466,23 +466,24 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
 
 }
 
-class None extends AIterable<any> {
+class NotIterable extends AIterable<any> {
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   *[Symbol.iterator](): Iterator<any> {}
 
-  reverse() {
+  reverse(): this {
     return this;
   }
 
 }
 
-const NONE = /*#__PURE__*/ new None();
+const notIterable = (/*#__PURE__*/ new NotIterable());
 
 function make<T>(iterate: () => Iterable<T>, reverse?: () => Iterable<T>): AIterable<T> {
 
   class Iterable extends AIterable<T> {
 
-    [Symbol.iterator]() {
+    [Symbol.iterator](): Iterator<T> {
       return itsIterator(iterate());
     }
 
@@ -508,8 +509,8 @@ function make<T>(iterate: () => Iterable<T>, reverse?: () => Iterable<T>): AIter
  * @returns A new class extending original `iterableClass` and implementing the missing [[AIterable]] methods.
  */
 export function toAIterable<C extends IterableClass<any, E>, E = IterableElement<InstanceType<C>>>(
-    iterableClass: C):
-    C & IterableClass<AIterable<E>, E> {
+    iterableClass: C,
+): C & IterableClass<AIterable<E>, E> {
 
   class ExtendedIterable extends iterableClass {
   }
