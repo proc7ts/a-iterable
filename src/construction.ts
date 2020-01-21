@@ -14,7 +14,7 @@ import { makeIt } from './util';
  */
 export function overArray<T>(array: ArrayLike<T>): RevertibleIterable<T> {
   return makeIt<T>(
-      function* () {
+      function *() {
         // eslint-disable-next-line @typescript-eslint/prefer-for-of
         for (let i = 0; i < array.length; ++i) {
           yield array[i];

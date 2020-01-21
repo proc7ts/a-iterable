@@ -24,7 +24,7 @@ export function itsIterator<T>(iterable: Iterable<T>): Iterator<T> {
  * @return An iterator.
  */
 export function itsIterable<T>(iterable: Iterable<T>): IterableIterator<T> {
-  return function* () { yield* iterable; }();
+  return function *() { yield* iterable; }();
 }
 
 /**

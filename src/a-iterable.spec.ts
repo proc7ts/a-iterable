@@ -218,7 +218,7 @@ describe('toAIterable', () => {
 
   class BaseIterable implements RevertibleIterable<number> {
 
-    * [Symbol.iterator](): Iterator<number> {
+    *[Symbol.iterator](): Iterator<number> {
       yield 1;
       yield 2;
       yield 3;
@@ -231,7 +231,7 @@ describe('toAIterable', () => {
   }
 
   let ExtendedIterable: IterableClass<BaseIterable & AIterable<number>>;
-  let extended: BaseIterable & AIterable<number> ;
+  let extended: BaseIterable & AIterable<number>;
 
   beforeEach(() => {
     ExtendedIterable = toAIterable(BaseIterable);

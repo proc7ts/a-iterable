@@ -5,7 +5,7 @@ describe('itsIterator', () => {
   it('accesses iterator', () => {
 
     const iterable: Iterable<number> = {
-      * [Symbol.iterator]() {
+      *[Symbol.iterator]() {
         yield 1;
       },
     };
@@ -18,7 +18,7 @@ describe('itsIterable', () => {
   it('constructs iterable iterator', () => {
 
     const iterable: Iterable<number> = {
-      * [Symbol.iterator]() {
+      *[Symbol.iterator]() {
         yield 1;
         yield 2;
       },

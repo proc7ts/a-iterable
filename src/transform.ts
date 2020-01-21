@@ -31,7 +31,7 @@ export function filterIt<T>(source: Iterable<T>, test: (element: T) => boolean):
 export function filterIt<T, R extends T>(source: Iterable<T>, test: (element: T) => element is R): Iterable<R>;
 
 export function filterIt<T>(source: Iterable<T>, test: (element: T) => boolean): Iterable<T> {
-  return makeIt(function* () {
+  return makeIt(function *() {
     for (const element of source) {
       if (test(element)) {
         yield element;
@@ -52,7 +52,7 @@ export function filterIt<T>(source: Iterable<T>, test: (element: T) => boolean):
  * @returns A new iterable with each element being the flattened result of the `convert` function call.
  */
 export function flatMapIt<T, R>(source: Iterable<T>, convert: (element: T) => Iterable<R>): Iterable<R> {
-  return makeIt(function* () {
+  return makeIt(function *() {
     for (const element of source) {
       yield* convert(element);
     }
@@ -69,7 +69,7 @@ export function flatMapIt<T, R>(source: Iterable<T>, convert: (element: T) => It
  * parameter.
  */
 export function mapIt<T, R>(source: Iterable<T>, convert: (element: T) => R): Iterable<R> {
-  return makeIt(function* () {
+  return makeIt(function *() {
     for (const element of source) {
       yield convert(element);
     }

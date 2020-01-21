@@ -39,7 +39,7 @@ export function reverseIt<T>(source: Iterable<T> | RevertibleIterable<T> | Array
  */
 export function reverseArray<T>(array: ArrayLike<T>): Iterable<T> {
   return makeIt(
-      function* () {
+      function *() {
 
         const len = array.length;
 

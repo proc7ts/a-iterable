@@ -6,7 +6,7 @@ describe('itsRevertible', () => {
   });
   it('recognizes simple iterables not to be revertible', () => {
     expect(itsRevertible({
-      * [Symbol.iterator]() {
+      *[Symbol.iterator]() {
         yield 1;
       },
     })).toBe(false);
