@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module a-iterable
  */
 import { callThru, NextCall, nextEach, PassedThru } from 'call-thru';

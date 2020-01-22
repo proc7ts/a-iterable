@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module a-iterable
  */
 import { RevertibleIterable } from './revertible-iterable';

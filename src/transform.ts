@@ -1,4 +1,5 @@
 /**
+ * @packageDocumentation
  * @module a-iterable
  */
 import { makeIt } from './util';
