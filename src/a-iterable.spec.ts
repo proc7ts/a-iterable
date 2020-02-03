@@ -1,4 +1,4 @@
-import { passIf } from 'call-thru';
+import { nextSkip } from 'call-thru';
 import { AIterable, toAIterable } from './a-iterable';
 import { IterableClass } from './api';
 import { RevertibleIterable } from './revertible-iterable';
@@ -188,7 +188,7 @@ describe('AIterable', () => {
     it('removes skipped elements', () => {
 
       const outcome: Iterable<number> = iter.thru(
-          passIf(n => n > 20),
+          n => n > 20 ? n : nextSkip,
           (n: number) => n + 1,
       );
 
