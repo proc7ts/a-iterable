@@ -9,7 +9,10 @@ import { IterableCallChain } from './iterable-call-chain';
  * Creates a next call in {@link IterableCallChain iterable call chain} that performs the next passes for each
  * element of the given iterable.
  *
- * @param iterable  An iterable containing elements to pass to the next passes.
+ * This call passes elements to the next call on demand. While the `nextEach()` one transforms them all at once,
+ * and iterates over results after that.
+ *
+ * @param iterable  An iterable containing elements to pass down the chain.
  *
  * @returns Next call for iterable call chain.
  */

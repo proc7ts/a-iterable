@@ -9,7 +9,7 @@ import Args = IterableCallChain.Args;
 import Out = IterableCallChain.Out;
 
 /**
- * Passes each element of the given iterable trough a chain of transformation passes.
+ * Passes each element of the given iterable trough the {@link IterableCallChain chain of transformation passes}.
  *
  * The passes are preformed by `call-thru`.
  *
