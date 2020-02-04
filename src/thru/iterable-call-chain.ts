@@ -6,7 +6,7 @@ import { CallChain, NextCall, NextSkip } from 'call-thru';
 
 export interface IterableCallChain extends CallChain {
 
-  iterate<Item>(pass: (this: void, arg: Item) => void, iterable: Iterable<Item>): void;
+  iterate<Item>(pass: (this: void, arg: Item) => any, iterable: Iterable<Item>): void;
 
 }
 
