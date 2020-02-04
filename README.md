@@ -149,9 +149,10 @@ import { AIterable, itsEvery } from 'a-iterable';
 
 const numbers = AIterable.from([1, 30, 39, 29, 10, 13]);
 
-numbers.every(x => x < 40); // true
+numbers.every(x => x < 40);     // true
 itsEvery(numbers, x => x < 40); // Plain iterable counterpart
-numbers.every(x => x < 20); // false
+numbers.every(x => x < 20);     // false
+itsEvery([], x => false);       // Always `true` for empty iterable
 ```
 
 [Array.prototype.every()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every
@@ -271,11 +272,32 @@ reverseIt(numbers); // Plain iterable counterpart
 [Array.prototype.reverse()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reverse
 
 
+### `some()`
+
+Tests whether some element passed the test implemented by the provided function. Corresponds to
+[Array.prototype.some()].
+
+The utility function counterpart operating over plain iterables is `itsSome()`.
+
+```typescript
+import { AIterable, itsSome } from 'a-iterable';
+
+const numbers = AIterable.from([1, 30, 39, 29, 10, 13]);
+
+numbers.some(x => x < 2);     // true
+itsSome(numbers, x => x < 2); // Plain iterable counterpart
+numbers.some(x => x > 40);    // false
+itsSome([], x => true);       // Always `false` for empty iterables
+```
+
+[Array.prototype.some()]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some
+
+
 ### `thru()`
 
 Passes each element of this iterable trough a chain of transformation passes.
 
-The passes are preformed by [callThru()] function.
+The passes are preformed by [call-thru] library.
 
 The utility function counterpart operating over plain iterables is `thruIt()`.
 
@@ -296,7 +318,7 @@ thruIt(
 ```
 
 
-[callThru()]: https://npmjs.com/package/call-thru
+[call-thru]: https://npmjs.com/package/call-thru
 
 
 `extendIterable()`

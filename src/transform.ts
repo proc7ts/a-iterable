@@ -2,6 +2,7 @@
  * @packageDocumentation
  * @module a-iterable
  */
+import { asis } from 'call-thru';
 import { makeIt } from './util';
 
 /**
@@ -15,7 +16,10 @@ import { makeIt } from './util';
  * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
  * be returned.
  */
-export function filterIt<T>(source: Iterable<T>, test: (element: T) => boolean): Iterable<T>;
+export function filterIt<T>(
+    source: Iterable<T>,
+    test: (this: void, element: T) => boolean,
+): Iterable<T>;
 
 /**
  * Creates an iterable with all `source` iterable elements extending the given type.
@@ -29,9 +33,12 @@ export function filterIt<T>(source: Iterable<T>, test: (element: T) => boolean):
  * @return A new iterable with the elements that pass the test. If no elements passed the test, an empty iterable will
  * be returned.
  */
-export function filterIt<T, R extends T>(source: Iterable<T>, test: (element: T) => element is R): Iterable<R>;
+export function filterIt<T, R extends T>(
+    source: Iterable<T>,
+    test: (this: void, element: T) => element is R,
+): Iterable<R>;
 
-export function filterIt<T>(source: Iterable<T>, test: (element: T) => boolean): Iterable<T> {
+export function filterIt<T>(source: Iterable<T>, test: (this: void, element: T) => boolean): Iterable<T> {
   return makeIt(function *() {
     for (const element of source) {
       if (test(element)) {
@@ -40,6 +47,18 @@ export function filterIt<T>(source: Iterable<T>, test: (element: T) => boolean):
     }
   });
 }
+
+/**
+ * Flattens the source iterable of iterables into a new iterable.
+ *
+ * Calling this function is the same as calling `flatMapIt(source, asis)`.
+ *
+ * @typeparam T  A type of source elements.
+ * @param source  A source iterable of iterables.
+ *
+ * @returns A new iterable with each element of `source` being the flattened.
+ */
+export function flatMapIt<T>(source: Iterable<Iterable<T>>): Iterable<T>;
 
 /**
  * First maps each element of the `source` iterable using a mapping function, then flattens the result into a new
@@ -52,7 +71,12 @@ export function filterIt<T>(source: Iterable<T>, test: (element: T) => boolean):
  *
  * @returns A new iterable with each element being the flattened result of the `convert` function call.
  */
-export function flatMapIt<T, R>(source: Iterable<T>, convert: (element: T) => Iterable<R>): Iterable<R> {
+export function flatMapIt<T, R>(source: Iterable<T>, convert: (this: void, element: T) => Iterable<R>): Iterable<R>;
+
+export function flatMapIt<T, R>(
+    source: Iterable<T>,
+    convert: (this: void, element: T) => Iterable<R> = asis as (element: T) => Iterable<R>,
+): Iterable<R> {
   return makeIt(function *() {
     for (const element of source) {
       yield* convert(element);
@@ -69,7 +93,7 @@ export function flatMapIt<T, R>(source: Iterable<T>, convert: (element: T) => It
  * @param convert  A function that produces an element of the new iterable, taking the source element as the only
  * parameter.
  */
-export function mapIt<T, R>(source: Iterable<T>, convert: (element: T) => R): Iterable<R> {
+export function mapIt<T, R>(source: Iterable<T>, convert: (this: void, element: T) => R): Iterable<R> {
   return makeIt(function *() {
     for (const element of source) {
       yield convert(element);

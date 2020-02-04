@@ -1,4 +1,4 @@
-import { passIf } from 'call-thru';
+import { nextSkip } from 'call-thru';
 import { AIterable, toAIterable } from './a-iterable';
 import { IterableClass } from './api';
 import { RevertibleIterable } from './revertible-iterable';
@@ -176,6 +176,18 @@ describe('AIterable', () => {
     });
   });
 
+  describe('some', () => {
+    it('returns `false` for empty iterable', () => {
+      expect(none.some(() => true)).toBe(false);
+    });
+    it('returns `true` when some element passed the test', () => {
+      expect(iter.some(element => element > 20)).toBe(true);
+    });
+    it('returns `false` when all elements do not pass the test', () => {
+      expect(iter.some(element => element < 0)).toBe(false);
+    });
+  });
+
   describe('thru', () => {
     it('transforms elements', () => {
 
@@ -188,7 +200,7 @@ describe('AIterable', () => {
     it('removes skipped elements', () => {
 
       const outcome: Iterable<number> = iter.thru(
-          passIf(n => n > 20),
+          n => n > 20 ? n : nextSkip,
           (n: number) => n + 1,
       );
 

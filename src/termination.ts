@@ -14,7 +14,7 @@ import { itsIterator } from './util';
  * @param action  An action to perform on each iterable element. This is a function accepting an element as its only
  * parameter.
  */
-export function itsEach<T>(iterable: Iterable<T>, action: (element: T) => void): void {
+export function itsEach<T>(iterable: Iterable<T>, action: (this: void, element: T) => void): void {
   for (const element of iterable) {
     action(element);
   }
@@ -42,13 +42,33 @@ export function itsEmpty(iterable: Iterable<any>): boolean {
  * @returns `true` if the `test` function returned a truthy value for every element, or `false` otherwise.
  * Returns `true` for empty iterable.
  */
-export function itsEvery<T>(iterable: Iterable<T>, test: (element: T) => boolean): boolean {
+export function itsEvery<T>(iterable: Iterable<T>, test: (this: void, element: T) => boolean): boolean {
   for (const element of iterable) {
     if (!test(element)) {
       return false;
     }
   }
   return true;
+}
+
+/**
+ * Tests whether at least one element of the given `iterable` passes the test implemented by the provided function.
+ *
+ * @typeparam T  A type of `iterable` elements.
+ * @param iterable  An iterable to test elements of.
+ * @param test  A predicate function to test each element. Returns `false` to continue tests, or `true` to stop it
+ * and return `true` from the method call. It accepts the tested element as the only parameter.
+ *
+ * @returns `true` if the callback function returned a truthy value for at least one element in the array, or `false`
+ * otherwise. Returns `false` for empty iterable.
+ */
+export function itsSome<T>(iterable: Iterable<T>, test: (this: void, element: T) => boolean): boolean {
+  for (const element of iterable) {
+    if (test(element)) {
+      return true;
+    }
+  }
+  return false;
 }
 
 /**
@@ -106,7 +126,7 @@ export function itsLast<T>(iterable: Iterable<T> | RevertibleIterable<T> | Array
  */
 export function itsReduction<T, R>(
     iterable: Iterable<T>,
-    reducer: (prev: R, element: T) => R,
+    reducer: (this: void, prev: R, element: T) => R,
     initialValue: R,
 ): R {
 

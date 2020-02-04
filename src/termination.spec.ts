@@ -1,5 +1,5 @@
 import { RevertibleIterable } from './revertible-iterable';
-import { itsEach, itsEmpty, itsEvery, itsFirst, itsLast, itsReduction } from './termination';
+import { itsEach, itsEmpty, itsEvery, itsFirst, itsLast, itsReduction, itsSome } from './termination';
 
 describe('itsEach', () => {
   it('iterates over elements', () => {
@@ -39,6 +39,18 @@ describe('itsEvery', () => {
   });
   it('returns `false` when some elements do not pass the test', () => {
     expect(itsEvery([1, 2, 3], element => element > 1)).toBe(false);
+  });
+});
+
+describe('itsSome', () => {
+  it('returns `false` for empty iterable', () => {
+    expect(itsSome([], () => true)).toBe(false);
+  });
+  it('returns `true` when at least one elements pass the test', () => {
+    expect(itsSome([1, 2, 3], element => element > 1)).toBe(true);
+  });
+  it('returns `false` when all elements do not pass the test', () => {
+    expect(itsSome([1, 2, 3], element => element < 0)).toBe(false);
   });
 });
 

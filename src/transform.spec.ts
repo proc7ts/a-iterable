@@ -16,6 +16,9 @@ describe('flatMapIt', () => {
 
     expect([...flatMapIt(elements, element => [element, element + 1])]).toEqual([11, 12, 22, 23, 33, 34]);
   });
+  it('flattens elements without converter specified', () => {
+    expect([...flatMapIt([[11, 12], [13, 14]])]).toEqual([11, 12, 13, 14]);
+  });
 });
 
 describe('mapIt', () => {
