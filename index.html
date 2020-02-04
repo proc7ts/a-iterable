@@ -54,7 +54,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> A-Iterable</h1>
+			<h1>A-Iterable</h1>
 		</div>
 	</div>
 </header>
@@ -155,9 +155,10 @@ itsFirst(AIterable.from([<span class="hljs-number">1</span>, <span class="hljs-n
 
 <span class="hljs-keyword">const</span> numbers = AIterable.from([<span class="hljs-number">1</span>, <span class="hljs-number">30</span>, <span class="hljs-number">39</span>, <span class="hljs-number">29</span>, <span class="hljs-number">10</span>, <span class="hljs-number">13</span>]);
 
-numbers.every(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &lt; <span class="hljs-number">40</span>); <span class="hljs-comment">// true</span>
+numbers.every(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &lt; <span class="hljs-number">40</span>);     <span class="hljs-comment">// true</span>
 itsEvery(numbers, <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &lt; <span class="hljs-number">40</span>); <span class="hljs-comment">// Plain iterable counterpart</span>
-numbers.every(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &lt; <span class="hljs-number">20</span>); <span class="hljs-comment">// false</span></code></pre>
+numbers.every(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &lt; <span class="hljs-number">20</span>);     <span class="hljs-comment">// false</span>
+itsEvery([], <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> <span class="hljs-literal">false</span>);       <span class="hljs-comment">// Always `true` for empty iterable</span></code></pre>
 				<a href="#codefiltercode" id="codefiltercode" style="color: inherit; text-decoration: none;">
 					<h3><code>filter()</code></h3>
 				</a>
@@ -229,11 +230,25 @@ itsReduction(numbers, <span class="hljs-function">(<span class="hljs-params">acc
 
 iter.reverse(); <span class="hljs-comment">// 4, 3, 2, 1</span>
 reverseIt(numbers); <span class="hljs-comment">// Plain iterable counterpart</span></code></pre>
+				<a href="#codesomecode" id="codesomecode" style="color: inherit; text-decoration: none;">
+					<h3><code>some()</code></h3>
+				</a>
+				<p>Tests whether some element passed the test implemented by the provided function. Corresponds to
+				<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some">Array.prototype.some()</a>.</p>
+				<p>The utility function counterpart operating over plain iterables is <code>itsSome()</code>.</p>
+				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { AIterable, itsSome } <span class="hljs-keyword">from</span> <span class="hljs-string">'a-iterable'</span>;
+
+<span class="hljs-keyword">const</span> numbers = AIterable.from([<span class="hljs-number">1</span>, <span class="hljs-number">30</span>, <span class="hljs-number">39</span>, <span class="hljs-number">29</span>, <span class="hljs-number">10</span>, <span class="hljs-number">13</span>]);
+
+numbers.some(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &lt; <span class="hljs-number">2</span>);     <span class="hljs-comment">// true</span>
+itsSome(numbers, <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &lt; <span class="hljs-number">2</span>); <span class="hljs-comment">// Plain iterable counterpart</span>
+numbers.some(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &gt; <span class="hljs-number">40</span>);    <span class="hljs-comment">// false</span>
+itsSome([], <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> <span class="hljs-literal">true</span>);       <span class="hljs-comment">// Always `false` for empty iterables</span></code></pre>
 				<a href="#codethrucode" id="codethrucode" style="color: inherit; text-decoration: none;">
 					<h3><code>thru()</code></h3>
 				</a>
 				<p>Passes each element of this iterable trough a chain of transformation passes.</p>
-				<p>The passes are preformed by <a href="https://npmjs.com/package/call-thru">callThru()</a> function.</p>
+				<p>The passes are preformed by <a href="https://npmjs.com/package/call-thru">call-thru</a> library.</p>
 				<p>The utility function counterpart operating over plain iterables is <code>thruIt()</code>.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { AIterable, passIf, thruIt } <span class="hljs-keyword">from</span> <span class="hljs-string">'a-iterable'</span>;
 
@@ -374,6 +389,9 @@ reverseArray([<span class="hljs-number">1</span>, <span class="hljs-number">2</s
 					<li class="globals  ">
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
+					<li class=" tsd-kind-module">
+						<a href="modules/iterablecallchain.html">Iterable<wbr>Call<wbr>Chain</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
@@ -395,6 +413,12 @@ reverseArray([<span class="hljs-number">1</span>, <span class="hljs-number">2</s
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
 						<a href="globals.html#objectentry" class="tsd-kind-icon">Object<wbr>Entry</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#args" class="tsd-kind-icon">Args</a>
+					</li>
+					<li class=" tsd-kind-variable">
+						<a href="globals.html#out" class="tsd-kind-icon">Out</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#filterit" class="tsd-kind-icon">filter<wbr>It</a>
@@ -433,10 +457,16 @@ reverseArray([<span class="hljs-number">1</span>, <span class="hljs-number">2</s
 						<a href="globals.html#itsrevertible" class="tsd-kind-icon">its<wbr>Revertible</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#itssome" class="tsd-kind-icon">its<wbr>Some</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#makeit" class="tsd-kind-icon">make<wbr>It</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#mapit" class="tsd-kind-icon">map<wbr>It</a>
+					</li>
+					<li class=" tsd-kind-function tsd-has-type-parameter">
+						<a href="globals.html#nextiterate" class="tsd-kind-icon">next<wbr>Iterate</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
 						<a href="globals.html#overarray" class="tsd-kind-icon">over<wbr>Array</a>
