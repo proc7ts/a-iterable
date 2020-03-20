@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module a-iterable
+ * @module @proc7ts/a-iterable
  */
 /**
  * A type of elements of iterable.

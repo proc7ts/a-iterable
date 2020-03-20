@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module a-iterable
+ * @module @proc7ts/a-iterable
  */
 import { isArrayLike } from './api';
 import { itsRevertible, RevertibleIterable } from './revertible-iterable';

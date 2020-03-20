@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module a-iterable
+ * @module @proc7ts/a-iterable
  */
 import { reverseArray } from './reverse';
 import { RevertibleIterable } from './revertible-iterable';

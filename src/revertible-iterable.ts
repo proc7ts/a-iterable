@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module a-iterable
+ * @module @proc7ts/a-iterable
  */
 /**
  * An iterable which elements order can be reversed.

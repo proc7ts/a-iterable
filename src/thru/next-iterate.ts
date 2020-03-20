@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module a-iterable
+ * @module @proc7ts/a-iterable
  */
-import { NextCall, nextCall } from 'call-thru';
+import { NextCall, nextCall } from '@proc7ts/call-thru';
 import { IterableCallChain } from './iterable-call-chain';
 
 /**

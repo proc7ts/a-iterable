@@ -1,4 +1,4 @@
-import { nextSkip } from 'call-thru';
+import { nextSkip } from '@proc7ts/call-thru';
 import { AIterable, toAIterable } from './a-iterable';
 import { IterableClass } from './api';
 import { RevertibleIterable } from './revertible-iterable';

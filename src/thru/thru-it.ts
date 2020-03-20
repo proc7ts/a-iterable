@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module a-iterable
+ * @module @proc7ts/a-iterable
  */
-import { asis, isNextCall, NextCall__symbol, noop } from 'call-thru';
+import { asis, isNextCall, NextCall__symbol, noop } from '@proc7ts/call-thru';
 import { flatMapIt } from '../transform';
 import { IterableCallChain } from './iterable-call-chain';
 import Args = IterableCallChain.Args;
@@ -11,7 +11,7 @@ import Out = IterableCallChain.Out;
 /**
  * Passes each element of the given iterable trough the {@link IterableCallChain chain of transformation passes}.
  *
- * The passes are preformed by `call-thru`.
+ * The passes are preformed by `@proc7ts/call-thru`.
  *
  * @returns An iterable of transformed elements.
  */

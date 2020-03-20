@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module a-iterable
+ * @module @proc7ts/a-iterable
  */
 import { overArray } from './construction';
 import { RevertibleIterable } from './revertible-iterable';

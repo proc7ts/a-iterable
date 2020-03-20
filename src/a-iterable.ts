@@ -1,6 +1,6 @@
 /**
  * @packageDocumentation
- * @module a-iterable
+ * @module @proc7ts/a-iterable
  */
 import { IterableClass, IterableElement } from './api';
 import { ArrayLikeIterable } from './array-like-iterable';
@@ -240,7 +240,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
   /**
    * Passes each element of this iterable trough a chain of transformation passes.
    *
-   * The passes are preformed by `call-thru` library.
+   * The passes are preformed by `@proc7ts/call-thru` library.
    *
    * @returns Next iterable of transformed elements.
    */

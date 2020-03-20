@@ -1,4 +1,4 @@
-import { nextArgs, nextSkip } from 'call-thru';
+import { nextArgs, nextSkip } from '@proc7ts/call-thru';
 import { thruIt } from './thru-it';
 
 describe('thruIt', () => {

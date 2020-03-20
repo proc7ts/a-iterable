@@ -1,6 +1,6 @@
+import { asis, nextArgs, nextSkip } from '@proc7ts/call-thru';
 import { nextIterate } from './next-iterate';
 import { thruIt } from './thru-it';
-import { nextSkip, nextArgs, asis } from 'call-thru';
 
 describe('nextIterate', () => {
   it('iterates over elements', () => {

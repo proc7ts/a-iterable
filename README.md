@@ -26,23 +26,23 @@ and does not add too much of the code to the final bundle.
 
 [utilities]: #utilities
 [core-js]: https://www.npmjs.com/package/core-js
-[npm-image]: https://img.shields.io/npm/v/a-iterable.svg?logo=npm
-[npm-url]: https://www.npmjs.com/package/a-iterable
-[ci-image]: https://img.shields.io/circleci/build/github/surol/a-iterable?logo=circleci
-[ci-url]: https://circleci.com/gh/surol/a-iterable
-[codecov-image]: https://codecov.io/gh/surol/a-iterable/branch/master/graph/badge.svg
-[codecov-url]: https://codecov.io/gh/surol/a-iterable
+[npm-image]: https://img.shields.io/npm/v/@proc7ts/a-iterable.svg?logo=npm
+[npm-url]: https://www.npmjs.com/package/@proc7ts/a-iterable
+[ci-image]: https://img.shields.io/circleci/build/github/proc7ts/a-iterable?logo=circleci
+[ci-url]: https://circleci.com/gh/proc7ts/a-iterable
+[codecov-image]: https://codecov.io/gh/proc7ts/a-iterable/branch/master/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/proc7ts/a-iterable
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
-[github-url]: https://github.com/surol/a-iterable
+[github-url]: https://github.com/proc7ts/a-iterable
 [api-docs-image]: https://img.shields.io/static/v1?logo=typescript&label=API&message=docs&color=informational
-[api-docs-url]: https://surol.github.io/a-iterable/
+[api-docs-url]: https://proc7ts.github.io/a-iterable/
 
 
 Example
 -------
 
 ```typescript
-import { AIterable } from 'a-iterable';
+import { AIterable } from '@proc7ts/a-iterable';
 
 const it = AIterable.of({
   *[Symbol.iterator]() {
@@ -88,7 +88,7 @@ Abstract `Iterable` implementation with array-like iteration operations.
 Returns an iterable without elements.
 
 ```typescript
-import { AIterable } from 'a-iterable';
+import { AIterable } from '@proc7ts/a-iterable';
 
 expect(AIterable.none()[Symbol.iterator]().next().done).toBe(true);
 ```
@@ -99,7 +99,7 @@ expect(AIterable.none()[Symbol.iterator]().next().done).toBe(true);
 Checks whether the given iterable is an array-like one.
 
 ```typescript
-import { AIterable } from 'a-iterable';
+import { AIterable } from '@proc7ts/a-iterable';
 
 AIterable.is([1, 2, 3]); // true
 AIterable.is({ *[Symbol.iterator]() { yield 'something'; } }); // false
@@ -111,7 +111,7 @@ AIterable.is({ *[Symbol.iterator]() { yield 'something'; } }); // false
 Creates an `AIterable` instance that iterates over the same elements as the given one if necessary.
 
 ```typescript
-import { AIterable } from 'a-iterable';
+import { AIterable } from '@proc7ts/a-iterable';
 
 AIterable.of([1, 2, 3]);
 AIterable.of({ *[Symbol.iterator]() { yield 'something'; } });
@@ -133,7 +133,7 @@ and iterating over its elements. This way new array instances won't be created.
 Uses [reverseIt()] function to reverse the constructed iterable.
 
 ```typescript
-import { AIterable, itsFirst } from 'a-iterable';
+import { AIterable, itsFirst } from '@proc7ts/a-iterable';
 
 itsFirst(AIterable.from([1, 2, 3]).filter(x => x > 1)); // 2
 ```
@@ -145,7 +145,7 @@ Tests whether all elements pass the test implemented by the provided function. C
 The utility function counterpart operating over plain iterables is `itsEvery()`.
 
 ```typescript
-import { AIterable, itsEvery } from 'a-iterable';
+import { AIterable, itsEvery } from '@proc7ts/a-iterable';
 
 const numbers = AIterable.from([1, 30, 39, 29, 10, 13]);
 
@@ -166,7 +166,7 @@ Creates an iterable with all elements that pass the test implemented by the prov
 The utility function counterpart operating over plain iterables is `filterIt()`.
 
 ```typescript
-import { AIterable, filterIt } from 'a-iterable';
+import { AIterable, filterIt } from '@proc7ts/a-iterable';
 
 const words = AIterable.of(['spray', 'limit', 'elite', 'exuberant', 'destruction', 'present']);
 
@@ -185,7 +185,7 @@ First maps each element using a mapping function, then flattens the result into 
 The utility function counterpart operating over plain iterables is `flatMapIt()`.
 
 ```typescript
-import { AIterable, flatMapIt } from 'a-iterable';
+import { AIterable, flatMapIt } from '@proc7ts/a-iterable';
 
 const numbers = AIterable.of([1, 2, 3]);
 
@@ -203,7 +203,7 @@ Performs the given action for each element. Corresponds to [Array.prototype.forE
 The utility function counterpart operating over plain iterables is `itsEach()`.
 
 ```typescript
-import { AIterable, itsEach } from 'a-iterable';
+import { AIterable, itsEach } from '@proc7ts/a-iterable';
 
 AIterable.is([1, 2, 3]).forEach(console.log); // 1, 2, 3
 itsEach([1, 2, 3], console.log); // Plain iterable counterpart
@@ -220,7 +220,7 @@ Corresponds to [Array.prototype.map()].
 The utility function counterpart operating over plain iterables is `mapIt()`.
 
 ```typescript
-import { AIterable, mapIt } from 'a-iterable';
+import { AIterable, mapIt } from '@proc7ts/a-iterable';
 
 const numbers = AIterable.of([1, 4, 9, 16]);
 
@@ -239,7 +239,7 @@ Corresponds to [Array.prototype.reduce()].
 The utility function counterpart operating over plain iterables is `itsReduction()`.
 
 ```typescript
-import { AIterable, itsReduction } from 'a-iterable';
+import { AIterable, itsReduction } from '@proc7ts/a-iterable';
 
 const numbers = AIterable.of([1, 2, 3, 4]);
 
@@ -260,7 +260,7 @@ rather than creating a new array.
 The utility function counterpart operating over plain iterables is `reverseIt()`.
 
 ```typescript
-import { AIterable, reverseIt } from 'a-iterable';
+import { AIterable, reverseIt } from '@proc7ts/a-iterable';
 
 const numbers = [1, 2, 3, 4];
 const iter = AIterable.from(numbers);
@@ -280,7 +280,7 @@ Tests whether some element passed the test implemented by the provided function.
 The utility function counterpart operating over plain iterables is `itsSome()`.
 
 ```typescript
-import { AIterable, itsSome } from 'a-iterable';
+import { AIterable, itsSome } from '@proc7ts/a-iterable';
 
 const numbers = AIterable.from([1, 30, 39, 29, 10, 13]);
 
@@ -302,7 +302,7 @@ The passes are preformed by [call-thru] library.
 The utility function counterpart operating over plain iterables is `thruIt()`.
 
 ```typescript
-import { AIterable, passIf, thruIt } from 'a-iterable';
+import { AIterable, passIf, thruIt } from '@proc7ts/a-iterable';
 
 const numbers = [1, 2, 3];
 const iter = AIterable.from(numbers);
@@ -327,7 +327,7 @@ thruIt(
 Extends an iterable class with `AIterable` API.
 
 ```typescript
-import { AIterable, toAIterable } from 'a-iterable';
+import { AIterable, toAIterable } from '@proc7ts/a-iterable';
 
 class BaseIterable implements Iterable<number> {
   * [Symbol.iterator](): Iterator<number> {
@@ -353,7 +353,7 @@ Utilities
 Checks whether the given iterable is empty.
 
 ```typescript
-import { AIterable, itsEmpty } from 'a-iterable';  
+import { AIterable, itsEmpty } from '@proc7ts/a-iterable';  
 
 !itsEmpty(AIterable.from([1, 2, 3]).filter(x => x === 2)); // `Array.includes()` analog
 !itsEmpty(AIterable.from([1, 2, 3]).filter(x => x > 1)); // `Array.some()` analog
@@ -364,7 +364,7 @@ import { AIterable, itsEmpty } from 'a-iterable';
 Returns the first element of the given iterable.
 
 ```typescript
-import { AIterable, itsFirst } from 'a-iterable';  
+import { AIterable, itsFirst } from '@proc7ts/a-iterable';  
 
 itsFirst(AIterable.from([1, 2, 3]).filter(x => x === 2)); // `Array.find()` analog
 ```
@@ -378,7 +378,7 @@ If the given `iterable` is an array-like structure, then just returns its last e
 then extracts the first element of the reverted one. Otherwise iterates over elements to find the last one.
 
 ```typescript
-import { itsLast } from 'a-iterable';
+import { itsLast } from '@proc7ts/a-iterable';
 
 itsLast([1, 2, 3]); // 3
 ```
@@ -391,7 +391,7 @@ Starts iteration over the given iterable.
 This is a shortcut for `iterable[Symbol.iterator]` to make it friendlier to minification.
 
 ```typescript
-import { itsIterator } from 'a-iterable';
+import { itsIterator } from '@proc7ts/a-iterable';
 
 itsIterator([1, 2, 3]).next().value; // 1
 ```
@@ -402,7 +402,7 @@ itsIterator([1, 2, 3]).next().value; // 1
 Creates custom iterable.
 
 ```typescript
-import { itsIterator, makeIt } from 'a-iterable';
+import { itsIterator, makeIt } from '@proc7ts/a-iterable';
 
 const array = [1, 2, 3];
 
@@ -416,7 +416,7 @@ makeIt(() => itsIterable(array), () => [...array].reverse()); // Revertible iter
 Builds an revertible iterable over elements of array-like structure, like `Array` or DOM `NodeList`.
 
 ```typescript
-import { overArray } from 'a-iterable';
+import { overArray } from '@proc7ts/a-iterable';
 
 expect([...overArray([1, 2, 3])]).toEqual([1, 2, 3]);
 expect([...overArray([1, 2, 3]).reverse()]).toEqual([3, 2, 1]);
@@ -428,7 +428,7 @@ expect([...overArray([1, 2, 3]).reverse()]).toEqual([3, 2, 1]);
 Builds an iterable over the key/value entries of the given object.
 
 ```typescript
-import { overEntries } from 'a-iterable';
+import { overEntries } from '@proc7ts/a-iterable';
 
 overEntries({
   a: 1,
@@ -443,7 +443,7 @@ overEntries({
 Builds an iterable over the keys of the given object.
 
 ```typescript
-import { overKeys } from 'a-iterable';
+import { overKeys } from '@proc7ts/a-iterable';
 
 overKeys({
   a: 1,
@@ -458,7 +458,7 @@ overKeys({
 Returns an iterable without elements revertible to itself.
 
 ```typescript
-import { overNone } from 'a-iterable';
+import { overNone } from '@proc7ts/a-iterable';
 
 expect([...overNone()]).toEqual([]);
 expect([...overNone().reverse()]).toEqual([]);
@@ -476,7 +476,7 @@ If the `source` iterable is revertible, then uses its `reverse()` method to reve
 Otherwise stores elements to array and reverts them with [reverseArray()] function.
 
 ```typescript
-import { reverseIt } from 'a-iterable';
+import { reverseIt } from '@proc7ts/a-iterable';
 
 reverseIt([1, 2 ,3]); // [3, 2, 1]
 ```
@@ -489,7 +489,7 @@ reverseIt([1, 2 ,3]); // [3, 2, 1]
 Constructs an iterable of array-like structure elements in reverse order.
 
 ```typescript
-import { reverseArray } from 'a-iterable';
+import { reverseArray } from '@proc7ts/a-iterable';
 
 reverseArray([1, 2 ,3]); // [3, 2, 1]
 ```

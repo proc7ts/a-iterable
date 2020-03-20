@@ -23,7 +23,7 @@ module.exports = {
     [
       'jest-junit',
       {
-        suiteName: 'a-iterable',
+        suiteName: '@proc7ts/a-iterable',
         outputDirectory: './target/test-results',
         classNameTemplate: '{classname}: {title}',
         titleTemplate: '{classname}: {title}',

@@ -1,8 +1,8 @@
 /**
  * @packageDocumentation
- * @module a-iterable
+ * @module @proc7ts/a-iterable
  */
-import { asis } from 'call-thru';
+import { asis } from '@proc7ts/call-thru';
 import { makeIt } from './util';
 
 /**
