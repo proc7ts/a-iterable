@@ -20,7 +20,7 @@
   "module": "dist/a-iterable.mjs",
   "typings": "index.d.ts",
   "peerDependencies": {
-    "call-thru": "^3.0.0"
+    "@proc7ts/call-thru": "^3.0.0"
   },
   "devDependencies": {
     "@proc7ts/call-thru": "^3.0.0",
