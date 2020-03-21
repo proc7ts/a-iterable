@@ -434,7 +434,7 @@ __metadata:
     typedoc-plugin-external-module-name: ^3.0.0
     typescript: ^3.8.3
   peerDependencies:
-    call-thru: ^3.0.0
+    "@proc7ts/call-thru": ^3.0.0
   languageName: unknown
   linkType: soft
 
