@@ -13,13 +13,30 @@ jobs:
     steps:
     - checkout
 
+    - restore_cache:
+        name: Restore Yarn package cache
+        keys:
+        - v4-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v4-dependencies-
+
     - run:
         name: Use Yarn 2
         command: yarn set version berry
 
     - run:
+        name: Initialize Yarn 2
+        command: yarn config set cacheFolder ~/.build-cache
+
+    - run:
         name: Install dependencies
         command: yarn install
+
+    - save_cache:
+        name: Save Yarn package cache
+        key: v4-dependencies-{{ checksum "package.json" }}
+        paths:
+        - ~/.build-cache
 
     - run:
         name: Build the project
