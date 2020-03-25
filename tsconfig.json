@@ -16,6 +16,9 @@
       "es2017",
       "es2019.array"
     ],
+    "types": [
+      "jest"
+    ],
     "outDir": "target/js",
     "sourceMap": true,
     "newLine": "LF"

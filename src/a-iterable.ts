@@ -10,7 +10,9 @@ import { itsEach, itsEvery, itsReduction, itsSome } from './termination';
 import { IterableCallChain, thruIt } from './thru';
 import { filterIt, flatMapIt, mapIt } from './transform';
 import { itsIterator, makeIt } from './util';
+/** @hidden */
 import Args = IterableCallChain.Args;
+/** @hidden */
 import Out = IterableCallChain.Out;
 
 /**

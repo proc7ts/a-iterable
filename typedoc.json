@@ -1,5 +1,9 @@
 {
-  "exclude": ["**/specs.ts"],
+  "exclude": [
+    "**/*.spec.ts",
+    "**/index.ts",
+    "**/specs.ts"
+  ],
   "excludeNotExported": true,
   "mode": "file",
   "name": "A-Iterable",

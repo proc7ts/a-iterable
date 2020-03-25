@@ -5,7 +5,9 @@
 import { asis, isNextCall, NextCall__symbol, noop } from '@proc7ts/call-thru';
 import { flatMapIt } from '../transform';
 import { IterableCallChain } from './iterable-call-chain';
+/** @hidden */
 import Args = IterableCallChain.Args;
+/** @hidden */
 import Out = IterableCallChain.Out;
 
 /**
