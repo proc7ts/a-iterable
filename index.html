@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<title>A-Iterable</title>
-	<meta name="description" content="">
+	<meta name="description" content="Documentation for A-Iterable">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -13,7 +13,7 @@
 	<div class="tsd-page-toolbar">
 		<div class="container">
 			<div class="table-wrap">
-				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.json" data-base=".">
 					<div class="field">
 						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
 						<input id="tsd-search-field" type="text" />
@@ -96,29 +96,29 @@
 
 expect([...it.map(<span class="hljs-function"><span class="hljs-params">item</span> =&gt;</span> item * item)]).toBe([<span class="hljs-number">1</span>, <span class="hljs-number">4</span>, <span class="hljs-number">9</span>]);
 </code></pre>
-				<a href="#coderevertibleiterablecode" id="coderevertibleiterablecode" style="color: inherit; text-decoration: none;">
+				<a href="#revertibleiterable" id="revertibleiterable" style="color: inherit; text-decoration: none;">
 					<h2><code>RevertibleIterable</code></h2>
 				</a>
 				<p>The library contains a <code>RevertibleIterable</code> implemented by <code>AIterable</code>. It extends the standard <code>Iterable</code> interface
 				with <code>reverse()</code> method, that constructs an iterable containing original iterable&#39;s elements in reverse order.</p>
 				<p>Arrays implement this interface. Note however, that the array counterpart reverses elements <em>in place</em> rather than
 				creating a new array.</p>
-				<a href="#codearraylikeiterablecode" id="codearraylikeiterablecode" style="color: inherit; text-decoration: none;">
+				<a href="#arraylikeiterable" id="arraylikeiterable" style="color: inherit; text-decoration: none;">
 					<h2><code>ArrayLikeIterable</code></h2>
 				</a>
 				<p>An iterable with Array-like iteration operations. Both <code>Array</code> and <code>AIterable</code> implement it.</p>
-				<a href="#codeaiterablecode" id="codeaiterablecode" style="color: inherit; text-decoration: none;">
+				<a href="#aiterable" id="aiterable" style="color: inherit; text-decoration: none;">
 					<h2><code>AIterable</code></h2>
 				</a>
 				<p>Abstract <code>Iterable</code> implementation with array-like iteration operations.</p>
-				<a href="#codeaiterablenonecode" id="codeaiterablenonecode" style="color: inherit; text-decoration: none;">
+				<a href="#aiterablenone" id="aiterablenone" style="color: inherit; text-decoration: none;">
 					<h3><code>AIterable.none()</code></h3>
 				</a>
 				<p>Returns an iterable without elements.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { AIterable } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/a-iterable'</span>;
 
 expect(AIterable.none()[Symbol.iterator]().next().done).toBe(<span class="hljs-literal">true</span>);</code></pre>
-				<a href="#codeaiterableiscode" id="codeaiterableiscode" style="color: inherit; text-decoration: none;">
+				<a href="#aiterableis" id="aiterableis" style="color: inherit; text-decoration: none;">
 					<h3><code>AIterable.is()</code></h3>
 				</a>
 				<p>Checks whether the given iterable is an array-like one.</p>
@@ -126,7 +126,7 @@ expect(AIterable.none()[Symbol.iterator]().next().done).toBe(<span class="hljs-l
 
 AIterable.is([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]); <span class="hljs-comment">// true</span>
 AIterable.is({ *[Symbol.iterator]() { <span class="hljs-keyword">yield</span> <span class="hljs-string">'something'</span>; } }); <span class="hljs-comment">// false</span></code></pre>
-				<a href="#codeaiterableofcode" id="codeaiterableofcode" style="color: inherit; text-decoration: none;">
+				<a href="#aiterableof" id="aiterableof" style="color: inherit; text-decoration: none;">
 					<h3><code>AIterable.of()</code></h3>
 				</a>
 				<p>Creates an <code>AIterable</code> instance that iterates over the same elements as the given one if necessary.</p>
@@ -136,7 +136,7 @@ AIterable.of([<span class="hljs-number">1</span>, <span class="hljs-number">2</s
 AIterable.of({ *[Symbol.iterator]() { <span class="hljs-keyword">yield</span> <span class="hljs-string">'something'</span>; } });</code></pre>
 				<p>When called for the object already implementing <code>ArrayLikeIterable</code> (such as <code>Array</code>), this method returns the source
 				object itself.</p>
-				<a href="#codeaiterablefromcode" id="codeaiterablefromcode" style="color: inherit; text-decoration: none;">
+				<a href="#aiterablefrom" id="aiterablefrom" style="color: inherit; text-decoration: none;">
 					<h3><code>AIterable.from()</code></h3>
 				</a>
 				<p>Creates an <code>AIterable</code> instance that iterates over the same elements as the given one.</p>
@@ -146,7 +146,7 @@ AIterable.of({ *[Symbol.iterator]() { <span class="hljs-keyword">yield</span> <s
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { AIterable, itsFirst } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/a-iterable'</span>;
 
 itsFirst(AIterable.from([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]).filter(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &gt; <span class="hljs-number">1</span>)); <span class="hljs-comment">// 2</span></code></pre>
-				<a href="#codeeverycode" id="codeeverycode" style="color: inherit; text-decoration: none;">
+				<a href="#every" id="every" style="color: inherit; text-decoration: none;">
 					<h3><code>every()</code></h3>
 				</a>
 				<p>Tests whether all elements pass the test implemented by the provided function. Corresponds to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every">Array.prototype.every()</a>.</p>
@@ -159,7 +159,7 @@ numbers.every(<span class="hljs-function"><span class="hljs-params">x</span> =&g
 itsEvery(numbers, <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &lt; <span class="hljs-number">40</span>); <span class="hljs-comment">// Plain iterable counterpart</span>
 numbers.every(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &lt; <span class="hljs-number">20</span>);     <span class="hljs-comment">// false</span>
 itsEvery([], <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> <span class="hljs-literal">false</span>);       <span class="hljs-comment">// Always `true` for empty iterable</span></code></pre>
-				<a href="#codefiltercode" id="codefiltercode" style="color: inherit; text-decoration: none;">
+				<a href="#filter" id="filter" style="color: inherit; text-decoration: none;">
 					<h3><code>filter()</code></h3>
 				</a>
 				<p>Creates an iterable with all elements that pass the test implemented by the provided function. Corresponds to
@@ -171,7 +171,7 @@ itsEvery([], <span class="hljs-function"><span class="hljs-params">x</span> =&gt
 
 words.filter(<span class="hljs-function"><span class="hljs-params">word</span> =&gt;</span> word.length &gt; <span class="hljs-number">6</span>); <span class="hljs-comment">// "exuberant", "destruction", "present"</span>
 filterIt(words, <span class="hljs-function"><span class="hljs-params">word</span> =&gt;</span> word.length &gt; <span class="hljs-number">6</span>); <span class="hljs-comment">// Plain iterable counterpart</span></code></pre>
-				<a href="#codeflatmapcode" id="codeflatmapcode" style="color: inherit; text-decoration: none;">
+				<a href="#flatmap" id="flatmap" style="color: inherit; text-decoration: none;">
 					<h3><code>flatMap()</code></h3>
 				</a>
 				<p>First maps each element using a mapping function, then flattens the result into a new iterable. Corresponds to
@@ -183,7 +183,7 @@ filterIt(words, <span class="hljs-function"><span class="hljs-params">word</span
 
 numbers.flatMap(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> [x, x + <span class="hljs-number">10</span>]); <span class="hljs-comment">// 1, 11, 2, 12, 3, 13</span>
 flatMapIt(numbers, <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> [x, x + <span class="hljs-number">10</span>]); <span class="hljs-comment">// Plain iterable counterpart</span></code></pre>
-				<a href="#codeforeachcode" id="codeforeachcode" style="color: inherit; text-decoration: none;">
+				<a href="#foreach" id="foreach" style="color: inherit; text-decoration: none;">
 					<h3><code>forEach()</code></h3>
 				</a>
 				<p>Performs the given action for each element. Corresponds to <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach">Array.prototype.forEach()</a>.</p>
@@ -192,7 +192,7 @@ flatMapIt(numbers, <span class="hljs-function"><span class="hljs-params">x</span
 
 AIterable.is([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]).forEach(<span class="hljs-built_in">console</span>.log); <span class="hljs-comment">// 1, 2, 3</span>
 itsEach([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], <span class="hljs-built_in">console</span>.log); <span class="hljs-comment">// Plain iterable counterpart</span></code></pre>
-				<a href="#codemapcode" id="codemapcode" style="color: inherit; text-decoration: none;">
+				<a href="#map" id="map" style="color: inherit; text-decoration: none;">
 					<h3><code>map()</code></h3>
 				</a>
 				<p>Creates a new iterable with the results of calling a provided function on every element.
@@ -204,7 +204,7 @@ itsEach([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>,
 
 numbers.map(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x * <span class="hljs-number">2</span>); <span class="hljs-comment">// 2, 8, 18, 32</span>
 mapIt(numbers, <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x * <span class="hljs-number">2</span>); <span class="hljs-comment">// Plain iterable counterpart</span></code></pre>
-				<a href="#codereducecode" id="codereducecode" style="color: inherit; text-decoration: none;">
+				<a href="#reduce" id="reduce" style="color: inherit; text-decoration: none;">
 					<h3><code>reduce()</code></h3>
 				</a>
 				<p>Applies a function against an accumulator and each element to reduce elements to a single value.
@@ -216,7 +216,7 @@ mapIt(numbers, <span class="hljs-function"><span class="hljs-params">x</span> =&
 
 numbers.reduce(<span class="hljs-function">(<span class="hljs-params">accumulator, currentValue</span>) =&gt;</span> accumulator + currentValue, <span class="hljs-number">0</span>); <span class="hljs-comment">// 10</span>
 itsReduction(numbers, <span class="hljs-function">(<span class="hljs-params">accumulator, currentValue</span>) =&gt;</span> accumulator + currentValue, <span class="hljs-number">0</span>); <span class="hljs-comment">// Plain iterable counterpart</span></code></pre>
-				<a href="#codereversecode" id="codereversecode" style="color: inherit; text-decoration: none;">
+				<a href="#reverse" id="reverse" style="color: inherit; text-decoration: none;">
 					<h3><code>reverse()</code></h3>
 				</a>
 				<p>Constructs an iterable containing this iterable&#39;s elements in reverse order.</p>
@@ -230,7 +230,7 @@ itsReduction(numbers, <span class="hljs-function">(<span class="hljs-params">acc
 
 iter.reverse(); <span class="hljs-comment">// 4, 3, 2, 1</span>
 reverseIt(numbers); <span class="hljs-comment">// Plain iterable counterpart</span></code></pre>
-				<a href="#codesomecode" id="codesomecode" style="color: inherit; text-decoration: none;">
+				<a href="#some" id="some" style="color: inherit; text-decoration: none;">
 					<h3><code>some()</code></h3>
 				</a>
 				<p>Tests whether some element passed the test implemented by the provided function. Corresponds to
@@ -244,7 +244,7 @@ numbers.some(<span class="hljs-function"><span class="hljs-params">x</span> =&gt
 itsSome(numbers, <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &lt; <span class="hljs-number">2</span>); <span class="hljs-comment">// Plain iterable counterpart</span>
 numbers.some(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &gt; <span class="hljs-number">40</span>);    <span class="hljs-comment">// false</span>
 itsSome([], <span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> <span class="hljs-literal">true</span>);       <span class="hljs-comment">// Always `false` for empty iterables</span></code></pre>
-				<a href="#codethrucode" id="codethrucode" style="color: inherit; text-decoration: none;">
+				<a href="#thru" id="thru" style="color: inherit; text-decoration: none;">
 					<h3><code>thru()</code></h3>
 				</a>
 				<p>Passes each element of this iterable trough a chain of transformation passes.</p>
@@ -263,7 +263,7 @@ thruIt(
     passIf(<span class="hljs-function">(<span class="hljs-params">n: <span class="hljs-built_in">number</span></span>) =&gt;</span> n &gt; <span class="hljs-number">1</span>),
     <span class="hljs-function"><span class="hljs-params">n</span> =&gt;</span> n * n,    
 ); <span class="hljs-comment">// Plain iterable counterpart</span></code></pre>
-				<a href="#codeextenditerablecode" id="codeextenditerablecode" style="color: inherit; text-decoration: none;">
+				<a href="#extenditerable" id="extenditerable" style="color: inherit; text-decoration: none;">
 					<h2><code>extendIterable()</code></h2>
 				</a>
 				<p>Extends an iterable class with <code>AIterable</code> API.</p>
@@ -284,7 +284,7 @@ extended.forEach(<span class="hljs-built_in">console</span>.log); <span class="h
 				<a href="#utilities" id="utilities" style="color: inherit; text-decoration: none;">
 					<h2>Utilities</h2>
 				</a>
-				<a href="#codeitsemptycode" id="codeitsemptycode" style="color: inherit; text-decoration: none;">
+				<a href="#itsempty" id="itsempty" style="color: inherit; text-decoration: none;">
 					<h3><code>itsEmpty()</code></h3>
 				</a>
 				<p>Checks whether the given iterable is empty.</p>
@@ -292,14 +292,14 @@ extended.forEach(<span class="hljs-built_in">console</span>.log); <span class="h
 
 !itsEmpty(AIterable.from([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]).filter(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x === <span class="hljs-number">2</span>)); <span class="hljs-comment">// `Array.includes()` analog</span>
 !itsEmpty(AIterable.from([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]).filter(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x &gt; <span class="hljs-number">1</span>)); <span class="hljs-comment">// `Array.some()` analog</span></code></pre>
-				<a href="#codeitsfirstcode" id="codeitsfirstcode" style="color: inherit; text-decoration: none;">
+				<a href="#itsfirst" id="itsfirst" style="color: inherit; text-decoration: none;">
 					<h3><code>itsFirst()</code></h3>
 				</a>
 				<p>Returns the first element of the given iterable.</p>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { AIterable, itsFirst } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/a-iterable'</span>;
 
 itsFirst(AIterable.from([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]).filter(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> x === <span class="hljs-number">2</span>)); <span class="hljs-comment">// `Array.find()` analog</span></code></pre>
-				<a href="#codeitslastcode" id="codeitslastcode" style="color: inherit; text-decoration: none;">
+				<a href="#itslast" id="itslast" style="color: inherit; text-decoration: none;">
 					<h3><code>itsLast()</code></h3>
 				</a>
 				<p>Returns the last element of the given iterable.</p>
@@ -308,7 +308,7 @@ itsFirst(AIterable.from([<span class="hljs-number">1</span>, <span class="hljs-n
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { itsLast } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/a-iterable'</span>;
 
 itsLast([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]); <span class="hljs-comment">// 3</span></code></pre>
-				<a href="#codeitsiteratorcode" id="codeitsiteratorcode" style="color: inherit; text-decoration: none;">
+				<a href="#itsiterator" id="itsiterator" style="color: inherit; text-decoration: none;">
 					<h3><code>itsIterator()</code></h3>
 				</a>
 				<p>Starts iteration over the given iterable.</p>
@@ -316,7 +316,7 @@ itsLast([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>,
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { itsIterator } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/a-iterable'</span>;
 
 itsIterator([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]).next().value; <span class="hljs-comment">// 1</span></code></pre>
-				<a href="#codemakeitcode" id="codemakeitcode" style="color: inherit; text-decoration: none;">
+				<a href="#makeit" id="makeit" style="color: inherit; text-decoration: none;">
 					<h3><code>makeIt()</code></h3>
 				</a>
 				<p>Creates custom iterable.</p>
@@ -326,7 +326,7 @@ itsIterator([<span class="hljs-number">1</span>, <span class="hljs-number">2</sp
 
 makeIt(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> itsIterator(array)); <span class="hljs-comment">// Iterable over array elements</span>
 makeIt(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> itsIterable(array), <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> [...array].reverse()); <span class="hljs-comment">// Revertible iterable over array elements </span></code></pre>
-				<a href="#codeoverarraycode" id="codeoverarraycode" style="color: inherit; text-decoration: none;">
+				<a href="#overarray" id="overarray" style="color: inherit; text-decoration: none;">
 					<h3><code>overArray()</code></h3>
 				</a>
 				<p>Builds an revertible iterable over elements of array-like structure, like <code>Array</code> or DOM <code>NodeList</code>.</p>
@@ -334,7 +334,7 @@ makeIt(<span class="hljs-function"><span class="hljs-params">()</span> =&gt;</sp
 
 expect([...overArray([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])]).toEqual([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]);
 expect([...overArray([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]).reverse()]).toEqual([<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>]);</code></pre>
-				<a href="#codeoverentriescode" id="codeoverentriescode" style="color: inherit; text-decoration: none;">
+				<a href="#overentries" id="overentries" style="color: inherit; text-decoration: none;">
 					<h3><code>overEntries()</code></h3>
 				</a>
 				<p>Builds an iterable over the key/value entries of the given object.</p>
@@ -345,7 +345,7 @@ overEntries({
   [<span class="hljs-number">1</span>]: <span class="hljs-string">'one'</span>,
   [Symbol.iterator]: <span class="hljs-literal">null</span>,
 }) <span class="hljs-comment">// Contains `['a', 1]`, `['1', 'one']`, and `[Symbol.iterator, null]`</span></code></pre>
-				<a href="#codeoverkeyscode" id="codeoverkeyscode" style="color: inherit; text-decoration: none;">
+				<a href="#overkeys" id="overkeys" style="color: inherit; text-decoration: none;">
 					<h3><code>overKeys()</code></h3>
 				</a>
 				<p>Builds an iterable over the keys of the given object.</p>
@@ -356,7 +356,7 @@ overKeys({
   [<span class="hljs-number">1</span>]: <span class="hljs-string">'one'</span>,
   [Symbol.iterator]: <span class="hljs-literal">null</span>,
 }) <span class="hljs-comment">// Contains `'a'`, `'1'`, and `Symbol.iterator`</span></code></pre>
-				<a href="#codeovernonecode" id="codeovernonecode" style="color: inherit; text-decoration: none;">
+				<a href="#overnone" id="overnone" style="color: inherit; text-decoration: none;">
 					<h3><code>overNone()</code></h3>
 				</a>
 				<p>Returns an iterable without elements revertible to itself.</p>
@@ -364,7 +364,7 @@ overKeys({
 
 expect([...overNone()]).toEqual([]);
 expect([...overNone().reverse()]).toEqual([]);</code></pre>
-				<a href="#codereverseitcode" id="codereverseitcode" style="color: inherit; text-decoration: none;">
+				<a href="#reverseit" id="reverseit" style="color: inherit; text-decoration: none;">
 					<h3><code>reverseIt()</code></h3>
 				</a>
 				<p>Constructs a reversed iterable.</p>
@@ -374,7 +374,7 @@ expect([...overNone().reverse()]).toEqual([]);</code></pre>
 				<pre><code class="language-typescript"><span class="hljs-keyword">import</span> { reverseIt } <span class="hljs-keyword">from</span> <span class="hljs-string">'@proc7ts/a-iterable'</span>;
 
 reverseIt([<span class="hljs-number">1</span>, <span class="hljs-number">2</span> ,<span class="hljs-number">3</span>]); <span class="hljs-comment">// [3, 2, 1]</span></code></pre>
-				<a href="#codereversearraycode" id="codereversearraycode" style="color: inherit; text-decoration: none;">
+				<a href="#reversearray" id="reversearray" style="color: inherit; text-decoration: none;">
 					<h3><code>reverseArray()</code></h3>
 				</a>
 				<p>Constructs an iterable of array-like structure elements in reverse order.</p>
@@ -390,101 +390,101 @@ reverseArray([<span class="hljs-number">1</span>, <span class="hljs-number">2</s
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-namespace">
-						<a href="modules/iterablecallchain.html">Iterable<wbr>Call<wbr>Chain</a>
+						<a href="modules/IterableCallChain.html">Iterable<wbr>Call<wbr>Chain</a>
 					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
 					<li class=" tsd-kind-class tsd-has-type-parameter">
-						<a href="classes/aiterable.html" class="tsd-kind-icon">AIterable</a>
+						<a href="classes/AIterable.html" class="tsd-kind-icon">AIterable</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/arraylikeiterable.html" class="tsd-kind-icon">Array<wbr>Like<wbr>Iterable</a>
+						<a href="interfaces/ArrayLikeIterable.html" class="tsd-kind-icon">Array<wbr>Like<wbr>Iterable</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/iterableclass.html" class="tsd-kind-icon">Iterable<wbr>Class</a>
+						<a href="interfaces/IterableClass.html" class="tsd-kind-icon">Iterable<wbr>Class</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-has-type-parameter">
-						<a href="interfaces/revertibleiterable.html" class="tsd-kind-icon">Revertible<wbr>Iterable</a>
+						<a href="interfaces/RevertibleIterable.html" class="tsd-kind-icon">Revertible<wbr>Iterable</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#iterableelement" class="tsd-kind-icon">Iterable<wbr>Element</a>
+						<a href="globals.html#IterableElement" class="tsd-kind-icon">Iterable<wbr>Element</a>
 					</li>
 					<li class=" tsd-kind-type-alias tsd-has-type-parameter">
-						<a href="globals.html#objectentry" class="tsd-kind-icon">Object<wbr>Entry</a>
+						<a href="globals.html#ObjectEntry" class="tsd-kind-icon">Object<wbr>Entry</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#filterit" class="tsd-kind-icon">filter<wbr>It</a>
+						<a href="globals.html#filterIt" class="tsd-kind-icon">filter<wbr>It</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#flatmapit" class="tsd-kind-icon">flat<wbr>Map<wbr>It</a>
+						<a href="globals.html#flatMapIt" class="tsd-kind-icon">flat<wbr>Map<wbr>It</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#isarraylike" class="tsd-kind-icon">is<wbr>Array<wbr>Like</a>
+						<a href="globals.html#isArrayLike" class="tsd-kind-icon">is<wbr>Array<wbr>Like</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#itseach" class="tsd-kind-icon">its<wbr>Each</a>
+						<a href="globals.html#itsEach" class="tsd-kind-icon">its<wbr>Each</a>
 					</li>
 					<li class=" tsd-kind-function">
-						<a href="globals.html#itsempty" class="tsd-kind-icon">its<wbr>Empty</a>
+						<a href="globals.html#itsEmpty" class="tsd-kind-icon">its<wbr>Empty</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#itsevery" class="tsd-kind-icon">its<wbr>Every</a>
+						<a href="globals.html#itsEvery" class="tsd-kind-icon">its<wbr>Every</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#itsfirst" class="tsd-kind-icon">its<wbr>First</a>
+						<a href="globals.html#itsFirst" class="tsd-kind-icon">its<wbr>First</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#itsiterable" class="tsd-kind-icon">its<wbr>Iterable</a>
+						<a href="globals.html#itsIterable" class="tsd-kind-icon">its<wbr>Iterable</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#itsiterator" class="tsd-kind-icon">its<wbr>Iterator</a>
+						<a href="globals.html#itsIterator" class="tsd-kind-icon">its<wbr>Iterator</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#itslast" class="tsd-kind-icon">its<wbr>Last</a>
+						<a href="globals.html#itsLast" class="tsd-kind-icon">its<wbr>Last</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#itsreduction" class="tsd-kind-icon">its<wbr>Reduction</a>
+						<a href="globals.html#itsReduction" class="tsd-kind-icon">its<wbr>Reduction</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#itsrevertible" class="tsd-kind-icon">its<wbr>Revertible</a>
+						<a href="globals.html#itsRevertible" class="tsd-kind-icon">its<wbr>Revertible</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#itssome" class="tsd-kind-icon">its<wbr>Some</a>
+						<a href="globals.html#itsSome" class="tsd-kind-icon">its<wbr>Some</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#makeit" class="tsd-kind-icon">make<wbr>It</a>
+						<a href="globals.html#makeIt" class="tsd-kind-icon">make<wbr>It</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#mapit" class="tsd-kind-icon">map<wbr>It</a>
+						<a href="globals.html#mapIt" class="tsd-kind-icon">map<wbr>It</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#nextiterate" class="tsd-kind-icon">next<wbr>Iterate</a>
+						<a href="globals.html#nextIterate" class="tsd-kind-icon">next<wbr>Iterate</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#overarray" class="tsd-kind-icon">over<wbr>Array</a>
+						<a href="globals.html#overArray" class="tsd-kind-icon">over<wbr>Array</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#overentries" class="tsd-kind-icon">over<wbr>Entries</a>
+						<a href="globals.html#overEntries" class="tsd-kind-icon">over<wbr>Entries</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#overkeys" class="tsd-kind-icon">over<wbr>Keys</a>
+						<a href="globals.html#overKeys" class="tsd-kind-icon">over<wbr>Keys</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#overnone" class="tsd-kind-icon">over<wbr>None</a>
+						<a href="globals.html#overNone" class="tsd-kind-icon">over<wbr>None</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#reversearray" class="tsd-kind-icon">reverse<wbr>Array</a>
+						<a href="globals.html#reverseArray" class="tsd-kind-icon">reverse<wbr>Array</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#reverseit" class="tsd-kind-icon">reverse<wbr>It</a>
+						<a href="globals.html#reverseIt" class="tsd-kind-icon">reverse<wbr>It</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#thruit" class="tsd-kind-icon">thru<wbr>It</a>
+						<a href="globals.html#thruIt" class="tsd-kind-icon">thru<wbr>It</a>
 					</li>
 					<li class=" tsd-kind-function tsd-has-type-parameter">
-						<a href="globals.html#toaiterable" class="tsd-kind-icon">toAIterable</a>
+						<a href="globals.html#toAIterable" class="tsd-kind-icon">toAIterable</a>
 					</li>
 				</ul>
 			</nav>
