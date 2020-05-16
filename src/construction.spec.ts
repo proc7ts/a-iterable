@@ -11,10 +11,10 @@ describe('overArray', () => {
   it('iterates over array elements', () => {
     expect([...overArray(elements)]).toEqual(elements);
   });
-  it('it is not an array', () => {
-    expect(overArray(elements)).not.toEqual(elements);
+  it('is not an array itself', () => {
+    expect(overArray(elements)).not.toBe(elements);
   });
-  it('it is revertible', () => {
+  it('is revertible', () => {
     expect([...overArray(elements).reverse()]).toEqual(elements.reverse());
   });
 });
