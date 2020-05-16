@@ -28,6 +28,7 @@ export function itsEach<T>(iterable: Iterable<T>, action: (this: void, element: 
  * @return `true` if the given iterable contains at least one element, or `false` otherwise.
  */
 export function itsEmpty(iterable: Iterable<any>): boolean {
+  // noinspection PointlessBooleanExpressionJS
   return !!itsIterator(iterable).next().done;
 }
 
@@ -80,7 +81,10 @@ export function itsSome<T>(iterable: Iterable<T>, test: (this: void, element: T)
  * @return Either the first element, or `undefined` if the given `iterable` is empty.
  */
 export function itsFirst<T>(iterable: Iterable<T>): T | undefined {
-  return itsIterator(iterable).next().value;
+
+  const result = itsIterator(iterable).next();
+
+  return !result.done ? result.value : undefined;
 }
 
 /**

@@ -61,6 +61,14 @@ describe('itsFirst', () => {
   it('returns `undefined` for empty iterable', () => {
     expect(itsFirst([])).toBeUndefined();
   });
+  it('returns `undefined` for generator returning value', () => {
+    expect(itsFirst(gen())).toBeUndefined();
+
+    // eslint-disable-next-line require-yield
+    function *gen(): Generator<string, string> {
+      return 'returned';
+    }
+  });
 });
 
 describe('itsLast', () => {
