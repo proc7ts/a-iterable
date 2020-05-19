@@ -2,7 +2,7 @@
   "compilerOptions": {
     "moduleResolution": "node",
     "module": "es2015",
-    "target": "es2017",
+    "target": "es2018",
     "strict": true,
     "experimentalDecorators": true,
     "noFallthroughCasesInSwitch": true,
@@ -13,7 +13,7 @@
     "importHelpers": true,
     "noEmitHelpers": true,
     "lib": [
-      "es2017",
+      "es2018",
       "es2019.array"
     ],
     "types": [
