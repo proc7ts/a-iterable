@@ -46,5 +46,6 @@ const noneIterable: RevertibleIterable<any> = {
  * @returns An empty iterable instance revertible to itself.
  */
 export function overNone<T>(): RevertibleIterable<T> {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
   return noneIterable;
 }

@@ -107,6 +107,6 @@ describe('itsReduction', () => {
     expect(itsReduction([11, 22, 33], (prev, element) => prev + element, 1)).toBe(67);
   });
   it('returns initial value on empty iterable', () => {
-    expect(itsReduction([], (prev, element) => prev + element, 1)).toBe(1);
+    expect(itsReduction<number, number>([], (prev, element) => prev + element, 1)).toBe(1);
   });
 });

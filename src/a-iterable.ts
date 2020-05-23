@@ -482,7 +482,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
 
   thru<R>(...fns: ((...args: any[]) => any)[]): AIterable<R> {
 
-    const thru = thruIt as any;
+    const thru = thruIt as (it: Iterable<T>, ...fns: ((...args: any[]) => any)[]) => Iterable<R>;
 
     return makeAIterable(() => thru(this, ...fns));
   }
@@ -494,8 +494,7 @@ export abstract class AIterable<T> implements ArrayLikeIterable<T> {
  */
 class NoneAIterable extends AIterable<any> {
 
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  *[Symbol.iterator](): Iterator<any> {}
+  *[Symbol.iterator](): Iterator<any> {/* Generate nothing */}
 
   reverse(): this {
     return this;
@@ -543,7 +542,7 @@ function makeAIterable<T>(
  *
  * @returns A new class extending original `iterableClass` and implementing the missing [[AIterable]] methods.
  */
-export function toAIterable<C extends IterableClass<any, E>, E = IterableElement<InstanceType<C>>>(
+export function toAIterable<C extends IterableClass<Iterable<E>, E>, E = IterableElement<InstanceType<C>>>(
     iterableClass: C,
 ): C & IterableClass<AIterable<E>, E> {
 

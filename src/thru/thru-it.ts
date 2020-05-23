@@ -322,5 +322,6 @@ export function thruIt<T>(
 
   chain(0).iterate(passes[0], it);
 
-  return flatMapIt(result, asis);
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  return flatMapIt<any, any>(result, asis);
 }

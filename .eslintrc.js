@@ -22,16 +22,15 @@ module.exports = {
       },
     },
     {
-      files: ['*.spec.ts'],
-      plugins: [
-        'jest',
+      files: [
+        '*.spec.ts',
+        'specs.ts',
       ],
       extends: [
-        'plugin:jest/recommended',
-        'plugin:jest/style',
+        '@proc7ts/eslint-config/jest',
       ],
-      env: {
-        'jest/globals': true,
+      parserOptions: {
+        project: './tsconfig.spec.json',
       },
     },
   ],
