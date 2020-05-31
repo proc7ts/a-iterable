@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/a-iterable
  */
-import { isArrayLike } from './api';
+import { isArrayLike } from '@proc7ts/primitives';
 import { itsRevertible, RevertibleIterable } from './revertible-iterable';
 import { itsIterator, makeIt } from './util';
 

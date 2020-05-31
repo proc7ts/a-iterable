@@ -2,7 +2,8 @@
  * @packageDocumentation
  * @module @proc7ts/a-iterable
  */
-import { asis, isNextCall, NextCall__symbol, noop } from '@proc7ts/call-thru';
+import { isNextCall, NextCall__symbol } from '@proc7ts/call-thru';
+import { asis, noop } from '@proc7ts/primitives';
 import { flatMapIt } from '../transform';
 import { IterableCallChain } from './iterable-call-chain';
 /** @hidden */

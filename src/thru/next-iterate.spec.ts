@@ -1,4 +1,5 @@
-import { asis, nextArgs, nextSkip } from '@proc7ts/call-thru';
+import { nextArgs, nextSkip } from '@proc7ts/call-thru';
+import { asis } from '@proc7ts/primitives';
 import { nextIterate } from './next-iterate';
 import { thruIt } from './thru-it';
 

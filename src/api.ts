@@ -19,14 +19,3 @@ export interface IterableClass<T extends Iterable<E>, E = IterableElement<T>> ex
   prototype: T;
   new (...args: any[]): T;
 }
-
-/**
- * Checks whether the given value is array-like.
- *
- * @param target  A value to check.
- *
- * @returns `true` if the `value` has a `length` property, or `false` otherwise.
- */
-export function isArrayLike<T>(target: object): target is ArrayLike<T> {
-  return 'length' in target;
-}
