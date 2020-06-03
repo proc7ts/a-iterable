@@ -3,8 +3,9 @@
  * @module @proc7ts/a-iterable
  */
 import { IterableClass, IterableElement } from './api';
+import { reverseArray } from './array';
 import { ArrayLikeIterable } from './array-like-iterable';
-import { reverseArray, reverseIt } from './reverse';
+import { reverseIt } from './reverse';
 import { RevertibleIterable } from './revertible-iterable';
 import { itsEach, itsEvery, itsReduction, itsSome } from './termination';
 import { IterableCallChain, thruIt } from './thru';

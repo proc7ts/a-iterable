@@ -24,8 +24,8 @@ export function itsIterator<T>(iterable: Iterable<T>): Iterator<T> {
  *
  * @return An iterator.
  */
-export function itsIterable<T>(iterable: Iterable<T>): IterableIterator<T> {
-  return function *(): IterableIterator<T> { yield* iterable; }();
+export function *itsIterable<T>(iterable: Iterable<T>): IterableIterator<T> {
+  yield* iterable;
 }
 
 /**
@@ -60,13 +60,9 @@ export function makeIt<T>(
     [Symbol.iterator]: iterate,
   };
 
-  if (!reverse) {
-    return iterable;
+  if (reverse) {
+    (iterable as RevertibleIterable<T>).reverse = reverse;
   }
 
-  const reversible = iterable as RevertibleIterable<T>;
-
-  reversible.reverse = reverse;
-
-  return reversible;
+  return iterable;
 }

@@ -1,4 +1,4 @@
-import { reverseArray, reverseIt } from './reverse';
+import { reverseIt } from './reverse';
 import { RevertibleIterable } from './revertible-iterable';
 import Mocked = jest.Mocked;
 
@@ -26,30 +26,5 @@ describe('reverseIt', () => {
   it('reverts non-revertible iterable elements', () => {
     delete iter.reverse;
     expect([...reverseIt(iter)]).toEqual(elements.reverse());
-  });
-});
-
-describe('reverseArray', () => {
-  it('reverts array elements', () => {
-    expect([...reverseArray([1, 2, 3])]).toEqual([3, 2, 1]);
-  });
-  it('reverts elements using source `reverse()` method', () => {
-
-    const elements = [1, 2, 3];
-    const reverted = [...elements].reverse();
-    const it: Mocked<RevertibleIterable<number>> = {
-      reverse: jest.fn(() => reverted),
-    } as any;
-
-    expect([...reverseIt(it)]).toEqual(reverted);
-    expect(it.reverse).toHaveBeenCalled();
-  });
-  it('does not revert array elements in-place', () => {
-
-    const elements = [1, 2, 3];
-
-    reverseArray(elements);
-
-    expect(elements).toEqual([1, 2, 3]);
   });
 });

@@ -84,7 +84,7 @@ export function itsFirst<T>(iterable: Iterable<T>): T | undefined {
 
   const result = itsIterator(iterable).next();
 
-  return !result.done ? result.value : undefined;
+  return result.done ? undefined : result.value;
 }
 
 /**

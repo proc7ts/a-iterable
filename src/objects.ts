@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/a-iterable
  */
-import { overArray } from './construction';
+import { overArray } from './array';
 import { RevertibleIterable } from './revertible-iterable';
 import { mapIt } from './transform';
 import { itsIterator, makeIt } from './util';
@@ -32,11 +32,11 @@ export type ObjectEntry<T, K extends keyof T = keyof T> = [K, T[K]];
  */
 export function overEntries<T extends object>(target: T): RevertibleIterable<ObjectEntry<T>> {
 
-  const keys = overKeys(target);
+  const targetKeys = overKeys(target);
+  const mapToEntries = (keys: Iterable<keyof T>): Iterable<ObjectEntry<T>> => mapIt(
+      keys,
+      key => [key, target[key]] as ObjectEntry<T>,
+  );
 
-  function mapToEntries(_keys: Iterable<keyof T>): Iterable<ObjectEntry<T>> {
-    return mapIt(_keys, key => [key, target[key]] as ObjectEntry<T>);
-  }
-
-  return makeIt(() => itsIterator(mapToEntries(keys)), () => mapToEntries(keys.reverse()));
+  return makeIt(() => itsIterator(mapToEntries(targetKeys)), () => mapToEntries(targetKeys.reverse()));
 }

@@ -3,7 +3,6 @@
  * @module @proc7ts/a-iterable
  */
 import { asis } from '@proc7ts/primitives';
-import { makeIt } from './util';
 
 /**
  * Creates an iterable with all `source` iterable elements that pass the test implemented by the provided function.
@@ -39,13 +38,25 @@ export function filterIt<T, R extends T>(
 ): Iterable<R>;
 
 export function filterIt<T>(source: Iterable<T>, test: (this: void, element: T) => boolean): Iterable<T> {
-  return makeIt(function *() {
-    for (const element of source) {
-      if (test(element)) {
-        yield element;
-      }
-    }
-  });
+  return {
+    [Symbol.iterator](): Iterator<T> {
+
+      const it = source[Symbol.iterator]();
+
+      return {
+        next(): IteratorResult<T> {
+          for (;;) {
+
+            const next = it.next();
+
+            if (next.done || test(next.value)) {
+              return next;
+            }
+          }
+        },
+      };
+    },
+  };
 }
 
 /**
@@ -77,11 +88,39 @@ export function flatMapIt<T, R>(
     source: Iterable<T>,
     convert: (this: void, element: T) => Iterable<R> = asis as (element: T) => Iterable<R>,
 ): Iterable<R> {
-  return makeIt(function *() {
-    for (const element of source) {
-      yield* convert(element);
-    }
-  });
+  return {
+    [Symbol.iterator](): Iterator<R> {
+
+      const it = source[Symbol.iterator]();
+      let cIt: Iterator<R> | undefined;
+
+      return {
+        next(): IteratorResult<R> {
+          for (;;) {
+            if (!cIt) {
+
+              const next = it.next();
+
+              if (next.done) {
+                return next;
+              }
+
+              cIt = convert(next.value)[Symbol.iterator]();
+            }
+
+            const cNext = cIt.next();
+
+            if (cNext.done) {
+              cIt = undefined;
+              continue;
+            }
+
+            return cNext;
+          }
+        },
+      };
+    },
+  };
 }
 
 /**
@@ -94,9 +133,19 @@ export function flatMapIt<T, R>(
  * parameter.
  */
 export function mapIt<T, R>(source: Iterable<T>, convert: (this: void, element: T) => R): Iterable<R> {
-  return makeIt(function *() {
-    for (const element of source) {
-      yield convert(element);
-    }
-  });
+  return {
+    [Symbol.iterator](): Iterator<R> {
+
+      const it = source[Symbol.iterator]();
+
+      return {
+        next(): IteratorResult<R> {
+
+          const next = it.next();
+
+          return next.done ? next : { value: convert(next.value) };
+        },
+      };
+    },
+  };
 }
