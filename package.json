@@ -1,6 +1,6 @@
 {
   "name": "@proc7ts/a-iterable",
-  "version": "2.6.1",
+  "version": "2.7.0",
   "description": "An Iterable implementation with ES6 Array-like API",
   "keywords": [
     "iterable",
