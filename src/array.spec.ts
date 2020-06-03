@@ -44,4 +44,13 @@ describe('reverseArray', () => {
 
     expect(elements).toEqual([1, 2, 3]);
   });
+  it('is revertible', () => {
+
+    const elements = [1, 2, 3];
+    const reverted = reverseArray(elements).reverse();
+
+    expect([...reverted]).toEqual([1, 2, 3]);
+    expect([...reverted]).toEqual(elements);
+    expect(reverted).not.toBe(elements);
+  });
 });

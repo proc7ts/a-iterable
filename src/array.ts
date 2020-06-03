@@ -61,7 +61,7 @@ export function overArray<T>(array: ArrayLike<T>): RevertibleIterable<T> {
  *
  * @returns An iterable of the `source` elements in reverse order.
  */
-export function reverseArray<T>(array: ArrayLike<T>): Iterable<T> {
+export function reverseArray<T>(array: ArrayLike<T>): RevertibleIterable<T> {
   return makeIt(
       () => reverseArrayIterator(array),
       () => overArray(array),
