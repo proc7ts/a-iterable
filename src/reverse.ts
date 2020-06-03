@@ -3,6 +3,7 @@
  * @module @proc7ts/a-iterable
  */
 import { isArrayLike } from '@proc7ts/primitives';
+import { reverseArray } from './array';
 import { itsRevertible, RevertibleIterable } from './revertible-iterable';
 import { itsIterator, makeIt } from './util';
 
@@ -31,22 +32,3 @@ export function reverseIt<T>(source: Iterable<T> | RevertibleIterable<T> | Array
   return reverseArray(Array.from(source));
 }
 
-/**
- * Constructs an iterable of array-like structure elements in reverse order.
- *
- * @param array  Source array.
- *
- * @returns An iterable of the `source` elements in reverse order.
- */
-export function reverseArray<T>(array: ArrayLike<T>): Iterable<T> {
-  return makeIt(
-      function *() {
-
-        const len = array.length;
-
-        for (let i = len - 1; i >= 0; --i) {
-          yield array[i];
-        }
-      },
-  );
-}

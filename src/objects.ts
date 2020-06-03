@@ -2,7 +2,7 @@
  * @packageDocumentation
  * @module @proc7ts/a-iterable
  */
-import { overArray } from './construction';
+import { overArray } from './array';
 import { RevertibleIterable } from './revertible-iterable';
 import { mapIt } from './transform';
 import { itsIterator, makeIt } from './util';
