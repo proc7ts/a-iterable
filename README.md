@@ -2,7 +2,7 @@ A-Iterable
 ==========
 
 [![NPM][npm-image]][npm-url]
-[![CircleCI][ci-image]][ci-url]
+[![Build Status][build-status-img]][build-status-link]
 [![codecov][codecov-image]][codecov-url]
 [![GitHub Project][github-image]][github-url]
 [![API Documentation][api-docs-image]][api-docs-url]
@@ -28,8 +28,8 @@ and does not add too much of the code to the final bundle.
 [core-js]: https://www.npmjs.com/package/core-js
 [npm-image]: https://img.shields.io/npm/v/@proc7ts/a-iterable.svg?logo=npm
 [npm-url]: https://www.npmjs.com/package/@proc7ts/a-iterable
-[ci-image]: https://img.shields.io/circleci/build/github/proc7ts/a-iterable?logo=circleci
-[ci-url]: https://circleci.com/gh/proc7ts/a-iterable
+[build-status-img]: https://github.com/proc7ts/a-iterable/workflows/Build/badge.svg
+[build-status-link]: https://github.com/proc7ts/a-iterable/actions?query=workflow%3ABuild
 [codecov-image]: https://codecov.io/gh/proc7ts/a-iterable/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/proc7ts/a-iterable
 [github-image]: https://img.shields.io/static/v1?logo=github&label=GitHub&message=project&color=informational
