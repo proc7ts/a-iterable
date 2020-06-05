@@ -297,7 +297,7 @@ itsSome([], x => true);       // Always `false` for empty iterables
 
 Passes each element of this iterable trough a chain of transformation passes.
 
-The passes are preformed by [call-thru] library.
+The passes are preformed by [@proc7ts/call-thru] library.
 
 The utility function counterpart operating over plain iterables is `thruIt()`.
 
@@ -318,7 +318,7 @@ thruIt(
 ```
 
 
-[call-thru]: https://npmjs.com/package/call-thru
+[@proc7ts/call-thru]: https://npmjs.com/package/@proc7ts/call-thru
 
 
 `extendIterable()`
