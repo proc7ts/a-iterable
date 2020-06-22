@@ -18,7 +18,7 @@
   },
   "main": "dist/a-iterable.js",
   "module": "dist/a-iterable.mjs",
-  "typings": "index.d.ts",
+  "types": "index.d.ts",
   "peerDependencies": {
     "@proc7ts/call-thru": "^4.0.0"
   },
