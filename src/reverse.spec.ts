@@ -24,7 +24,7 @@ describe('reverseIt', () => {
     expect([...reverseIt(iter)]).toEqual(elements.reverse());
   });
   it('reverts non-revertible iterable elements', () => {
-    delete iter.reverse;
+    delete (iter as any).reverse;
     expect([...reverseIt(iter)]).toEqual(elements.reverse());
   });
 });
