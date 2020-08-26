@@ -19,14 +19,20 @@
   "main": "dist/a-iterable.js",
   "module": "dist/a-iterable.mjs",
   "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/a-iterable.mjs",
+      "require": "./dist/a-iterable.js"
+    }
+  },
   "peerDependencies": {
-    "@proc7ts/call-thru": "^4.0.0"
+    "@proc7ts/call-thru": "^4.1.0"
   },
   "dependencies": {
-    "@proc7ts/primitives": "^1.1.0"
+    "@proc7ts/primitives": "^1.2.0"
   },
   "devDependencies": {
-    "@proc7ts/call-thru": "^4.0.0",
+    "@proc7ts/call-thru": "^4.1.0",
     "@proc7ts/eslint-config": "^2.0.4",
     "@proc7ts/rollup-helpers": "^1.0.0",
     "@rollup/plugin-commonjs": "^15.0.0",
