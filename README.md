@@ -1,3 +1,5 @@
+> Discontinued in favor of [@proc7ts/push-iterator](https://github.com/proc7ts/push-iterator)
+
 A-Iterable
 ==========
 
